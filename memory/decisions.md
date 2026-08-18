@@ -1,0 +1,7 @@
+## 2026-08-18 — Project scoped as workspace, not Blueprint, until an idea is locked
+**Decision:** No `/rubric` run yet. This project stays "Framework: none, workspace" until the 4-person team picks one idea to build, since the idea choice is a combined decision, not Gaurav's to make alone.
+**Why:** Running Blueprint's PRD/rubric flow before the idea is locked would produce a plan built on a guess. The hackathon's own deadline (2026-08-27) leaves no slack for redoing that work if the team picks a different idea afterward.
+
+## 2026-08-18 — Corrected the "RGHS/CGHS employees scam the system" framing
+**Decision:** Gaurav's idea 2 originally framed government employees as a class doing fake-prescription scams. Research (RGHS: 51 hospitals suspended, ~Rs 3 crore in penalties; CGHS: 19 Delhi-NCR hospitals suspended, CBI FIR against 2 Kanpur hospitals) found every documented fraud case sits with empanelled providers and intermediaries, not employees. The idea was rewritten around the verifiable weakness instead: a beneficiary cannot see what was billed under their own scheme ID, so a forged claim is invisible to the one person who would catch it.
+**Why:** An unverified accusation about a class of people should not be carried into a hackathon problem statement, especially one going in front of external judges. The rewritten framing is both accurate and a sharper demo, since it shows a citizen catching a fabricated claim rather than accusing a group.
