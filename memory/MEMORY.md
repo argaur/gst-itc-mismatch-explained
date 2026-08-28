@@ -1,8 +1,8 @@
 # Memory Index — Build What Moves India
 
 - [project.md](project.md) — status, last session, next up, blockers
-- [decisions.md](decisions.md) — workspace-not-Blueprint scoping; RGHS/CGHS framing correction; 2-person team split + 10-platform brief; platform locked to Cyber Crime + CPGRAMS; Cyber Crime re-confirmed + problem statement reframed; Harshit-overlap resolved (he's on EPFO)
-- [past-mistakes.md](past-mistakes.md) — parallel WebSearch-heavy agent fan-outs exhaust quota; artifact publish gate refused a valid republish in a loop
+- [decisions.md](decisions.md) — workspace scoping; research/problem-direction decisions; team split and Harshit-overlap resolution; Netlify decision-brief / Vercel prototype hosting split; GST DRC-01C locked as platform
+- [past-mistakes.md](past-mistakes.md) — parallel WebSearch-heavy agent fan-outs exhaust quota; artifact publish gate refused a valid republish in a loop; a Codex prompt named a Claude-only skill
 - [Session: 2026-08-18](session-2026-08-18.md) — project scaffolded, team ideas pulled, Gaurav's 5 ideas researched and structured
 - [Session: 2026-08-24](session-2026-08-24.md) — team split, 10-platform secondary + primary research, published comparison artifact
 - [Session: 2026-08-24 (2)](session-2026-08-24-2.md) — Fable 5 ranked top-5 problem shortlist, added "Compiled Problems" tab to the artifact
@@ -12,3 +12,10 @@
 - [Session: 2026-08-26 (2)](session-2026-08-26-2.md) — Firecrawl fact-check pass corrected the corpus and artifact; Harshit-overlap resolved (he's on EPFO); Gaurav flagged the whole approach for a rethink next session
 - [brief-judging-criteria.md](brief-judging-criteria.md) — full 2026-08-26 extraction of buildwhatmovesindia.com/brief, 6-criterion rubric, submission mechanics, PRD gaps
 - [codex-handoff-workflow.md](codex-handoff-workflow.md) — from 2026-08-26, Codex builds this project, Claude plans only, via AGENTS.md/PROJECT_CONTEXT.md/STATUS.md
+- [Session: 2026-08-26 (3)](session-2026-08-26-3.md) — re-verified brief judging criteria, built + committed AGENTS.md/PROJECT_CONTEXT.md/STATUS.md Codex handoff, advised ChatGPT Plus over Pro
+- [Session: 2026-08-26 (4)](session-2026-08-26-4.md) — Codex analysed the full research corpus, recommended GST DRC-01C for Round 1, and created the shareable decision brief, working PRD, and gated implementation plan
+- [Session: 2026-08-26 (5)](session-2026-08-26-5.md) — Claude reviewed Codex's GST pivot against the judging rubric, flagged 4 gaps (thin pain evidence, Netlify vs Vercel, stale status docs, test-rigor scope), fixed the hosting stack in IMPLEMENTATION_PLAN.md
+- [Session: 2026-08-26 (6)](session-2026-08-26-6.md) — Codex corrected the GST data model and evidence claims, removed the fictional timeline, rebuilt the detailed plan, added a high-level implementation tab, and locked the Netlify-brief/Vercel-prototype hosting split
+- [Session: 2026-08-26 (7)](session-2026-08-26-7.md) — Codex created a clickable existing-vs-proposed GST DRC-01C comparison wireframe, documented the six-stage current portal flow and four-stage proposed journey, froze the shared synthetic case, and preserved the non-approval boundary
+- [Session: 2026-08-26 (8)](session-2026-08-26-8.md) — Codex added a fully sourced GST research tab to `index.html`, separated direct voices from official/secondary evidence and inference, documented validation gaps, kept Implementation Plan last, and verified desktop/mobile/keyboard behavior
+- [Session: 2026-08-27](session-2026-08-27.md) — Gaurav approved GST DRC-01C while the exact flow remained pending; Codex sealed the PRD, reconciled the plan, built and tested the deterministic Block 1 core, deployed the flow-review skeleton, and stopped before Stage 4 awaiting the call decision

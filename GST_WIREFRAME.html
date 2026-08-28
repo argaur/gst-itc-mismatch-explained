@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Clickable comparison of the existing GST DRC-01C portal workflow and the proposed Notice, Explained journey.">
+  <title>GST DRC-01C — Existing vs proposed workflow</title>
+  <style>
+    :root {
+      --ink:#172033; --muted:#657084; --paper:#f4f6f9; --card:#fff; --line:#dfe4eb;
+      --navy:#17365d; --blue:#2368b0; --blue-soft:#eaf3ff; --green:#157347; --green-soft:#eaf8f0;
+      --amber:#8a5a00; --amber-soft:#fff6df; --red:#a23b43; --red-soft:#fff0f1;
+      --shadow:0 16px 42px rgba(23,54,93,.11); --radius:20px;
+    }
+    *{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+    button{font:inherit} button,a,summary{outline-offset:3px} button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid #8bc1ff}
+    .proposal{display:flex;align-items:center;justify-content:center;gap:8px;min-height:34px;padding:7px 16px;background:#1d2939;color:#fff;font-size:12px;text-align:center}
+    .proposal b{color:#ffd166}.workflow-tabs-shell{position:sticky;top:0;z-index:25;border-bottom:1px solid var(--line);background:rgba(255,255,255,.97);backdrop-filter:blur(12px)}.workflow-tabs{width:min(1010px,calc(100% - 32px));display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 auto;padding:10px 0}.workflow-tab{min-height:48px;border:1px solid transparent;border-radius:13px;padding:10px 16px;background:transparent;color:var(--muted);font-weight:900;cursor:pointer}.workflow-tab[aria-selected="true"]{border-color:#abcdec;background:var(--blue-soft);color:#154f89}.workflow-panel[hidden]{display:none}.shell{min-height:calc(100vh - 102px);display:grid;grid-template-columns:292px minmax(0,1fr)}
+    aside{position:sticky;top:69px;height:calc(100vh - 69px);padding:28px 22px;background:#122b4a;color:#fff;overflow:auto}
+    .brand{display:flex;align-items:center;gap:11px;margin-bottom:28px}.mark{display:grid;width:42px;height:42px;place-items:center;border-radius:13px;background:#fff;color:var(--navy);font-weight:900;font-size:18px}.brand strong{display:block;font-size:17px}.brand span{color:#b9cbe0;font-size:12px}
+    .case-card{margin-bottom:24px;border:1px solid rgba(255,255,255,.16);border-radius:16px;padding:14px;background:rgba(255,255,255,.07)}
+    .case-card small{color:#b9cbe0}.case-card strong{display:block;margin-top:3px}.stepper{display:grid;gap:7px}.step-link{width:100%;display:grid;grid-template-columns:34px 1fr;gap:11px;align-items:center;border:0;border-radius:13px;padding:10px;color:#c9d7e6;background:transparent;text-align:left;cursor:pointer}.step-link:hover{background:rgba(255,255,255,.07)}.step-link[aria-current="step"]{color:#fff;background:rgba(117,185,255,.2)}
+    .step-no{display:grid;width:32px;height:32px;place-items:center;border:1px solid #6c87a5;border-radius:50%;font-size:12px;font-weight:800}.step-link.done .step-no{border-color:#61c995;background:#1d7651;color:#fff}.step-link[aria-current="step"] .step-no{border-color:#a7d3ff;background:#fff;color:#17365d}.step-title{font-weight:800}.step-meta{display:block;color:#93abc3;font-size:11px}
+    .side-bottom{margin-top:30px;padding-top:20px;border-top:1px solid rgba(255,255,255,.14);color:#aebfd2;font-size:12px}.legend{display:flex;align-items:center;gap:7px;margin-top:8px}.dot{width:8px;height:8px;border-radius:50%;background:#61c995}.dot.mock{background:#ffd166}
+    main{min-width:0}.topbar{position:sticky;top:69px;z-index:10;display:flex;align-items:center;justify-content:space-between;min-height:68px;border-bottom:1px solid var(--line);padding:12px clamp(18px,4vw,48px);background:rgba(255,255,255,.95);backdrop-filter:blur(12px)}
+    .mobile-brand{display:none;font-weight:900}.status{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:13px}.status i{width:9px;height:9px;border-radius:50%;background:#62b98a}.help{min-height:42px;border:1px solid var(--line);border-radius:12px;padding:9px 14px;background:#fff;color:var(--navy);font-weight:800;cursor:pointer}
+    .workspace{width:min(1010px,calc(100% - 40px));margin:0 auto;padding:36px 0 80px}.view{display:none}.view.active{display:block}.eyebrow{margin:0 0 8px;color:var(--blue);font-size:12px;font-weight:900;letter-spacing:.09em;text-transform:uppercase}.view h1{max-width:760px;margin:0;font-size:clamp(29px,4.5vw,48px);line-height:1.08;letter-spacing:-.045em}.lede{max-width:730px;margin:14px 0 0;color:var(--muted);font-size:17px}.disclosure{display:flex;gap:11px;margin:22px 0;border:1px solid #f0d388;border-radius:14px;padding:13px 15px;background:var(--amber-soft);color:#654600;font-size:13px}.disclosure strong{display:block}.icon{flex:0 0 auto;display:grid;width:27px;height:27px;place-items:center;border-radius:50%;background:#ffe8a7;font-weight:900}
+    .grid{display:grid;gap:16px}.grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}.grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}.card{border:1px solid var(--line);border-radius:var(--radius);padding:22px;background:var(--card);box-shadow:var(--shadow)}.card.flat{box-shadow:none}.card h2,.card h3{margin:0 0 8px;line-height:1.2}.card p{margin:0;color:var(--muted)}
+    .notice-card{overflow:hidden;padding:0}.notice-head{display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid var(--line);padding:16px 20px;background:#f9fafc}.pill{display:inline-flex;align-items:center;min-height:28px;border-radius:999px;padding:4px 9px;background:var(--blue-soft);color:#15518f;font-size:11px;font-weight:900;letter-spacing:.04em;text-transform:uppercase}.pill.amber{background:var(--amber-soft);color:var(--amber)}.pill.green{background:var(--green-soft);color:var(--green)}.notice-body{padding:24px}.amount{margin:7px 0 3px;font-size:clamp(38px,7vw,64px);font-weight:900;letter-spacing:-.055em;color:#17365d}.math{display:flex;align-items:center;gap:12px;margin:20px 0 0}.math-box{min-width:145px;border:1px solid var(--line);border-radius:14px;padding:14px;background:#f9fafc}.math-box span{display:block;color:var(--muted);font-size:12px}.math-box strong{display:block;margin-top:3px;font-size:19px}.operator{font-size:24px;font-weight:900;color:#7e8999}
+    .button-row{display:flex;align-items:center;justify-content:flex-end;gap:10px;margin-top:22px}.btn{min-height:48px;border:0;border-radius:13px;padding:12px 18px;background:var(--navy);color:#fff;font-weight:850;cursor:pointer}.btn:hover{background:#214b7c}.btn.secondary{border:1px solid var(--line);background:#fff;color:var(--navy)}.btn.ghost{background:transparent;color:var(--blue)}.btn:disabled{cursor:not-allowed;opacity:.55}.full{width:100%}
+    .source{display:flex;align-items:center;gap:12px}.source-icon{display:grid;width:42px;height:42px;place-items:center;border-radius:12px;background:var(--blue-soft);color:var(--blue);font-size:18px;font-weight:900}.source strong{display:block}.source small{color:var(--muted)}
+    .reconcile{margin:20px 0;border:1px solid #bcd9f5;border-radius:18px;padding:20px;background:linear-gradient(135deg,#f4f9ff,#fff)}.reconcile-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px}.figure{min-width:170px;text-align:center}.figure small{display:block;color:var(--muted)}.figure strong{font-size:25px}.equals{font-size:22px;color:var(--muted)}
+    .finding{padding:0;overflow:hidden}.finding button{width:100%;display:grid;grid-template-columns:auto 1fr auto 24px;gap:14px;align-items:center;border:0;padding:18px 20px;background:#fff;text-align:left;cursor:pointer}.finding button:hover{background:#fbfcfe}.finding .money{font-size:22px;font-weight:900;color:#17365d}.finding .summary{font-weight:850}.finding .summary small{display:block;color:var(--muted);font-weight:500}.chevron{text-align:center;transition:transform .2s}.finding.open .chevron{transform:rotate(180deg)}.finding-body{display:none;border-top:1px solid var(--line);padding:18px 20px;background:#fbfcfe}.finding.open .finding-body{display:block}.evidence-list{display:grid;gap:10px;margin:12px 0}.evidence-row{display:grid;grid-template-columns:145px 1fr auto;gap:12px;align-items:center;border:1px solid var(--line);border-radius:12px;padding:11px;background:#fff}.record-id{font:700 12px ui-monospace,SFMono-Regular,Consolas,monospace;color:#345}.evidence-row small{color:var(--muted)}
+    .ai-panel{position:relative;overflow:hidden;border-color:#b7d2ed}.ai-panel:before{position:absolute;inset:0 auto 0 0;width:5px;background:linear-gradient(#337dcc,#68b090);content:""}.ai-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:20px}.ai-title{display:flex;gap:12px}.ai-spark{display:grid;width:42px;height:42px;place-items:center;border-radius:13px;background:#17365d;color:#fff;font-size:19px}.generated{font-size:12px;color:var(--green);font-weight:800}.answer-block{border-top:1px solid var(--line);padding:18px 0}.answer-block:last-child{padding-bottom:0}.answer-block h3{margin-bottom:7px}.answer-block ul{margin:8px 0 0;padding-left:20px}.answer-block li+li{margin-top:7px}.cite{display:inline-flex;margin:3px 3px 0 0;border-radius:6px;padding:2px 6px;background:#eef2f6;color:#405168;font:700 11px ui-monospace,monospace}
+    .loading{display:none;place-items:center;min-height:315px;text-align:center}.loader{width:44px;height:44px;margin:0 auto 14px;border:4px solid #dce7f2;border-top-color:var(--blue);border-radius:50%;animation:spin .8s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}.error-state{display:none;border:1px solid #efb8bd;border-radius:16px;padding:18px;background:var(--red-soft);color:#772e34}.ai-panel.is-loading .ai-content{display:none}.ai-panel.is-loading .loading{display:grid}.ai-panel.is-error .ai-content,.ai-panel.is-error .loading{display:none}.ai-panel.is-error .error-state{display:block}
+    .brief{padding:0;overflow:hidden}.brief-cover{padding:28px;background:#17365d;color:#fff}.brief-cover p{color:#d4e0ed}.brief-body{padding:26px}.brief-section{padding:20px 0;border-bottom:1px solid var(--line)}.brief-section:last-child{border-bottom:0}.brief-section h3{margin:0 0 10px}.brief-section p{color:#455267}.brief-table{width:100%;border-collapse:collapse}.brief-table th,.brief-table td{padding:11px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}.brief-table th{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.06em}.brief-table td:last-child,.brief-table th:last-child{text-align:right}.check{display:flex;gap:10px;margin-top:9px}.check input{width:20px;height:20px}.not-submitted{display:flex;align-items:center;gap:10px;margin-top:20px;border:1px solid #a9d6be;border-radius:14px;padding:14px;background:var(--green-soft);color:#0f5e3a;font-weight:800}
+    .drawer-backdrop{position:fixed;inset:0;z-index:30;display:none;background:rgba(15,30,48,.45)}.drawer-backdrop.open{display:block}.drawer{position:absolute;top:0;right:0;width:min(440px,92vw);height:100%;padding:26px;background:#fff;overflow:auto;box-shadow:-18px 0 50px rgba(0,0,0,.18)}.drawer-head{display:flex;align-items:center;justify-content:space-between}.close{display:grid;width:42px;height:42px;place-items:center;border:1px solid var(--line);border-radius:11px;background:#fff;cursor:pointer}.flow-list{display:grid;gap:12px;margin-top:22px}.flow-item{border-left:3px solid var(--blue);padding-left:14px}.flow-item strong{display:block}.flow-item span{color:var(--muted);font-size:13px}
+    .mobile-steps{display:none;grid-template-columns:repeat(4,1fr);gap:5px;margin-bottom:20px}.mobile-step{height:5px;border:0;border-radius:999px;background:#d7dee7}.mobile-step.active{background:var(--blue)}
+    .wire-note{margin-top:32px;border-top:1px solid var(--line);padding-top:18px;color:var(--muted);font-size:12px;text-align:center}
+    .existing-wrap{width:min(1120px,calc(100% - 32px));margin:0 auto;padding:36px 0 80px}.existing-hero{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(280px,.55fr);gap:24px;align-items:end;margin-bottom:24px}.existing-hero h1{margin:0;font-size:clamp(31px,5vw,52px);line-height:1.05;letter-spacing:-.05em}.research-note{border:1px solid #cfd7e1;border-radius:16px;padding:16px;background:#fff;color:var(--muted);font-size:13px}.research-note strong{display:block;color:var(--ink);margin-bottom:5px}.research-note a{color:var(--blue);font-weight:800}
+    .comparison-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;overflow:hidden;margin:22px 0;border:1px solid var(--line);border-radius:17px;background:var(--line)}.comparison-stat{padding:15px;background:#fff}.comparison-stat span{display:block;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.06em}.comparison-stat strong{display:block;margin-top:3px;font-size:18px}.comparison-stat.bad strong{color:var(--red)}
+    .current-layout{display:grid;grid-template-columns:280px minmax(0,1fr);gap:18px;align-items:start}.current-nav{position:sticky;top:90px;display:grid;gap:7px;border:1px solid var(--line);border-radius:18px;padding:10px;background:#fff;box-shadow:var(--shadow)}.current-step{display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:center;min-height:54px;border:0;border-radius:11px;padding:8px 10px;background:transparent;color:var(--muted);text-align:left;cursor:pointer}.current-step:hover{background:#f7f9fb}.current-step[aria-current="step"]{background:#eef3f8;color:#17365d}.current-step-no{display:grid;width:29px;height:29px;place-items:center;border-radius:8px;background:#e8edf2;color:#526275;font-size:12px;font-weight:900}.current-step[aria-current="step"] .current-step-no{background:#17365d;color:#fff}.current-step strong{display:block}.current-step small{display:block;color:#8190a1}.current-screen{display:none}.current-screen.active{display:block}.portal-frame{overflow:hidden;border:1px solid #ccd4dd;border-radius:17px;background:#fff;box-shadow:var(--shadow)}.portal-utility{display:flex;justify-content:flex-end;gap:18px;padding:7px 17px;background:#202c3b;color:#dbe2ea;font-size:11px}.portal-brand{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 22px;border-bottom:1px solid #dfe4e9}.portal-brand strong{font-size:18px;color:#1d3553}.portal-brand small{display:block;color:#758395}.portal-menu{display:flex;gap:22px;padding:10px 22px;background:#f3f5f7;color:#3f5064;font-size:12px;font-weight:800}.portal-content{min-height:455px;padding:26px}.portal-content h2{margin:0 0 6px}.portal-content>p{margin-top:0;color:var(--muted)}.breadcrumb{margin-bottom:18px;color:#6d7d8e;font-size:12px}.portal-tile{border:1px solid #cfd7df;border-radius:6px;background:#fff}.portal-tile-head{padding:10px 14px;background:#e9edf1;color:#26394e;font-weight:850}.portal-tile-body{padding:18px}.portal-btn{display:inline-flex;align-items:center;justify-content:center;min-height:38px;border:0;border-radius:4px;padding:9px 16px;background:#276898;color:#fff;font-size:12px;font-weight:850}.portal-btn.outline{border:1px solid #276898;background:#fff;color:#276898}.portal-table{width:100%;border-collapse:collapse;font-size:12px}.portal-table th,.portal-table td{padding:10px;border:1px solid #d6dce2;text-align:left}.portal-table th{background:#eef1f4;color:#435466}.portal-link{border:0;padding:0;background:transparent;color:#1f67a1;text-decoration:underline;font-weight:800;cursor:pointer}.portal-alert{margin:14px 0;border-left:4px solid #dcad32;padding:12px 14px;background:#fff8e6;color:#614814;font-size:13px}.portal-tabs{display:flex;border-bottom:1px solid #ccd4dd}.portal-tabs span{padding:11px 16px;color:#536577;font-weight:800}.portal-tabs .selected{border-bottom:3px solid #2a6c9c;color:#1f5e8b}.form-group{margin-top:16px}.form-group label{display:block;margin-bottom:5px;color:#435366;font-size:12px;font-weight:800}.fake-input{min-height:42px;border:1px solid #bfc8d2;border-radius:3px;padding:10px;background:#fff;color:#6c7784}.fake-input.tall{min-height:86px}.choice{display:flex;gap:9px;align-items:flex-start;margin:9px 0;color:#465568}.choice i{flex:0 0 auto;width:16px;height:16px;border:1px solid #8997a6;border-radius:50%;margin-top:2px}.outside-work{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}.outside-file{border:1px dashed #aeb8c3;border-radius:7px;padding:18px;background:#fafbfc;text-align:center}.outside-file strong{display:block;margin-top:6px}.outside-file small{color:var(--muted)}.friction{display:flex;gap:11px;margin-top:18px;border:1px solid #efc1c4;border-radius:13px;padding:13px 14px;background:var(--red-soft);color:#762f35}.friction strong{display:block}.screen-actions{display:flex;justify-content:space-between;gap:10px;margin-top:18px}.process-pills{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}.process-pill{border-radius:999px;padding:5px 9px;background:#eef1f4;color:#47596c;font-size:11px;font-weight:800}
+    @media(max-width:880px){.shell{grid-template-columns:1fr}.shell>aside{display:none}.mobile-brand{display:block}.workspace{width:min(100% - 28px,720px);padding-top:24px}.mobile-steps{display:grid}.grid.two,.grid.three{grid-template-columns:1fr}.math{align-items:stretch;display:grid;grid-template-columns:1fr auto 1fr}.math-box{min-width:0}.evidence-row{grid-template-columns:1fr auto}.evidence-row small{grid-column:1/-1}.topbar{padding-inline:16px}.existing-hero,.current-layout{grid-template-columns:1fr}.current-nav{position:static;grid-template-columns:repeat(3,1fr)}.current-step{grid-template-columns:1fr;gap:4px;text-align:center}.current-step-no{margin:0 auto}.comparison-strip{grid-template-columns:repeat(2,1fr)}.outside-work{grid-template-columns:1fr}.portal-content{padding:18px}.portal-menu{overflow:auto}.portal-table{min-width:650px}.portal-table-wrap{overflow:auto}}
+    @media(max-width:520px){.status{display:none}.view h1{font-size:30px}.notice-body,.card{padding:18px}.math{grid-template-columns:1fr}.operator{text-align:center;line-height:1}.button-row{align-items:stretch;flex-direction:column-reverse}.button-row .btn{width:100%}.finding button{grid-template-columns:1fr auto}.finding .summary{grid-column:1/-1}.finding .money{grid-column:1}.finding .chevron{grid-column:2;grid-row:1}.reconcile-row{align-items:stretch;flex-direction:column}.equals{text-align:center}.brief-body{padding:18px}.brief-table{font-size:12px}}
+    @media print{.proposal,.workflow-tabs-shell,#existing-workflow-panel,aside,.topbar,.mobile-steps,.button-row,.wire-note,.proposed-compare{display:none!important}#proposed-workflow-panel{display:block!important}.shell{display:block}.workspace{width:100%;padding:0}.view{display:none!important}#view-4{display:block!important}.brief{border:0;box-shadow:none}.brief-cover{background:#fff!important;color:#000!important;border-bottom:2px solid #000}.brief-cover p{color:#333}.not-submitted{background:#fff}.pill{border:1px solid #888;background:#fff!important;color:#000!important}}
+  </style>
+</head>
+<body>
+  <div class="proposal"><b>COMPARISON WIREFRAME</b><span>Documented current process vs proposed concept · Synthetic data · No government system accessed</span></div>
+  <div class="workflow-tabs-shell">
+    <div class="workflow-tabs" role="tablist" aria-label="Compare workflows">
+      <button class="workflow-tab" id="existing-workflow-tab" role="tab" aria-selected="true" aria-controls="existing-workflow-panel">Existing workflow</button>
+      <button class="workflow-tab" id="proposed-workflow-tab" role="tab" aria-selected="false" aria-controls="proposed-workflow-panel">Proposed workflow</button>
+    </div>
+  </div>
+
+  <section class="workflow-panel" id="existing-workflow-panel" role="tabpanel" aria-labelledby="existing-workflow-tab">
+    <div class="existing-wrap">
+      <div class="existing-hero">
+        <div><p class="eyebrow">Existing workflow · Current GST Portal</p><h1>The portal collects a response. The taxpayer still has to find the explanation.</h1><p class="lede">This reconstruction follows the published DRC‑01C Part B user guide. It uses the same synthetic ₹21,600 case as the proposal, without copying government branding or accessing GSTN.</p></div>
+        <div class="research-note"><strong>Evidence boundary</strong>The navigation, Part A/Part B structure, filing controls, and filing consequence come from published government guidance checked on 26 August 2026. Visual styling and all case data are reconstructed for comparison. <a href="https://comtax.wb.gov.in/GST/Functionality_Taxpayer/functionality_FO_Return_20231123_2.pdf" target="_blank" rel="noreferrer">Government functionality note ↗</a></div>
+      </div>
+
+      <div class="comparison-strip" aria-label="Existing workflow summary">
+        <div class="comparison-stat"><span>Portal stages shown</span><strong>6 stages</strong></div>
+        <div class="comparison-stat bad"><span>Invoice-level cause</span><strong>Not identified</strong></div>
+        <div class="comparison-stat bad"><span>Reconciliation</span><strong>Outside portal</strong></div>
+        <div class="comparison-stat"><span>Portal outcome</span><strong>Part B filed</strong></div>
+      </div>
+
+      <div class="current-layout">
+        <nav class="current-nav" aria-label="Existing portal workflow steps">
+          <button class="current-step" data-current-step="1" aria-current="step"><span class="current-step-no">1</span><span><strong>Receive & log in</strong><small>Find the alert</small></span></button>
+          <button class="current-step" data-current-step="2"><span class="current-step-no">2</span><span><strong>Navigate</strong><small>Return Compliance</small></span></button>
+          <button class="current-step" data-current-step="3"><span class="current-step-no">3</span><span><strong>Find reference</strong><small>Search the list</small></span></button>
+          <button class="current-step" data-current-step="4"><span class="current-step-no">4</span><span><strong>Read Part A</strong><small>See aggregate gap</small></span></button>
+          <button class="current-step" data-current-step="5"><span class="current-step-no">5</span><span><strong>Reconcile outside</strong><small>Find the cause</small></span></button>
+          <button class="current-step" data-current-step="6"><span class="current-step-no">6</span><span><strong>File Part B</strong><small>Sign and verify</small></span></button>
+        </nav>
+
+        <div>
+          <section class="current-screen active" id="current-screen-1">
+            <div class="portal-frame">
+              <div class="portal-utility">Skip to main content · Help · Demo language</div>
+              <div class="portal-brand"><div><strong>Taxpayer portal</strong><small>Independent workflow reconstruction</small></div><span class="pill amber">Synthetic account</span></div>
+              <div class="portal-menu"><span>Dashboard</span><span>Services</span><span>Returns</span><span>Payments</span><span>User services</span></div>
+              <div class="portal-content"><div class="breadcrumb">Home › Dashboard</div><h2>Welcome, DEMO taxpayer</h2><p>The user must first notice that return compliance needs attention.</p>
+                <div class="grid two" style="margin-top:22px"><div class="portal-tile"><div class="portal-tile-head">Return Compliance</div><div class="portal-tile-body"><span class="pill amber">1 pending</span><h3 style="margin:12px 0 4px">ITC mismatch requires a response</h3><p>Form GST DRC‑01C · April 2026</p><button class="portal-btn" data-current-next="2" style="margin-top:14px">Go to Return Compliance</button></div></div><div class="portal-tile"><div class="portal-tile-head">Returns calendar</div><div class="portal-tile-body"><p>Subsequent GSTR‑1/IFF filing can be blocked until DRC‑01C Part B is filed.</p></div></div></div>
+              </div>
+            </div>
+            <div class="friction"><span>!</span><span><strong>First burden: discoverability</strong>The current guide begins with login and navigation. The user must recognise the DRC‑01C alert and know it sits under Return Compliance.</span></div>
+          </section>
+
+          <section class="current-screen" id="current-screen-2">
+            <div class="portal-frame"><div class="portal-utility">Services · Returns · Return Compliance</div><div class="portal-brand"><div><strong>Services</strong><small>Returns and compliance</small></div><span class="pill amber">Synthetic account</span></div><div class="portal-menu"><span>Registration</span><span>Ledgers</span><span>Returns</span><span>Payments</span><span>User services</span></div><div class="portal-content"><div class="breadcrumb">Home › Services › Returns › Return Compliance</div><h2>Return Compliance</h2><p>The published route is Services → Returns → Return Compliance, or the dashboard shortcut.</p><div class="grid two" style="margin-top:22px"><div class="portal-tile"><div class="portal-tile-head">Liability mismatch (DRC‑01B)</div><div class="portal-tile-body"><p>No pending records</p><button class="portal-btn outline">View</button></div></div><div class="portal-tile"><div class="portal-tile-head">ITC mismatch (DRC‑01C)</div><div class="portal-tile-body"><p><strong>1 pending intimation</strong></p><button class="portal-btn" data-current-next="3">View</button></div></div></div></div></div>
+            <div class="screen-actions"><button class="btn secondary" data-current-next="1">← Previous</button><button class="btn" data-current-next="3">Open ITC mismatch →</button></div>
+          </section>
+
+          <section class="current-screen" id="current-screen-3">
+            <div class="portal-frame"><div class="portal-utility">Return Compliance · ITC Mismatch</div><div class="portal-brand"><div><strong>ITC Mismatch (DRC‑01C)</strong><small>Search and select an intimation</small></div><span class="pill amber">1 pending</span></div><div class="portal-content"><div class="breadcrumb">Home › Return Compliance › ITC Mismatch</div><h2>Search intimations</h2><div class="grid three" style="margin:18px 0"><div class="form-group"><label>Search by</label><div class="fake-input">Return period</div></div><div class="form-group"><label>Financial year</label><div class="fake-input">2026–27</div></div><div class="form-group"><label>Return period</label><div class="fake-input">April 2026</div></div></div><button class="portal-btn">Search</button><div class="portal-table-wrap" style="margin-top:22px"><table class="portal-table"><tr><th>Reference number</th><th>Return period</th><th>Issue date</th><th>Status</th></tr><tr><td><button class="portal-link" data-current-next="4">DEMO-DRC01C-APR26</button></td><td>April 2026</td><td>DEMO date</td><td><span class="pill amber">Pending</span></td></tr></table></div></div></div>
+            <div class="friction"><span>!</span><span><strong>Second burden: reference-first navigation</strong>The user filters a compliance list and opens a reference number before reaching the notice details.</span></div><div class="screen-actions"><button class="btn secondary" data-current-next="2">← Previous</button><button class="btn" data-current-next="4">Open reference →</button></div>
+          </section>
+
+          <section class="current-screen" id="current-screen-4">
+            <div class="portal-frame"><div class="portal-utility">Reference · DEMO-DRC01C-APR26</div><div class="portal-brand"><div><strong>Form GST DRC‑01C</strong><small>Intimation of difference in input tax credit</small></div><span class="pill amber">Pending response</span></div><div class="portal-content"><div class="portal-tabs"><span class="selected">Part A · Intimation</span><span>Part B · Reply</span></div><div style="padding-top:20px"><h2>Difference in ITC available and claimed</h2><div class="portal-table-wrap"><table class="portal-table"><tr><th>Description</th><th>IGST</th><th>CGST</th><th>SGST</th><th>Total</th></tr><tr><td>ITC claimed in GSTR‑3B</td><td>₹88,400</td><td>₹80,000</td><td>₹80,000</td><td><strong>₹2,48,400</strong></td></tr><tr><td>ITC available in GSTR‑2B</td><td>₹66,800</td><td>₹80,000</td><td>₹80,000</td><td><strong>₹2,26,800</strong></td></tr><tr><td><strong>Difference</strong></td><td><strong>₹21,600</strong></td><td>₹0</td><td>₹0</td><td><strong>₹21,600</strong></td></tr></table></div><div class="portal-alert">Provide DRC‑03 payment details, a reason for the difference, or both in Part B.</div></div></div></div>
+            <div class="friction"><span>!</span><span><strong>Core problem: the portal shows the aggregate, not the cause</strong>Part A confirms ₹21,600 but does not identify which purchase records created it. The documented form moves directly to the taxpayer’s reply.</span></div><div class="screen-actions"><button class="btn secondary" data-current-next="3">← Previous</button><button class="btn" data-current-next="5">Now find the cause →</button></div>
+          </section>
+
+          <section class="current-screen" id="current-screen-5">
+            <div class="portal-frame"><div class="portal-utility">Outside the portal · Taxpayer work</div><div class="portal-brand"><div><strong>Manual reconciliation workspace</strong><small>Not provided by the DRC‑01C reply form</small></div><span class="pill amber">External work</span></div><div class="portal-content"><h2>Connect ₹21,600 to invoice-level records</h2><p>The taxpayer or practitioner must download/open separate records, align periods, and determine a defensible reason before returning to Part B.</p><div class="outside-work"><div class="outside-file"><span class="source-icon" style="margin:auto">3B</span><strong>GSTR‑3B summary</strong><small>Aggregate claim total</small></div><div class="outside-file"><span class="source-icon" style="margin:auto">2B</span><strong>GSTR‑2B extracts</strong><small>Current and later periods</small></div><div class="outside-file"><span class="source-icon" style="margin:auto">PR</span><strong>Purchase workpaper</strong><small>Invoice-level entries</small></div></div><div class="process-pills"><span class="process-pill">Align invoice keys</span><span class="process-pill">Compare periods</span><span class="process-pill">Check duplicate rows</span><span class="process-pill">Calculate totals</span><span class="process-pill">Choose response wording</span></div></div></div>
+            <div class="friction"><span>!</span><span><strong>Highest-effort stage: reconciliation happens elsewhere</strong>The user needs tax literacy, spreadsheet work, or professional help to translate the aggregate mismatch into source-backed reasons.</span></div><div class="screen-actions"><button class="btn secondary" data-current-next="4">← Back to Part A</button><button class="btn" data-current-next="6">Return with an explanation →</button></div>
+          </section>
+
+          <section class="current-screen" id="current-screen-6">
+            <div class="portal-frame"><div class="portal-utility">Reference · Part B reply</div><div class="portal-brand"><div><strong>Reply by taxpayer</strong><small>Form GST DRC‑01C · Part B</small></div><span class="pill amber">Synthetic form</span></div><div class="portal-content"><div class="portal-tabs"><span>Part A · Intimation</span><span class="selected">Part B · Reply</span></div><div class="grid two" style="margin-top:18px"><div><h3>1. Payment made through DRC‑03</h3><div class="form-group"><label>DRC‑03 ARN</label><div class="fake-input">Enter ARN and validate</div></div><button class="portal-btn outline" style="margin-top:10px">Validate</button></div><div><h3>2. Reason for difference</h3><div class="choice"><i></i><span>Select a predefined reason</span></div><div class="form-group"><label>Further explanation</label><div class="fake-input tall">Taxpayer-entered explanation…</div></div></div></div><div class="form-group"><label>Verification</label><div class="choice"><i style="border-radius:3px"></i><span>I hereby solemnly affirm and declare…</span></div></div><div class="grid two"><div class="form-group"><label>Authorised signatory</label><div class="fake-input">Select name</div></div><div class="form-group"><label>Place</label><div class="fake-input">Enter place</div></div></div><div class="process-pills"><span class="process-pill">Save</span><span class="process-pill">Download draft</span><span class="process-pill">Proceed warning</span><span class="process-pill">EVC or DSC</span><span class="process-pill">OTP verify</span><span class="process-pill">Completed status</span></div></div></div>
+            <div class="friction"><span>!</span><span><strong>The portal validates filing, not the quality of diagnosis</strong>Part B provides the official response channel. The difficult reasoning and evidence preparation must already be complete before this screen.</span></div><div class="screen-actions"><button class="btn secondary" data-current-next="5">← Previous</button><button class="btn" data-switch-workflow="proposed">See the proposed workflow →</button></div>
+          </section>
+        </div>
+      </div>
+      <p class="wire-note">Existing workflow reconstructed from the GST Portal’s published DRC‑01C guide · Independent comparison · No government branding or live access</p>
+    </div>
+  </section>
+
+  <section class="workflow-panel" id="proposed-workflow-panel" role="tabpanel" aria-labelledby="proposed-workflow-tab" hidden>
+  <div class="shell">
+    <aside>
+      <div class="brand"><div class="mark">NE</div><div><strong>Notice, Explained</strong><span>GST mismatch review</span></div></div>
+      <div class="case-card"><small>Synthetic case</small><strong>DEMO-CASE-01</strong><small>Return period · April 2026</small></div>
+      <nav class="stepper" aria-label="Citizen journey">
+        <button class="step-link" data-step="1" aria-current="step"><span class="step-no">1</span><span><span class="step-title">Understand notice</span><span class="step-meta">See the mismatch</span></span></button>
+        <button class="step-link" data-step="2"><span class="step-no">2</span><span><span class="step-title">Trace evidence</span><span class="step-meta">Find source records</span></span></button>
+        <button class="step-link" data-step="3"><span class="step-no">3</span><span><span class="step-title">Explain findings</span><span class="step-meta">AI-assisted summary</span></span></button>
+        <button class="step-link" data-step="4"><span class="step-no">4</span><span><span class="step-title">Prepare review</span><span class="step-meta">Professional handoff</span></span></button>
+      </nav>
+      <div class="side-bottom"><strong>What works in the proposed build</strong><div class="legend"><i class="dot"></i>Deterministic reconciliation</div><div class="legend"><i class="dot"></i>Real constrained OpenAI call</div><div class="legend"><i class="dot mock"></i>Synthetic records and notice</div></div>
+    </aside>
+
+    <main>
+      <div class="topbar"><div class="mobile-brand">Notice, Explained</div><div class="status"><i></i>All demo records loaded locally</div><button class="help" id="helpBtn">How it works</button></div>
+      <div class="workspace">
+        <div class="comparison-strip proposed-compare" aria-label="Proposed workflow summary">
+          <div class="comparison-stat"><span>Guided citizen stages</span><strong>4 stages</strong></div>
+          <div class="comparison-stat"><span>Invoice-level cause</span><strong style="color:var(--green)">Identified</strong></div>
+          <div class="comparison-stat"><span>Reconciliation</span><strong style="color:var(--green)">Inside journey</strong></div>
+          <div class="comparison-stat"><span>Product outcome</span><strong>Review brief</strong></div>
+        </div>
+        <div class="mobile-steps" aria-hidden="true"><span class="mobile-step active"></span><span class="mobile-step"></span><span class="mobile-step"></span><span class="mobile-step"></span></div>
+
+        <section class="view active" id="view-1" aria-labelledby="title-1">
+          <p class="eyebrow">Step 1 of 4 · Understand your notice</p>
+          <h1 id="title-1">Your claimed credit is ₹21,600 higher than the portal record.</h1>
+          <p class="lede">We translated the aggregate DRC‑01C difference into plain language. Next, trace it back to the records that created it.</p>
+          <div class="disclosure"><span class="icon">i</span><span><strong>This is a synthetic demonstration.</strong>No GST return, notice, taxpayer account, or government system has been accessed.</span></div>
+          <article class="card notice-card">
+            <div class="notice-head"><div><span class="pill amber">Action needs review</span></div><span class="pill">Form DRC‑01C</span></div>
+            <div class="notice-body">
+              <p class="eyebrow">Difference shown in the notice</p><div class="amount">₹21,600</div><p>Input tax credit mismatch · April 2026</p>
+              <div class="math"><div class="math-box"><span>Claimed in GSTR‑3B</span><strong>₹2,48,400</strong></div><div class="operator">−</div><div class="math-box"><span>Available in GSTR‑2B</span><strong>₹2,26,800</strong></div></div>
+            </div>
+          </article>
+          <div class="button-row"><button class="btn" data-next="2">Show where ₹21,600 comes from →</button></div>
+        </section>
+
+        <section class="view" id="view-2" aria-labelledby="title-2">
+          <p class="eyebrow">Step 2 of 4 · Trace the evidence</p><h1 id="title-2">Two record-level findings explain the full difference.</h1><p class="lede">The rules engine compares three synthetic sources. Every amount below links back to a visible source row.</p>
+          <div class="grid three" style="margin-top:22px">
+            <article class="card flat source"><span class="source-icon">3B</span><span><strong>GSTR‑3B summary</strong><small>Claimed total · ₹2,48,400</small></span></article>
+            <article class="card flat source"><span class="source-icon">2B</span><span><strong>GSTR‑2B extracts</strong><small>April + May synthetic rows</small></span></article>
+            <article class="card flat source"><span class="source-icon">PR</span><span><strong>Claim workpaper</strong><small>Invoice-level claim rows</small></span></article>
+          </div>
+          <div class="reconcile"><div class="reconcile-row"><div class="figure"><small>Later-period filing</small><strong>₹18,400</strong></div><span class="equals">+</span><div class="figure"><small>Probable duplicate</small><strong>₹3,200</strong></div><span class="equals">=</span><div class="figure"><small>Notice difference</small><strong>₹21,600</strong></div></div></div>
+          <div class="grid">
+            <article class="card finding open"><button aria-expanded="true"><span class="pill green">Strong evidence</span><span class="summary">Appears in the next period<small>One supplier record is absent in April and present in May.</small></span><span class="money">₹18,400</span><span class="chevron">⌃</span></button><div class="finding-body"><p>This synthetic invoice was claimed in the April workpaper, was not present in the April GSTR‑2B extract, and appears in the May extract.</p><div class="evidence-list"><div class="evidence-row"><span class="record-id">DEMO-PR-1042</span><span>Claim workpaper · April</span><small>₹18,400</small></div><div class="evidence-row"><span class="record-id">DEMO-2B-MAY-1042</span><span>GSTR‑2B · May</span><small>₹18,400</small></div></div></div></article>
+            <article class="card finding"><button aria-expanded="false"><span class="pill amber">Needs verification</span><span class="summary">Probable duplicate claim row<small>The same synthetic invoice key and tax amount occur twice.</small></span><span class="money">₹3,200</span><span class="chevron">⌄</span></button><div class="finding-body"><p>Two workpaper entries share the same supplier, invoice number, date, and tax amount. A professional should verify whether one is a duplicate.</p><div class="evidence-list"><div class="evidence-row"><span class="record-id">DEMO-PR-1077-A</span><span>Claim workpaper row A</span><small>₹3,200</small></div><div class="evidence-row"><span class="record-id">DEMO-PR-1077-B</span><span>Claim workpaper row B</span><small>₹3,200</small></div></div></div></article>
+          </div>
+          <div class="button-row"><button class="btn secondary" data-next="1">← Back</button><button class="btn" id="explainBtn">Explain these findings →</button></div>
+        </section>
+
+        <section class="view" id="view-3" aria-labelledby="title-3">
+          <p class="eyebrow">Step 3 of 4 · Explain the findings</p><h1 id="title-3">A grounded explanation, not a tax decision.</h1><p class="lede">In the intended build, OpenAI receives only the two validated findings. It does not calculate tax, browse GSTN, or receive free-form personal data.</p>
+          <div class="disclosure"><span class="icon">AI</span><span><strong>Wireframe interaction</strong>The content below previews a real constrained OpenAI response. This HTML wireframe itself does not call a model.</span></div>
+          <article class="card ai-panel" id="aiPanel">
+            <div class="loading"><div><div class="loader"></div><strong>Turning validated findings into plain language…</strong><p>This would be a real server-side OpenAI call in the prototype.</p></div></div>
+            <div class="error-state"><h3>We could not generate the explanation.</h3><p>Your evidence is still available. No records were lost and nothing was submitted.</p><button class="btn" id="retryBtn" style="margin-top:12px">Try again</button></div>
+            <div class="ai-content">
+              <div class="ai-head"><div class="ai-title"><span class="ai-spark">✦</span><div><h2>Plain-language review</h2><span class="generated">Generated from validated demo evidence</span></div></div><span class="pill green">Grounded</span></div>
+              <div class="answer-block"><h3>What we found</h3><p>The ₹21,600 difference can be traced to two items. ₹18,400 appears in the following month’s synthetic GSTR‑2B extract. Another ₹3,200 may be a duplicate entry in the claim workpaper.</p></div>
+              <div class="answer-block"><h3>Evidence used</h3><p>Later-period item <span class="cite">DEMO-PR-1042</span><span class="cite">DEMO-2B-MAY-1042</span></p><p>Possible duplicate <span class="cite">DEMO-PR-1077-A</span><span class="cite">DEMO-PR-1077-B</span></p></div>
+              <div class="answer-block"><h3>What to verify with a GST professional</h3><ul><li>Confirm the correct tax period for the ₹18,400 supplier invoice.</li><li>Confirm whether one ₹3,200 workpaper entry is an accidental duplicate.</li><li>Review the proposed Part B wording before using it anywhere.</li></ul></div>
+              <div class="answer-block"><h3>What this tool cannot decide</h3><p>It cannot determine liability, tell you whether to pay or reverse credit, validate a GSTIN, or submit a response.</p></div>
+            </div>
+          </article>
+          <div class="button-row"><button class="btn secondary" data-next="2">← Back to evidence</button><button class="btn" data-next="4">Prepare review brief →</button></div>
+        </section>
+
+        <section class="view" id="view-4" aria-labelledby="title-4">
+          <p class="eyebrow">Step 4 of 4 · Prepare for review</p><h1 id="title-4">Your evidence is organised for a professional review.</h1><p class="lede">This is the end of the citizen journey. The tool prepares a transparent handoff; it does not claim that a response was filed or accepted.</p>
+          <article class="card brief" style="margin-top:22px">
+            <div class="brief-cover"><span class="pill amber">Draft · Synthetic demo</span><h2 style="margin:13px 0 6px">DRC‑01C review brief</h2><p>DEMO-CASE-01 · Return period April 2026 · Prepared for professional review</p></div>
+            <div class="brief-body">
+              <section class="brief-section"><h3>1. Notice summary</h3><table class="brief-table"><tr><th>Source</th><th>Amount</th></tr><tr><td>Claimed ITC · GSTR‑3B</td><td>₹2,48,400</td></tr><tr><td>Available ITC · GSTR‑2B</td><td>₹2,26,800</td></tr><tr><td><strong>Difference to explain</strong></td><td><strong>₹21,600</strong></td></tr></table></section>
+              <section class="brief-section"><h3>2. Reconciliation findings</h3><table class="brief-table"><tr><th>Finding</th><th>Evidence</th><th>Amount</th></tr><tr><td>Later-period supplier filing</td><td>DEMO-PR-1042 + DEMO-2B-MAY-1042</td><td>₹18,400</td></tr><tr><td>Probable duplicate workpaper row</td><td>DEMO-PR-1077-A + DEMO-PR-1077-B</td><td>₹3,200</td></tr></table></section>
+              <section class="brief-section"><h3>3. Draft Part B explanation</h3><p>“The difference of ₹21,600 is under review. Based on the attached synthetic reconciliation, ₹18,400 relates to an invoice reflected in the subsequent period’s records and ₹3,200 relates to a probable duplicate in the claim workpaper. Supporting records should be verified by a qualified GST professional before any response.”</p></section>
+              <section class="brief-section"><h3>4. Reviewer checklist</h3><label class="check"><input type="checkbox">Verify the tax period of the ₹18,400 invoice</label><label class="check"><input type="checkbox">Confirm whether the ₹3,200 row is a duplicate</label><label class="check"><input type="checkbox">Approve or rewrite the draft explanation</label></section>
+              <section class="brief-section"><h3>5. Limitations</h3><p>All records are synthetic. This tool has not verified a GSTIN, determined liability, accessed GSTN, or submitted any response. Professional review is required.</p></section>
+              <div class="not-submitted"><span>✓</span>Nothing has been submitted to GSTN.</div>
+            </div>
+          </article>
+          <div class="button-row"><button class="btn secondary" data-next="1">Start again</button><button class="btn" onclick="window.print()">Print review brief</button></div>
+        </section>
+
+        <p class="wire-note">Concept wireframe for Kriti + Gaurav · Not an official government product · No real personal or tax data</p>
+      </div>
+    </main>
+  </div>
+  </section>
+
+  <div class="drawer-backdrop" id="drawerBackdrop" role="dialog" aria-modal="true" aria-labelledby="drawerTitle">
+    <aside class="drawer"><div class="drawer-head"><div><p class="eyebrow">Solution map</p><h2 id="drawerTitle">How the proposed product works</h2></div><button class="close" id="closeDrawer" aria-label="Close">×</button></div>
+      <div class="flow-list"><div class="flow-item"><strong>1. Synthetic notice opens</strong><span>The user sees the ₹21,600 aggregate mismatch in plain language.</span></div><div class="flow-item"><strong>2. Rules trace source records</strong><span>Deterministic code compares the claim workpaper with current and next-period GSTR‑2B rows.</span></div><div class="flow-item"><strong>3. OpenAI explains validated findings</strong><span>The model gets a small allow-listed payload and returns structured language—not tax calculations.</span></div><div class="flow-item"><strong>4. Human reviews the handoff</strong><span>The user prints a traceable brief. Nothing is filed and no outcome is implied.</span></div></div>
+      <div class="disclosure"><span class="icon">i</span><span><strong>Reality boundary</strong>Planned real: reconciliation logic and OpenAI call. Mocked: notice, records, identity, and every government interaction.</span></div>
+    </aside>
+  </div>
+
+  <script>
+    const workflowTabs=[...document.querySelectorAll('.workflow-tab')];
+    const workflowPanels=[...document.querySelectorAll('.workflow-panel')];
+    function switchWorkflow(name){
+      const selectedId=`${name}-workflow-panel`;
+      workflowPanels.forEach(panel=>panel.hidden=panel.id!==selectedId);
+      workflowTabs.forEach(tab=>{const selected=tab.getAttribute('aria-controls')===selectedId;tab.setAttribute('aria-selected',String(selected));tab.tabIndex=selected?0:-1});
+      window.scrollTo({top:0,behavior:'smooth'});
+    }
+    workflowTabs.forEach(tab=>{
+      tab.addEventListener('click',()=>switchWorkflow(tab.id.startsWith('existing')?'existing':'proposed'));
+      tab.addEventListener('keydown',event=>{if(event.key==='ArrowLeft'||event.key==='ArrowRight'){event.preventDefault();const next=tab.id.startsWith('existing')?'proposed':'existing';switchWorkflow(next);document.getElementById(`${next}-workflow-tab`).focus()}});
+    });
+    document.querySelectorAll('[data-switch-workflow]').forEach(button=>button.addEventListener('click',()=>switchWorkflow(button.dataset.switchWorkflow)));
+
+    const currentScreens=[...document.querySelectorAll('.current-screen')];
+    const currentSteps=[...document.querySelectorAll('.current-step')];
+    function goCurrent(step){
+      currentScreens.forEach((screen,index)=>screen.classList.toggle('active',index===step-1));
+      currentSteps.forEach((button,index)=>{if(index===step-1)button.setAttribute('aria-current','step');else button.removeAttribute('aria-current')});
+      document.getElementById('existing-workflow-panel').scrollIntoView({behavior:'smooth',block:'start'});
+    }
+    currentSteps.forEach(button=>button.addEventListener('click',()=>goCurrent(Number(button.dataset.currentStep))));
+    document.querySelectorAll('[data-current-next]').forEach(button=>button.addEventListener('click',()=>goCurrent(Number(button.dataset.currentNext))));
+
+    const views=[...document.querySelectorAll('.view')];
+    const links=[...document.querySelectorAll('.step-link')];
+    const mobileSteps=[...document.querySelectorAll('.mobile-step')];
+    function go(step){
+      views.forEach((v,i)=>v.classList.toggle('active',i===step-1));
+      links.forEach((l,i)=>{if(i===step-1)l.setAttribute('aria-current','step');else l.removeAttribute('aria-current');if(i<step-1)l.classList.add('done');else l.classList.remove('done')});
+      mobileSteps.forEach((s,i)=>s.classList.toggle('active',i<=step-1));
+      window.scrollTo({top:0,behavior:'smooth'});
+    }
+    document.querySelectorAll('[data-next]').forEach(b=>b.addEventListener('click',()=>go(Number(b.dataset.next))));
+    links.forEach(l=>l.addEventListener('click',()=>go(Number(l.dataset.step))));
+    document.querySelectorAll('.finding button').forEach(b=>b.addEventListener('click',()=>{const card=b.closest('.finding');const open=card.classList.toggle('open');b.setAttribute('aria-expanded',String(open));b.querySelector('.chevron').textContent=open?'⌃':'⌄'}));
+    const aiPanel=document.getElementById('aiPanel');
+    function runExplanation(){go(3);aiPanel.className='card ai-panel is-loading';setTimeout(()=>{aiPanel.className='card ai-panel'},1200)}
+    document.getElementById('explainBtn').addEventListener('click',runExplanation);
+    document.getElementById('retryBtn').addEventListener('click',runExplanation);
+    const backdrop=document.getElementById('drawerBackdrop');
+    document.getElementById('helpBtn').addEventListener('click',()=>backdrop.classList.add('open'));
+    document.getElementById('closeDrawer').addEventListener('click',()=>backdrop.classList.remove('open'));
+    backdrop.addEventListener('click',e=>{if(e.target===backdrop)backdrop.classList.remove('open')});
+    document.addEventListener('keydown',e=>{if(e.key==='Escape')backdrop.classList.remove('open')});
+  </script>
+</body>
+</html>

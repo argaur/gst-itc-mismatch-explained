@@ -1,0 +1,9 @@
+.tmp/
+debug.log
+prototype/node_modules/
+prototype/dist/
+prototype/.vercel/
+*.local
+*.env
+*.env.*
+!.env.example

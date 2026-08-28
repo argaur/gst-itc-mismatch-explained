@@ -1,0 +1,2109 @@
+<title>Ten Portals, Ten Failures</title>
+<style>
+  :root{
+    --paper: #EDEAE1;
+    --paper-raised: #F8F6F0;
+    --paper-raised-2: #F1EEE5;
+    --ink: #211D18;
+    --ink-soft: #58524A;
+    --ink-faint: #8C8577;
+    --rule: #CFC8B9;
+    --rule-strong: #B7AF9C;
+    --accent: #2E4374;
+    --accent-strong: #1F2E52;
+    --accent-soft: #DDE3F1;
+    --rust: #A8511F;
+    --rust-soft: #F0DCCB;
+    --good: #3F6B4C;
+    --good-soft: #DCE8DE;
+    --warn: #8C6A1E;
+    --warn-soft: #EFE2C4;
+    --bad: #93362D;
+    --bad-soft: #F1DAD5;
+    --shadow: 0 1px 0 rgba(33,29,24,0.06), 0 8px 20px -12px rgba(33,29,24,0.25);
+    --font-display: "Newsreader", Georgia, "Times New Roman", serif;
+    --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+  }
+
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper: #1B1916;
+      --paper-raised: #242220;
+      --paper-raised-2: #29271F;
+      --ink: #ECE7DA;
+      --ink-soft: #B3AC9C;
+      --ink-faint: #7C7669;
+      --rule: #3B372E;
+      --rule-strong: #4C4738;
+      --accent: #93ABDE;
+      --accent-strong: #C3D2F0;
+      --accent-soft: #29344F;
+      --rust: #E0925F;
+      --rust-soft: #46301F;
+      --good: #8FBE9B;
+      --good-soft: #253A2C;
+      --warn: #E0BB68;
+      --warn-soft: #3E351D;
+      --bad: #E19188;
+      --bad-soft: #402724;
+      --shadow: 0 1px 0 rgba(0,0,0,0.4), 0 8px 24px -12px rgba(0,0,0,0.55);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper: #1B1916;
+    --paper-raised: #242220;
+    --paper-raised-2: #29271F;
+    --ink: #ECE7DA;
+    --ink-soft: #B3AC9C;
+    --ink-faint: #7C7669;
+    --rule: #3B372E;
+    --rule-strong: #4C4738;
+    --accent: #93ABDE;
+    --accent-strong: #C3D2F0;
+    --accent-soft: #29344F;
+    --rust: #E0925F;
+    --rust-soft: #46301F;
+    --good: #8FBE9B;
+    --good-soft: #253A2C;
+    --warn: #E0BB68;
+    --warn-soft: #3E351D;
+    --bad: #E19188;
+    --bad-soft: #402724;
+    --shadow: 0 1px 0 rgba(0,0,0,0.4), 0 8px 24px -12px rgba(0,0,0,0.55);
+  }
+
+  *{ box-sizing: border-box; }
+  html,body{ margin:0; padding:0; }
+  body{
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 15.5px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  a{ color: var(--accent); }
+  ::selection{ background: var(--accent-soft); }
+
+  .skip{ position:absolute; left:-9999px; }
+  .skip:focus{ left: 8px; top: 8px; background: var(--paper-raised); padding: 8px 12px; border-radius: 4px; z-index: 100; }
+
+  /* ---------- Masthead ---------- */
+  .masthead{
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 40px 28px 22px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .masthead-eyebrow{
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--rust);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .masthead-eyebrow::before{
+    content:"";
+    width: 7px; height: 7px;
+    background: var(--rust);
+    display: inline-block;
+    transform: rotate(45deg);
+  }
+  h1.masthead-title{
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(30px, 4.4vw, 46px);
+    letter-spacing: -0.01em;
+    margin: 10px 0 12px;
+    text-wrap: balance;
+    color: var(--ink);
+  }
+  .masthead-sub{
+    max-width: 62ch;
+    color: var(--ink-soft);
+    font-size: 15.5px;
+    margin: 0 0 18px;
+  }
+  .masthead-meta{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 22px;
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    color: var(--ink-faint);
+    letter-spacing: 0.02em;
+  }
+  .masthead-meta strong{ color: var(--ink-soft); font-weight: 600; }
+
+  .legend{
+    max-width: 1180px;
+    margin: 16px auto 0;
+    padding: 0 28px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 18px;
+    align-items: center;
+  }
+  .legend-item{
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+  }
+  .swatch{ width: 9px; height: 9px; border-radius: 2px; display:inline-block; }
+  .swatch.strong{ background: var(--good); }
+  .swatch.moderate{ background: var(--warn); }
+  .swatch.thin{ background: var(--bad); }
+
+  /* ---------- Tabs ---------- */
+  .tab-shell{
+    max-width: 1180px;
+    margin: 26px auto 0;
+    padding: 0 28px;
+  }
+  .tabs{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    border-bottom: 1px solid var(--rule-strong);
+    padding-bottom: 0;
+  }
+  .tab{
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    background: var(--paper-raised-2);
+    color: var(--ink-soft);
+    border: 1px solid var(--rule);
+    border-bottom: none;
+    border-radius: 7px 7px 0 0;
+    padding: 10px 14px 9px;
+    cursor: pointer;
+    transform: translateY(1px);
+    transition: transform .12s ease, background .12s ease, color .12s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    min-width: 84px;
+  }
+  .tab .tab-code{ font-weight: 600; }
+  .tab .tab-name{
+    font-family: var(--font-body);
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 10.5px;
+    color: var(--ink-faint);
+    white-space: nowrap;
+  }
+  .tab:hover{ background: var(--paper-raised); color: var(--ink); }
+  .tab:focus-visible{ outline: 2px solid var(--accent); outline-offset: 2px; }
+  .tab[aria-selected="true"]{
+    background: var(--paper-raised);
+    color: var(--accent-strong);
+    border-color: var(--rule-strong);
+    transform: translateY(0);
+    box-shadow: var(--shadow);
+  }
+  .tab[aria-selected="true"] .tab-name{ color: var(--accent); }
+
+  /* ---------- Panel ---------- */
+  .panel-wrap{
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 28px 80px;
+  }
+  .panel{
+    background: var(--paper-raised);
+    border: 1px solid var(--rule-strong);
+    border-top: none;
+    border-radius: 0 0 10px 10px;
+    padding: 34px clamp(20px, 4vw, 46px) 42px;
+  }
+  .panel[hidden]{ display: none; }
+
+  .panel-head{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 14px;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 20px;
+    margin-bottom: 28px;
+  }
+  .panel-head-left .kicker{
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 6px;
+  }
+  h2.panel-title{
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-style: italic;
+    font-size: clamp(26px, 3.2vw, 34px);
+    margin: 0 0 6px;
+    color: var(--ink);
+    text-wrap: balance;
+  }
+  .panel-domain{
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    color: var(--accent);
+  }
+  .panel-hook{
+    max-width: 46ch;
+    font-family: var(--font-display);
+    font-size: 15.5px;
+    font-style: italic;
+    color: var(--ink-soft);
+    text-align: right;
+    margin: 0;
+  }
+
+  .problem{
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 4px 22px;
+    padding: 26px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .problem:first-of-type{ padding-top: 4px; }
+  .problem:last-of-type{ border-bottom: none; }
+
+  .problem-num{
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 34px;
+    color: var(--rule-strong);
+    line-height: 1;
+    padding-top: 2px;
+  }
+
+  .problem-head{
+    grid-column: 2;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  h3.problem-title{
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 18.5px;
+    margin: 0;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+  }
+  .chip{
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 3px 9px 4px;
+    border-radius: 999px;
+    white-space: nowrap;
+    font-weight: 600;
+  }
+  .chip.strong{ background: var(--good-soft); color: var(--good); }
+  .chip.moderate{ background: var(--warn-soft); color: var(--warn); }
+  .chip.thin{ background: var(--bad-soft); color: var(--bad); }
+
+  .findings{
+    grid-column: 2;
+    list-style: none;
+    margin: 12px 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    max-width: 74ch;
+  }
+  .findings li{
+    position: relative;
+    padding-left: 17px;
+    color: var(--ink-soft);
+    font-size: 14.5px;
+  }
+  .findings li::before{
+    content:"";
+    position: absolute;
+    left: 0; top: 8px;
+    width: 6px; height: 1.5px;
+    background: var(--rust);
+  }
+  .findings li strong{ color: var(--ink); font-weight: 600; }
+  .src{
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.03em;
+    color: var(--accent);
+    background: var(--accent-soft);
+    padding: 1px 6px;
+    border-radius: 4px;
+    margin-left: 6px;
+    white-space: nowrap;
+    display: inline-block;
+  }
+  .src.primary{ color: var(--rust); background: var(--rust-soft); }
+
+  .extra{
+    margin-top: 34px;
+    padding-top: 26px;
+    border-top: 1px dashed var(--rule-strong);
+  }
+  .extra-label{
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin: 0 0 12px;
+  }
+  .extra-list{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+  .extra-list li{
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    padding-left: 14px;
+    position: relative;
+    max-width: 78ch;
+  }
+  .extra-list li::before{
+    content: "\2014";
+    position: absolute;
+    left: 0;
+    color: var(--ink-faint);
+  }
+  .extra-list li strong{ color: var(--ink); font-weight: 600; }
+
+  .footnote{
+    max-width: 1180px;
+    margin: 30px auto 60px;
+    padding: 0 28px;
+    color: var(--ink-faint);
+    font-size: 12px;
+    font-family: var(--font-mono);
+    max-width: 72ch;
+  }
+
+  @media (max-width: 620px){
+    .problem{ grid-template-columns: 34px 1fr; gap: 4px 14px; }
+    .problem-num{ font-size: 24px; }
+    .panel{ padding: 26px 18px 32px; }
+    .panel-hook{ text-align: left; }
+  }
+
+  /* ---------- Top-level stage tabs ---------- */
+  .toptab-shell{ max-width: 1180px; margin: 28px auto 0; padding: 0 28px; }
+  .toptabs{ display: flex; flex-wrap: wrap; gap: 8px; }
+  .toptab{
+    font-family: var(--font-body); font-size: 13.5px; font-weight: 600;
+    background: var(--paper-raised-2); color: var(--ink-soft);
+    border: 1px solid var(--rule-strong); border-radius: 999px;
+    padding: 8px 16px 8px 8px; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 9px;
+    transition: background .12s ease, color .12s ease, border-color .12s ease;
+  }
+  .toptab .step{
+    font-family: var(--font-mono); font-size: 11px; font-weight: 600;
+    width: 22px; height: 22px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--paper); color: var(--ink-faint); border: 1px solid var(--rule);
+  }
+  .toptab:hover{ background: var(--paper-raised); color: var(--ink); }
+  .toptab:focus-visible{ outline: 2px solid var(--accent); outline-offset: 2px; }
+  .toptab[aria-selected="true"]{ background: var(--accent); border-color: var(--accent); color: var(--paper-raised); }
+  .toptab[aria-selected="true"] .step{ background: transparent; color: inherit; border-color: currentColor; opacity: .85; }
+
+  .panel.standalone{ border-top: 1px solid var(--rule-strong); border-radius: 10px; margin-top: 26px; }
+
+  /* ---------- Stage 3: scoring ---------- */
+  .decide-section{ margin: 0 0 42px; }
+  .decide-note{ max-width: 76ch; color: var(--ink-soft); font-size: 14px; margin: 0 0 16px; }
+  .decide-note strong{ color: var(--ink); }
+  .table-scroll{ overflow-x: auto; border: 1px solid var(--rule); border-radius: 8px; background: var(--paper-raised-2); }
+  table.score{ border-collapse: collapse; width: 100%; font-size: 13px; }
+  table.score th{
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--ink-faint); text-align: left; padding: 10px 10px 8px;
+    border-bottom: 1px solid var(--rule-strong); white-space: nowrap; background: var(--paper-raised-2);
+  }
+  table.score th.num, table.score td.num{ text-align: center; }
+  table.score td{ padding: 9px 10px; border-bottom: 1px solid var(--rule); color: var(--ink-soft); vertical-align: top; }
+  table.score tr:last-child td{ border-bottom: none; }
+  table.score td.num{ font-family: var(--font-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  table.score td.total{ font-weight: 600; color: var(--ink); }
+  table.score td.cand{ min-width: 250px; color: var(--ink); }
+  table.score td.cand small{ display: block; color: var(--ink-faint); font-size: 11.5px; font-weight: 400; margin-top: 2px; }
+  table.score tr.top td{ background: var(--accent-soft); }
+  table.score#scores{ min-width: 1020px; }
+  table.rubric{ min-width: 740px; }
+  table.rubric td q{ font-style: italic; color: var(--ink); quotes: "\201C" "\201D"; }
+  .orig-dot{ color: var(--rust); font-weight: 700; }
+
+  .chip.hold{ background: var(--good-soft); color: var(--good); }
+  .chip.newer{ background: var(--accent-soft); color: var(--accent); }
+  .chip.down{ background: var(--warn-soft); color: var(--warn); }
+  .chip.kill{ background: var(--bad-soft); color: var(--bad); }
+  .chip.flag{ background: var(--rust-soft); color: var(--rust); }
+
+  .callout{
+    border: 1px solid var(--rule-strong); border-left: 4px solid var(--warn);
+    background: var(--paper-raised-2); border-radius: 8px;
+    padding: 16px 18px; margin: 0 0 42px; max-width: 82ch;
+  }
+  .callout.rust{ border-left-color: var(--rust); }
+  .callout-title{
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--warn); margin: 0 0 10px;
+  }
+  .callout.rust .callout-title{ color: var(--rust); }
+  .callout ul, .callout ol{ margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 7px; }
+  .callout li{ font-size: 13.5px; color: var(--ink-soft); }
+  .callout li strong{ color: var(--ink); }
+
+  .attack{ border-bottom: 1px solid var(--rule); padding: 18px 0; }
+  .attack:last-of-type{ border-bottom: none; }
+  .attack-head{ display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 8px; }
+  .attack-head h4{ font-family: var(--font-body); font-weight: 600; font-size: 15.5px; margin: 0; color: var(--ink); }
+  .attack ul{ list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 7px; max-width: 80ch; }
+  .attack li{ position: relative; padding-left: 17px; font-size: 13.5px; color: var(--ink-soft); }
+  .attack li::before{ content:""; position: absolute; left: 0; top: 8px; width: 6px; height: 1.5px; background: var(--rust); }
+  .attack li strong{ color: var(--ink); }
+
+  .picks{ list-style: none; counter-reset: pick; margin: 0; padding: 0; display: flex; flex-direction: column; }
+  .picks li{ counter-increment: pick; display: grid; grid-template-columns: 52px 1fr; gap: 2px 20px; padding: 18px 0; border-bottom: 1px solid var(--rule); }
+  .picks li:last-child{ border-bottom: none; }
+  .picks li::before{
+    content: counter(pick, decimal-leading-zero); grid-row: 1 / span 2;
+    font-family: var(--font-display); font-size: 30px; font-weight: 500;
+    color: var(--rule-strong); line-height: 1; padding-top: 2px;
+  }
+  .pick-title{ font-weight: 600; font-size: 15.5px; color: var(--ink); display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+  .pick-score{ font-family: var(--font-mono); font-size: 11.5px; color: var(--accent); }
+  .pick-why{ font-size: 13.5px; color: var(--ink-soft); max-width: 78ch; margin: 2px 0 0; }
+
+  @media (max-width: 620px){
+    .toptab{ font-size: 12.5px; padding: 7px 12px 7px 7px; }
+    .picks li{ grid-template-columns: 36px 1fr; }
+    .picks li::before{ font-size: 22px; }
+  }
+
+  /* ---------- Meta tabs: the outermost level ---------- */
+  .metatab-shell{ max-width: 1180px; margin: 22px auto 0; padding: 0 28px; }
+  .metatabs{
+    display: flex; flex-wrap: wrap; gap: 0;
+    border-bottom: 2px solid var(--rule-strong);
+  }
+  .metatab{
+    appearance: none;
+    font-family: var(--font-display);
+    font-size: clamp(17px, 2.1vw, 21px);
+    font-weight: 600;
+    background: transparent;
+    color: var(--ink-faint);
+    border: none;
+    border-bottom: 2px solid transparent;
+    margin: 0 26px -2px 0;
+    padding: 8px 0 12px;
+    cursor: pointer;
+    text-align: left;
+    display: flex; flex-direction: column; gap: 2px;
+    transition: color .13s ease, border-color .13s ease;
+  }
+  .metatab .metatab-sub{
+    font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--ink-faint); font-weight: 500;
+  }
+  .metatab:hover{ color: var(--ink-soft); }
+  .metatab:focus-visible{ outline: 2px solid var(--accent); outline-offset: 3px; }
+  .metatab[aria-selected="true"]{ color: var(--ink); border-bottom-color: var(--rust); }
+  .metatab[aria-selected="true"] .metatab-sub{ color: var(--rust); }
+
+  /* ---------- Walkthrough ---------- */
+  .wt-intro{ max-width: 1180px; margin: 26px auto 0; padding: 0 28px; }
+  .wt-intro p{ max-width: 78ch; color: var(--ink-soft); font-size: 14.5px; margin: 0 0 12px; }
+  .wt-intro p strong{ color: var(--ink); }
+
+  .portal-head{
+    display: flex; justify-content: space-between; align-items: flex-end;
+    flex-wrap: wrap; gap: 14px;
+    border-bottom: 2px solid var(--rule-strong);
+    padding-bottom: 18px; margin: 0 0 26px;
+  }
+  .portal-head .kicker{
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--rust); margin: 0 0 6px;
+  }
+  h2.portal-title{
+    font-family: var(--font-display); font-weight: 600; font-size: clamp(24px, 3vw, 32px);
+    margin: 0 0 5px; color: var(--ink); text-wrap: balance;
+  }
+  .portal-meta{ font-family: var(--font-mono); font-size: 12px; color: var(--accent); }
+  .portal-verdict{
+    max-width: 44ch; font-family: var(--font-display); font-style: italic;
+    font-size: 15px; color: var(--ink-soft); text-align: right; margin: 0;
+  }
+
+  .wt-block{ margin: 0 0 40px; }
+  .wt-label{
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--ink-faint);
+    margin: 0 0 12px; padding-bottom: 6px; border-bottom: 1px solid var(--rule);
+  }
+  .wt-note{ max-width: 78ch; color: var(--ink-soft); font-size: 14px; margin: 0 0 16px; }
+  .wt-note strong{ color: var(--ink); }
+  .wt-note code, .wt-block code{
+    font-family: var(--font-mono); font-size: 12.5px;
+    background: var(--paper-raised-2); border: 1px solid var(--rule);
+    border-radius: 4px; padding: 1px 5px; color: var(--ink-soft);
+    word-break: break-all;
+  }
+
+  .steps{ list-style: none; margin: 0; padding: 0; counter-reset: st; }
+  .steps > li{
+    counter-increment: st;
+    display: grid; grid-template-columns: 40px 1fr; gap: 4px 18px;
+    padding: 0 0 24px; position: relative;
+  }
+  .steps > li::before{
+    content: counter(st, decimal-leading-zero);
+    grid-row: 1 / span 3;
+    font-family: var(--font-mono); font-size: 12px; font-weight: 600;
+    color: var(--paper-raised); background: var(--accent);
+    width: 30px; height: 30px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    z-index: 1;
+  }
+  .steps > li::after{
+    content: ""; position: absolute; left: 14.5px; top: 30px; bottom: 0;
+    width: 1px; background: var(--rule-strong);
+  }
+  .steps > li:last-child::after{ display: none; }
+  .steps > li.blocked::before{ background: var(--bad); }
+  .steps > li.offsite::before{ background: var(--ink-faint); }
+  .step-title{
+    font-weight: 600; font-size: 15.5px; color: var(--ink);
+    display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap;
+    padding-top: 4px;
+  }
+  .step-url{ font-family: var(--font-mono); font-size: 11px; color: var(--ink-faint); word-break: break-all; font-weight: 400; }
+  .step-body{ font-size: 14px; color: var(--ink-soft); max-width: 76ch; margin: 5px 0 0; }
+  .step-body strong{ color: var(--ink); }
+  .step-fields{
+    list-style: none; margin: 9px 0 0; padding: 0;
+    display: flex; flex-direction: column; gap: 5px; max-width: 76ch;
+  }
+  .step-fields li{ font-size: 13.5px; color: var(--ink-soft); padding-left: 15px; position: relative; }
+  .step-fields li::before{
+    content: ""; position: absolute; left: 0; top: 8px;
+    width: 5px; height: 5px; border-radius: 50%; background: var(--rule-strong);
+  }
+  .step-fields li.req::before{ background: var(--rust); }
+  .step-fields li strong{ color: var(--ink); font-weight: 600; }
+  .req-tag{
+    font-family: var(--font-mono); font-size: 9.5px; letter-spacing: .06em;
+    text-transform: uppercase; color: var(--rust); margin-left: 5px;
+  }
+
+  .friction{ list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 14px; }
+  .friction li{
+    border-left: 3px solid var(--warn); padding: 2px 0 2px 14px;
+    max-width: 82ch; font-size: 14px; color: var(--ink-soft);
+  }
+  .friction li strong{ display: block; color: var(--ink); font-weight: 600; margin-bottom: 3px; font-size: 14.5px; }
+  .friction li.hard{ border-left-color: var(--bad); }
+  .friction li.obs{ border-left-color: var(--accent); }
+
+  .obs-tag{
+    font-family: var(--font-mono); font-size: 9.5px; letter-spacing: .06em;
+    text-transform: uppercase; padding: 2px 7px; border-radius: 3px;
+    margin-right: 7px; vertical-align: 1px; font-weight: 600;
+    background: var(--accent-soft); color: var(--accent);
+    display: inline-block;
+  }
+  .obs-tag.doc{ background: var(--good-soft); color: var(--good); }
+  .obs-tag.sec{ background: var(--rust-soft); color: var(--rust); }
+  .obs-tag.gap{ background: var(--bad-soft); color: var(--bad); }
+
+  table.wt{ border-collapse: collapse; width: 100%; font-size: 13px; min-width: 620px; }
+  table.wt th{
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--ink-faint); text-align: left; padding: 10px 10px 8px;
+    border-bottom: 1px solid var(--rule-strong); background: var(--paper-raised-2); white-space: nowrap;
+  }
+  table.wt td{ padding: 9px 10px; border-bottom: 1px solid var(--rule); color: var(--ink-soft); vertical-align: top; }
+  table.wt tr:last-child td{ border-bottom: none; }
+  table.wt td strong{ color: var(--ink); }
+  table.wt td.mono{ font-family: var(--font-mono); font-size: 11.5px; word-break: break-all; }
+
+  .callout.bad{ border-left-color: var(--bad); }
+  .callout.bad .callout-title{ color: var(--bad); }
+  .callout.accent{ border-left-color: var(--accent); }
+  .callout.accent .callout-title{ color: var(--accent); }
+  .callout p{ font-size: 13.5px; color: var(--ink-soft); margin: 0 0 9px; }
+  .callout p:last-child{ margin-bottom: 0; }
+  .callout p strong{ color: var(--ink); }
+
+  .quote{
+    font-family: var(--font-display); font-style: italic; font-size: 15.5px;
+    color: var(--ink); border-left: 3px solid var(--rule-strong);
+    padding: 4px 0 4px 16px; margin: 0 0 16px; max-width: 74ch;
+  }
+  .quote cite{
+    display: block; font-family: var(--font-mono); font-style: normal;
+    font-size: 10.5px; letter-spacing: .05em; text-transform: uppercase;
+    color: var(--ink-faint); margin-top: 7px;
+  }
+
+  .compare{ display: grid; grid-template-columns: repeat(auto-fit, minmax(258px, 1fr)); gap: 18px; }
+  .compare-card{
+    background: var(--paper-raised-2); border: 1px solid var(--rule);
+    border-radius: 8px; padding: 16px 18px;
+  }
+  .compare-card h4{
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--ink-faint); margin: 0 0 10px;
+  }
+  .compare-card p{ font-size: 13.5px; color: var(--ink-soft); margin: 0 0 8px; }
+  .compare-card p:last-child{ margin: 0; }
+  .compare-card strong{ color: var(--ink); }
+
+  @media (max-width: 620px){
+    .metatab{ font-size: 16px; margin-right: 16px; }
+    .portal-verdict{ text-align: left; }
+    .steps > li{ grid-template-columns: 32px 1fr; gap: 4px 12px; }
+    .steps > li::before{ width: 26px; height: 26px; font-size: 11px; }
+    .steps > li::after{ left: 12.5px; top: 26px; }
+  }
+
+</style>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,500;0,600;1,500;1,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+<a class="skip" href="#views">Skip to content</a>
+
+<header class="masthead">
+  <div class="masthead-eyebrow">Build What Moves India &middot; Platform Research Dossier &middot; Kriti + Gaurav</div>
+  <h1 class="masthead-title">Ten Portals, Ten Failures</h1>
+  <p class="masthead-sub">Two halves of one decision. <strong>Problem Identification</strong> holds the research that narrowed ten platforms to a shortlist. <strong>Platform Walkthrough</strong> takes the two the team then chose &mdash; the National Cyber Crime Reporting Portal and CPGRAMS &mdash; and walks their live screens end to end.</p>
+  <div class="masthead-meta">
+    <span><strong>Compiled</strong> 2026&#8209;08&#8209;24</span>
+    <span><strong>Platforms</strong> 10 researched &middot; 2 walked live</span>
+    <span><strong>Sources</strong> live portals + secondary + primary</span>
+    <span><strong>Impact scoring</strong> 2026&#8209;08&#8209;24</span>
+    <span><strong>Walkthrough</strong> 2026&#8209;08&#8209;25, live browser session, nothing submitted</span>
+  </div>
+</header>
+
+<nav class="metatab-shell" aria-label="Section selector">
+  <div class="metatabs" role="tablist">
+    <button class="metatab" id="metatab-identify" role="tab" aria-selected="true" aria-controls="meta-identify">Problem Identification<span class="metatab-sub">Ten portals &middot; 29 candidates &middot; one rubric</span></button>
+    <button class="metatab" id="metatab-walkthrough" role="tab" aria-selected="false" aria-controls="meta-walkthrough">Platform Walkthrough<span class="metatab-sub">Cyber Crime &amp; CPGRAMS &middot; screen by screen</span></button>
+  </div>
+</nav>
+
+<section id="meta-identify" role="tabpanel" aria-labelledby="metatab-identify">
+
+<nav class="toptab-shell" aria-label="Stage selector">
+  <div class="toptabs" role="tablist">
+    <button class="toptab" id="toptab-research" role="tab" aria-selected="false" aria-controls="view-research"><span class="step">1</span>Initial Research</button>
+    <button class="toptab" id="toptab-compiled" role="tab" aria-selected="false" aria-controls="view-compiled"><span class="step">2</span>Compiled Problems</button>
+    <button class="toptab" id="toptab-decide" role="tab" aria-selected="true" aria-controls="view-decide"><span class="step">3</span>Finalizing Problem Statement</button>
+  </div>
+</nav>
+
+<div id="views">
+
+<section id="view-research" role="tabpanel" aria-labelledby="toptab-research" hidden>
+  <div class="legend" aria-hidden="true">
+    <span class="legend-item"><span class="swatch strong"></span>Strong evidence</span>
+    <span class="legend-item"><span class="swatch moderate"></span>Moderate evidence</span>
+    <span class="legend-item"><span class="swatch thin"></span>Thin evidence</span>
+    <span class="legend-item"><span class="src" style="margin-left:0;">Secondary</span> news / official data</span>
+    <span class="legend-item"><span class="src primary" style="margin-left:0;">Primary</span> Reddit / X / app store / forums</span>
+  </div>
+  <nav class="tab-shell" aria-label="Platform selector">
+    <div class="tabs" id="tabs" role="tablist"></div>
+  </nav>
+  <main class="panel-wrap" id="panel-region">
+    <div id="panels"></div>
+  </main>
+</section>
+
+<section id="view-compiled" role="tabpanel" aria-labelledby="toptab-compiled" hidden>
+  <div class="panel-wrap">
+    <div id="compiled-panel"></div>
+  </div>
+</section>
+
+<section id="view-decide" role="tabpanel" aria-labelledby="toptab-decide">
+  <div class="panel-wrap">
+    <div class="panel standalone">
+
+      <div class="panel-head">
+        <div class="panel-head-left">
+          <p class="kicker">Stage 3 &middot; scored against the brief's own judging criteria</p>
+          <h2 class="panel-title">Finalizing the Problem Statement</h2>
+          <p class="panel-domain">29 candidates &middot; 10 platforms &middot; one rubric &middot; brief fetched live 2026&#8209;08&#8209;24</p>
+        </div>
+        <p class="panel-hook">&ldquo;Score everything the same way, then argue against the winners.&rdquo;</p>
+      </div>
+
+      <div class="decide-section">
+        <p class="extra-label">The rubric &mdash; six factors, each from the brief's own words</p>
+        <p class="decide-note">Derived from <strong>buildwhatmovesindia.com/brief</strong>, fetched live on 2026&#8209;08&#8209;24 (the site 403&#8209;blocks automated fetch; pulled via a real browser session). The six judging criteria are quoted verbatim. Scores are 1&ndash;5 integers per factor, weighted to a total out of 100. Overlap with the sister team and same&#8209;idea crowding are tracked as flags, not score components.</p>
+        <div class="table-scroll">
+          <table class="score rubric">
+            <thead><tr><th>#</th><th>Factor</th><th class="num">Weight</th><th>Brief language it maps to</th></tr></thead>
+            <tbody>
+              <tr><td class="num">F1</td><td class="cand">Problem reality &amp; severity</td><td class="num">25</td><td><q>Is this a real and important user problem?</q> &middot; <q>Pick one real problem you have faced</q></td></tr>
+              <tr><td class="num">F2</td><td class="cand">Complete-journey demoability</td><td class="num">20</td><td><q>Let us complete the main journey from start to finish</q> &middot; <q>A static design is not enough</q> &middot; video minute one must <q>demo the project as a citizen</q></td></tr>
+              <tr><td class="num">F3</td><td class="cand">Backend / process depth</td><td class="num">20</td><td><q>Does the solution address the backend, infrastructure and processes, not just the interface?</q></td></tr>
+              <tr><td class="num">F4</td><td class="cand">Mockability &amp; rule compliance</td><td class="num">15</td><td><q>Use mock or synthetic data wherever personal information, payments, OTPs or government systems would normally be involved</q> &middot; the full &ldquo;What not to do&rdquo; list</td></tr>
+              <tr><td class="num">F5</td><td class="cand">Legible improvement</td><td class="num">10</td><td><q>Be easier to understand or use than the current experience</q> &middot; <q>Why is your version better?</q> &middot; <q>real Indian users&hellip; limited digital experience</q></td></tr>
+              <tr><td class="num">F6</td><td class="cand">AI / Codex leverage</td><td class="num">10</td><td>Prototype <q>built with Codex or powered by an OpenAI model</q>, Codex <q>a meaningful part of how you build it, not something added only for the submission</q></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="callout">
+        <p class="callout-title">The live site disagrees with this repo &mdash; verify before planning</p>
+        <ul>
+          <li><strong>Deadline:</strong> site says <strong>Aug 28, 2026, 8:00 PM IST, no grace period</strong>. Repo says Aug 27.</li>
+          <li><strong>Finale:</strong> site says <strong>Sep 12, Bengaluru</strong> (filmed, not live-streamed). Repo says Sep 5&ndash;6.</li>
+          <li><strong>The 10-platform list is nowhere on the live site.</strong> The brief still reads &ldquo;IRCTC, EPFO and the Income Tax portal are examples, not a fixed list.&rdquo; The narrowing presumably came by email/WhatsApp &mdash; confirm its source before treating it as binding. Scoring below keeps the 10-platform scope, as recorded.</li>
+          <li><strong>New detail:</strong> selection runs in two stages &mdash; top 250 shortlisted Aug 28&ndash;Sep 1, a mentorship week, improved build resubmitted by Sep 7, ten finalists announced Sep 8&ndash;12.</li>
+        </ul>
+      </div>
+
+      <div class="decide-section">
+        <p class="extra-label">All 29 candidates, scored &mdash; every platform covered</p>
+        <p class="decide-note"><span class="orig-dot">&#9679;</span> marks the five problems from the earlier compiled shortlist, re-scored under this rubric alongside everything else. Highlighted rows are the surviving top six. Full prose per candidate lives in <strong>research/impact-scoring.md</strong>.</p>
+        <div class="table-scroll">
+          <table class="score" id="scores">
+            <thead><tr><th class="num">Rk</th><th>ID</th><th>Platform</th><th>Candidate problem</th><th class="num">F1</th><th class="num">F2</th><th class="num">F3</th><th class="num">F4</th><th class="num">F5</th><th class="num">F6</th><th class="num">Total</th><th>Verdict</th></tr></thead>
+            <tbody>
+              <tr class="top"><td class="num">1=</td><td class="num">C1 <span class="orig-dot">&#9679;</span></td><td>Cyber Crime</td><td class="cand">Innocent account frozen, no notice, no SLA<small>Guided release path: freeze-type diagnosis, RTI draft, bank letter, NOC/SLA tracker</small></td><td class="num">5</td><td class="num">4</td><td class="num">5</td><td class="num">5</td><td class="num">5</td><td class="num">4</td><td class="num total">94</td><td><span class="chip flag">Holds #1 &middot; overlap open</span></td></tr>
+              <tr class="top"><td class="num">1=</td><td class="num">G1 <span class="orig-dot">&#9679;</span></td><td>GST</td><td class="cand">Automated DRC-01B/01C notice, no officer, no explanation<small>Decode against the ledger, assign fault (buyer vs supplier), draft the correct reply form</small></td><td class="num">5</td><td class="num">4</td><td class="num">5</td><td class="num">5</td><td class="num">4</td><td class="num">5</td><td class="num total">94</td><td><span class="chip hold">Rises to co-#1</span></td></tr>
+              <tr class="top"><td class="num">3</td><td class="num">P1 <span class="orig-dot">&#9679;</span></td><td>Parivahan</td><td class="cand">RC transfer stalls; status hides the seller's legal liability<small>Staged pipeline tracker + liability-shield document pack</small></td><td class="num">5</td><td class="num">4</td><td class="num">5</td><td class="num">5</td><td class="num">4</td><td class="num">3</td><td class="num total">90</td><td><span class="chip hold">Holds #3</span></td></tr>
+              <tr class="top"><td class="num">4</td><td class="num">P2</td><td>Parivahan</td><td class="cand">e-Challan misissued off an ANPR plate misread<small>Evidence-checked dispute triage: challan photo vs registered plate, drafted challenge, tracked outcome</small></td><td class="num">4</td><td class="num">4</td><td class="num">4</td><td class="num">5</td><td class="num">5</td><td class="num">5</td><td class="num total">87</td><td><span class="chip newer">New entrant</span></td></tr>
+              <tr class="top"><td class="num">5</td><td class="num">I1 <span class="orig-dot">&#9679;</span></td><td>IRCTC</td><td class="cand">Money debited, no ticket issued<small>Reconciliation state machine showing exactly where the transaction is stuck</small></td><td class="num">5</td><td class="num">4</td><td class="num">4</td><td class="num">5</td><td class="num">4</td><td class="num">3</td><td class="num total">86</td><td><span class="chip down">Crowding risk</span></td></tr>
+              <tr class="top"><td class="num">6=</td><td class="num">R2</td><td>RTI Online</td><td class="cand">Wrong-authority filing + doomed drafting<small>&ldquo;Filed right the first time&rdquo;: route the authority, validate the draft, track through transfer</small></td><td class="num">4</td><td class="num">4</td><td class="num">4</td><td class="num">5</td><td class="num">4</td><td class="num">5</td><td class="num total">85</td><td><span class="chip newer">Reframed RTI pick</span></td></tr>
+              <tr class="top"><td class="num">6=</td><td class="num">I2 <span class="orig-dot">&#9679;</span></td><td>IRCTC</td><td class="cand">TDR trap: one wrong dropdown auto-rejects or locks the account<small>Pre-flight verdict, deadline countdown, correct reason code before filing</small></td><td class="num">4</td><td class="num">4</td><td class="num">4</td><td class="num">5</td><td class="num">4</td><td class="num">3</td><td class="num total">85</td><td><span class="chip hold">Pairs with I1</span></td></tr>
+              <tr><td class="num">8=</td><td class="num">T1</td><td>Income Tax</td><td class="cand">AIS mismatch: double-counted interest, wrong-PAN entries<small>Pre-filing reconciliation engine against mock 26AS/16</small></td><td class="num">4</td><td class="num">4</td><td class="num">4</td><td class="num">5</td><td class="num">4</td><td class="num">4</td><td class="num total">83</td><td><span class="chip flag">Stat unverified</span></td></tr>
+              <tr><td class="num">8=</td><td class="num">T2</td><td>Income Tax</td><td class="cand">&ldquo;Is this notice scary or routine?&rdquo;<small>Classify the notice PDF, plain-language meaning, deadline, next step</small></td><td class="num">4</td><td class="num">4</td><td class="num">3</td><td class="num">5</td><td class="num">5</td><td class="num">5</td><td class="num total">83</td><td><span class="chip down">Thin process depth</span></td></tr>
+              <tr><td class="num">10</td><td class="num">E1</td><td>EPFO</td><td class="cand">Claim rejected on a mismatch the member never saw (26% rate)<small>Pre-flight check + auto-drafted fix artifact</small></td><td class="num">5</td><td class="num">4</td><td class="num">3</td><td class="num">5</td><td class="num">4</td><td class="num">3</td><td class="num total">82</td><td><span class="chip flag">Overlap: Varun</span></td></tr>
+              <tr><td class="num">11=</td><td class="num">G2</td><td>GST</td><td class="cand">Supplier's late filing silently costs the buyer's ITC<small>Early-warning watch on vendor filing status</small></td><td class="num">3</td><td class="num">4</td><td class="num">5</td><td class="num">5</td><td class="num">4</td><td class="num">3</td><td class="num total">80</td><td><span class="chip kill">Fold into G1</span></td></tr>
+              <tr><td class="num">11=</td><td class="num">CP1</td><td>CPGRAMS</td><td class="cand">&ldquo;Disposed doesn't mean done&rdquo;<small>ATR substantive-match check + auto-drafted appeal</small></td><td class="num">3</td><td class="num">4</td><td class="num">4</td><td class="num">5</td><td class="num">4</td><td class="num">5</td><td class="num total">80</td><td><span class="chip flag">Overlap: Harshit</span></td></tr>
+              <tr><td class="num">13=</td><td class="num">C2</td><td>Cyber Crime</td><td class="cand">&ldquo;Disposed&rdquo; status decoder<small>Plain meaning + specific next action per status</small></td><td class="num">4</td><td class="num">3</td><td class="num">4</td><td class="num">5</td><td class="num">4</td><td class="num">4</td><td class="num total">79</td><td><span class="chip kill">Fold into C1</span></td></tr>
+              <tr><td class="num">13=</td><td class="num">R1 <span class="orig-dot">&#9679;</span></td><td>RTI Online</td><td class="cand">Second appeal vanishes into the commission backlog<small>Wait estimator + return-proof appeal draft</small></td><td class="num">4</td><td class="num">3</td><td class="num">4</td><td class="num">5</td><td class="num">4</td><td class="num">4</td><td class="num total">79</td><td><span class="chip down">Out of top 5</span></td></tr>
+              <tr><td class="num">15</td><td class="num">C3</td><td>Cyber Crime</td><td class="cand">Golden-hour fund trail, hop by hop<small>Where the victim's money is in the freeze pipeline</small></td><td class="num">4</td><td class="num">4</td><td class="num">4</td><td class="num">4</td><td class="num">4</td><td class="num">3</td><td class="num total">78</td><td><span class="chip kill">Fold into C1</span></td></tr>
+              <tr><td class="num">16</td><td class="num">T3</td><td>Income Tax</td><td class="cand">Refund stuck past 90 days with no visible stage<small>Which internal step blocks it, which action unblocks it</small></td><td class="num">4</td><td class="num">3</td><td class="num">4</td><td class="num">5</td><td class="num">4</td><td class="num">3</td><td class="num total">77</td><td><span class="chip kill">Status-page shape</span></td></tr>
+              <tr><td class="num">17=</td><td class="num">CP2</td><td>CPGRAMS</td><td class="cand">Complaint reclassified as &ldquo;suggestion&rdquo; to dodge review<small>Mislabel detector against the complaint's own text</small></td><td class="num">3</td><td class="num">3</td><td class="num">4</td><td class="num">5</td><td class="num">4</td><td class="num">5</td><td class="num total">76</td><td><span class="chip kill">One documented case</span></td></tr>
+              <tr><td class="num">17=</td><td class="num">U1</td><td>UMANG</td><td class="cand">2,446 services indexed by department, not by need<small>Intent-to-service matching + ID readiness pre-flight (Gaurav's idea)</small></td><td class="num">3</td><td class="num">4</td><td class="num">3</td><td class="num">5</td><td class="num">4</td><td class="num">5</td><td class="num total">76</td><td><span class="chip down">&ldquo;Fix the search bar&rdquo; attack</span></td></tr>
+              <tr><td class="num">19</td><td class="num">R3</td><td>RTI Online</td><td class="cand">Fee debited, no registration number (2013&rarr;2026)<small>Payment reconciliation + recovery flow</small></td><td class="num">4</td><td class="num">3</td><td class="num">4</td><td class="num">5</td><td class="num">4</td><td class="num">2</td><td class="num total">75</td><td><span class="chip down">Narrow product</span></td></tr>
+              <tr><td class="num">20=</td><td class="num">M3</td><td>MCA</td><td class="cand">Name rejected with no clue which name clashed<small>Phonetic + trademark clash diagnostic before resubmission</small></td><td class="num">3</td><td class="num">4</td><td class="num">3</td><td class="num">5</td><td class="num">4</td><td class="num">4</td><td class="num total">74</td><td><span class="chip down">Niche audience</span></td></tr>
+              <tr><td class="num">20=</td><td class="num">U2</td><td>UMANG</td><td class="cand">EPFO OTP dead-end inside the app<small>Pre-flight Aadhaar-mobile mismatch diagnosis</small></td><td class="num">4</td><td class="num">3</td><td class="num">4</td><td class="num">4</td><td class="num">4</td><td class="num">3</td><td class="num total">74</td><td><span class="chip flag">EPFO in disguise</span></td></tr>
+              <tr><td class="num">22</td><td class="num">E2</td><td>EPFO</td><td class="cand">EPS pension gaps surface only after exit, irreversibly<small>Pre-flight eligibility check while still employed</small></td><td class="num">3</td><td class="num">4</td><td class="num">4</td><td class="num">4</td><td class="num">4</td><td class="num">3</td><td class="num total">73</td><td><span class="chip down">Thin EPS evidence</span></td></tr>
+              <tr><td class="num">23</td><td class="num">R4</td><td>RTI Online</td><td class="cand">One-line &ldquo;exempt under Section 8&rdquo; rejection<small>Legality check + drafted appeal grounds</small></td><td class="num">3</td><td class="num">3</td><td class="num">3</td><td class="num">5</td><td class="num">4</td><td class="num">5</td><td class="num total">72</td><td><span class="chip kill">Component, not product</span></td></tr>
+              <tr><td class="num">24=</td><td class="num">G3</td><td>GST</td><td class="cand">Suo moto cancellation cliff<small>Countdown + cheapest path back to compliant</small></td><td class="num">3</td><td class="num">3</td><td class="num">4</td><td class="num">5</td><td class="num">4</td><td class="num">2</td><td class="num total">70</td><td><span class="chip kill">Dashboard shape</span></td></tr>
+              <tr><td class="num">24=</td><td class="num">M1</td><td>MCA</td><td class="cand">Director disqualification early warning (14,000+ in 2025)<small>Penalty-cliff and strike-off countdown</small></td><td class="num">3</td><td class="num">3</td><td class="num">4</td><td class="num">5</td><td class="num">4</td><td class="num">2</td><td class="num total">70</td><td><span class="chip down">Stat is search-synthesis</span></td></tr>
+              <tr><td class="num">24=</td><td class="num">M2</td><td>MCA</td><td class="cand">V3 &ldquo;filed but not real&rdquo;<small>True SRN-lifecycle status checker</small></td><td class="num">4</td><td class="num">3</td><td class="num">4</td><td class="num">4</td><td class="num">3</td><td class="num">2</td><td class="num total">70</td><td><span class="chip down">Audience: professionals</span></td></tr>
+              <tr><td class="num">27=</td><td class="num">P3</td><td>Parivahan</td><td class="cand">Payment succeeded, status pending 24&ndash;72h<small>Gateway vs application-record reconciliation diagnosis</small></td><td class="num">3</td><td class="num">3</td><td class="num">4</td><td class="num">5</td><td class="num">3</td><td class="num">2</td><td class="num total">68</td><td><span class="chip kill">Killed standalone</span></td></tr>
+              <tr><td class="num">27=</td><td class="num">P4</td><td>Parivahan</td><td class="cand">DL/LL test chaos and opaque rejections<small>Decode which of the known failure modes hit this application</small></td><td class="num">4</td><td class="num">3</td><td class="num">3</td><td class="num">4</td><td class="num">3</td><td class="num">3</td><td class="num total">68</td><td><span class="chip kill">Real fix is offline</span></td></tr>
+              <tr><td class="num">29</td><td class="num">I3</td><td>IRCTC</td><td class="cand">WL/RAC decision support<small>&ldquo;What should I actually do right now&rdquo; over a bare status code</small></td><td class="num">3</td><td class="num">4</td><td class="num">3</td><td class="num">4</td><td class="num">3</td><td class="num">3</td><td class="num total">67</td><td><span class="chip kill">Already served (ConfirmTkt)</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="decide-section">
+        <p class="extra-label">Adversarial pass &mdash; the winners, argued against</p>
+        <p class="decide-note">Each top candidate was attacked before the ranking was finalized: is the evidence real, is it mockable, is it genuinely backend/process, and would a judge see through a weak version. Scores were set before this pass; it changed the ranking only where noted.</p>
+
+        <div class="attack">
+          <div class="attack-head"><h4>C1 &middot; Cyber Crime innocent freeze</h4><span class="chip hold">Survives at #1, conditional</span></div>
+          <ul>
+            <li><strong>&ldquo;The resolution is offline &mdash; isn't this just a document generator?&rdquo;</strong> Partial hit. The brief itself allows mocked &ldquo;backend behavior where production access would be unsafe&rdquo; &mdash; so the demo must complete the journey against a mocked bank + cyber-cell backend (freeze &rarr; diagnosis &rarr; evidence &rarr; NOC &rarr; release, on an SLA clock). Ship only letter templates and judges will see through it; the case-state machine is the product.</li>
+            <li><strong>Evidence check:</strong> the strongest of all 29 &mdash; both research passes independently rank it first; a 2,434-upvote first-person recovery thread; CBI's 8.5 lakh mule-account figure; near-identical threads across 8+ banks.</li>
+            <li><strong>Unresolved external risk:</strong> direct overlap with Harshit's idea &mdash; see the open questions below. Not resolvable by scoring.</li>
+          </ul>
+        </div>
+
+        <div class="attack">
+          <div class="attack-head"><h4>G1 &middot; GST notice decoder</h4><span class="chip hold">Survives at co-#1</span></div>
+          <ul>
+            <li><strong>&ldquo;Judges must follow GSTR-1/2B/3B inside a 60-second citizen demo.&rdquo;</strong> Real risk. Mitigation: open with the Karnataka persona &mdash; a flower seller who never touched gst.gov.in gets a UPI-triggered demand (~18,000 notices in Jul 2025, confirmed; the "9,000 traders" figure is not independently corroborated, one source cites ~6,000, corrected 2026-08-26) &mdash; before the registered-trader flow. That framing needs zero tax literacy.</li>
+            <li><strong>&ldquo;ClearTax and CAs already do this.&rdquo;</strong> They serve the paying, tax-literate segment. No free tool answers &ldquo;do I actually owe this, whose fault is it, which form, by when&rdquo; for a specific received notice &mdash; the 2019&ndash;2026 forum-thread trail is proof the gap persists.</li>
+            <li><strong>AI check:</strong> the most defensible Codex story in the field &mdash; parse a legal notice, reconcile a ledger, assign fault, draft DRC-03 vs DRC-06. The model is load-bearing, not garnish.</li>
+          </ul>
+        </div>
+
+        <div class="attack">
+          <div class="attack-head"><h4>P1 &middot; RC-transfer seller liability</h4><span class="chip hold">Survives at #3</span></div>
+          <ul>
+            <li><strong>&ldquo;The product cannot make the RTO transfer the RC.&rdquo;</strong> True &mdash; so the build is diagnosis + protection, not resolution theater: which stage is stuck, what the seller is exposed to today, and the auto-drafted intimation pack that shifts liability &mdash; the thing the arrest-warrant poster needed four years earlier.</li>
+            <li><strong>Evidence check:</strong> CAG-audited pipeline numbers plus the most visceral primary story in the research (a bail bond signed by the seller's mother; an 800+ day case both CPGRAMS and the consumer helpline closed without action).</li>
+          </ul>
+        </div>
+
+        <div class="attack">
+          <div class="attack-head"><h4>P2 &middot; e-Challan dispute triage</h4><span class="chip newer">Survives &mdash; the pass's one new entrant</span></div>
+          <ul>
+            <li><strong>&ldquo;Too narrow &mdash; dispute triage only.&rdquo;</strong> Under this brief, bounded is a feature: the journey (challan arrives &rarr; photo-vs-registered-plate evidence check &rarr; verdict with confidence &rarr; drafted dispute &rarr; tracked outcome) completes start to finish. A vision model reading the challan photo is honest, demo-visible OpenAI usage.</li>
+            <li><strong>Evidence check:</strong> CAG's 3.8% forwarding stat, independent misread complaints in five cities, and the issuing authority itself cancelling 69 wrong challans.</li>
+          </ul>
+        </div>
+
+        <div class="attack">
+          <div class="attack-head"><h4>I1 + I2 &middot; IRCTC debit-no-ticket + TDR trap</h4><span class="chip down">Survives on evidence, demoted as a pick</span></div>
+          <ul>
+            <li><strong>&ldquo;The most famous portal on the list &mdash; the default pick for hundreds of teams.&rdquo;</strong> Not a rubric factor, but a real Stage-1 risk when 250 get shortlisted from a large field. Railways is also actively shipping fixes (new PRS, anti-bot, capacity). The TDR-lockout wedge is the differentiated part if the team goes here anyway.</li>
+          </ul>
+        </div>
+
+        <div class="attack">
+          <div class="attack-head"><h4>R2 &middot; RTI filed right the first time</h4><span class="chip down">Survives with a flag</span></div>
+          <ul>
+            <li><strong>&ldquo;A free AI RTI drafter already exists&rdquo;</strong> (righttoinformation.wiki) &mdash; a direct hit on the drafting half. Differentiation must be the combination: authority routing before money changes hands (the portal's own FAQ admits misdirected fees are simply lost) + draft validation against legal rejection patterns + transfer/appeal tracking. Drafting alone is dead on arrival.</li>
+          </ul>
+        </div>
+
+        <div class="attack">
+          <div class="attack-head"><h4>Downgraded and killed</h4><span class="chip kill">Did not survive</span></div>
+          <ul>
+            <li><strong>R1 (original #4, RTI second-appeal backlog):</strong> superbly evidenced, but the prototype cannot resolve the failing moment &mdash; a 29-year queue estimator demos as a dashboard, the exact shape the brief warns against. Its appeal-drafting half folds into R2.</li>
+            <li><strong>M1 (MCA disqualification warning):</strong> the 14,000+ figure is search-synthesis with no primary voice found, and an early-warning product demos as a dashboard.</li>
+            <li><strong>T1 caveat, strengthened 2026-08-26:</strong> a dedicated Firecrawl search for the 42-lakh AIS-mismatch figure found no corroborating source in any form. Do not use this number in a pitch; if T1 is ever picked up, replace it with a sourced figure or drop the stat entirely.</li>
+            <li><strong>Killed standalone:</strong> G3, I3, P3, P4, C2, C3, R4 &mdash; fold-ins, dashboards, or already served by existing tools. <strong>Excluded by overlap, not merit:</strong> CP1 (Harshit's exact idea), E1 (Varun's EPFO idea), U2 (an EPFO fix wearing UMANG's badge).</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="decide-section">
+        <p class="extra-label">Top picks, re-ranked under the rubric</p>
+        <ol class="picks">
+          <li>
+            <span class="pick-title">Cyber Crime &mdash; guided release for the innocently frozen account <span class="pick-score">C1 &middot; 94</span></span>
+            <p class="pick-why">Best evidence in the field, a true process fix (the release side of an asymmetric freeze system), fully synthetic, and stakes a judge feels instantly. Pick only after the Harshit conversation below.</p>
+          </li>
+          <li>
+            <span class="pick-title">GST &mdash; decode the automated notice, draft the right reply <span class="pick-score">G1 &middot; 94</span></span>
+            <p class="pick-why">The clean-room co-#1: zero overlap with the sister team, the lowest crowding risk of the top tier, and the strongest &ldquo;Codex is load-bearing&rdquo; story. If the overlap talk goes badly, this is the pick.</p>
+          </li>
+          <li>
+            <span class="pick-title">Parivahan &mdash; RC-transfer liability shield <span class="pick-score">P1 &middot; 90</span></span>
+            <p class="pick-why">The most visceral story (arrest warrant, bail bond) over a genuinely staged process the citizen currently cannot see into. Maps onto Kriti's own Parivahan idea.</p>
+          </li>
+          <li>
+            <span class="pick-title">Parivahan &mdash; e-challan evidence-checked dispute <span class="pick-score">P2 &middot; 87</span></span>
+            <p class="pick-why">New entrant. The tightest bounded citizen journey of the set, with a vision-model demo moment (challan photo vs registered plate) no other candidate has.</p>
+          </li>
+          <li>
+            <span class="pick-title">IRCTC &mdash; debit-no-ticket + TDR pre-flight <span class="pick-score">I1+I2 &middot; 86/85</span></span>
+            <p class="pick-why">Top-tier evidence, but the highest same-idea crowding risk in the hackathon. The TDR-lockout wedge is the only differentiated way in.</p>
+          </li>
+          <li>
+            <span class="pick-title">RTI &mdash; filed right the first time <span class="pick-score">R2 &middot; 85</span></span>
+            <p class="pick-why">Good, provided the pitch is routing + validation + transfer tracking as one flow &mdash; drafting alone already exists free.</p>
+          </li>
+        </ol>
+      </div>
+
+      <div class="callout rust">
+        <p class="callout-title">Open questions &mdash; for Kriti + Gaurav, not resolved here</p>
+        <ol>
+          <li><strong>Cyber Crime &times; Harshit overlap &mdash; still open.</strong> Rank-1 C1 directly overlaps Harshit's &ldquo;Why is my account frozen?&rdquo; idea from the shared sheet. Talk to the other team before committing. Options: they're not building it &rarr; proceed; they are &rarr; take G1, co-equal on score with zero overlap; both build different wedges &rarr; risky in a judged field.</li>
+          <li><strong>Brief-fact discrepancies</strong> (deadline, finale date, and the missing 10-platform list on the live site) &mdash; confirm against the original announcement before planning the build window.</li>
+          <li><strong>T1's 42-lakh AIS stat</strong> must be traced to a primary source before appearing in any pitch material.</li>
+        </ol>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+</div>
+
+<p class="footnote">Evidence-strength chips reflect how well a problem is corroborated across the underlying secondary (news, CAG, parliamentary) and primary (Reddit, X/Twitter, app store, forum) research files for each platform, not the severity of the problem itself. Full source lists and every citation live in the project's <code>research/</code> and <code>research/primary/</code> folders.</p>
+
+</section>
+
+<section id="meta-walkthrough" role="tabpanel" aria-labelledby="metatab-walkthrough" hidden>
+
+  <div class="wt-intro">
+    <p><strong>What this is.</strong> Kriti and Gaurav narrowed the field to two platforms on impact: the <strong>National Cyber Crime Reporting Portal</strong>, because tech now touches every person and every sector, and <strong>CPGRAMS</strong>, because it is the one mechanism that makes every government department answerable. This section is the ground truth under that choice &mdash; both portals opened in a real browser on <strong>25 August 2026</strong> and walked screen by screen, as far as an anonymous citizen can get.</p>
+    <p><strong>How to read the tags.</strong> <span class="obs-tag">Observed</span> means seen live on the portal this session. <span class="obs-tag doc">Official doc</span> means taken verbatim from the portal's own manual, FAQ or an OM. <span class="obs-tag sec">Secondary</span> means news, parliamentary or audit sourcing. <span class="obs-tag gap">Gap</span> means we could not verify it and neither should you.</p>
+    <p><strong>The hard rule, and how we kept it.</strong> No form was submitted on either portal. No OTP was requested or entered. No complaint, grievance, suspect report or appeal was filed. No real name, mobile number, email, Aadhaar, PAN or payment detail was typed into any field. Every locked door below is reported as locked, not walked around.</p>
+  </div>
+
+  <nav class="tab-shell" aria-label="Portal selector">
+    <div class="tabs" id="wt-tabs" role="tablist">
+      <button class="tab" id="wt-tab-cyber" role="tab" aria-selected="true" aria-controls="wt-panel-cyber"><span class="tab-code">01</span><span class="tab-name">Cyber Crime</span></button>
+      <button class="tab" id="wt-tab-cpgrams" role="tab" aria-selected="false" aria-controls="wt-panel-cpgrams"><span class="tab-code">02</span><span class="tab-name">CPGRAMS</span></button>
+    </div>
+  </nav>
+
+  <div class="panel-wrap">
+    <div class="panel standalone" id="wt-panel-cyber" role="tabpanel" aria-labelledby="wt-tab-cyber">
+
+      <!-- ============ PORTAL 1 : NCRP ============ -->
+      <div class="portal-head">
+        <div class="panel-head-left">
+          <p class="kicker">Portal 1 &middot; walked live 2026&#8209;08&#8209;25</p>
+          <h2 class="portal-title">National Cyber Crime Reporting Portal</h2>
+          <p class="portal-meta">cybercrime.gov.in &middot; I4C, Ministry of Home Affairs &middot; last updated on site 05/06/2026</p>
+        </div>
+        <p class="portal-verdict">&ldquo;Three doors, three different identity rules, and only one of them lets you watch what happens next.&rdquo;</p>
+      </div>
+
+      <div class="wt-block">
+        <p class="wt-label">The three doors &mdash; the first decision, made before the citizen knows the rules</p>
+        <p class="wt-note">The homepage offers exactly three tiles, and the choice between them silently sets the identity requirement, the anonymity option, whether the case can ever be withdrawn, and whether a fund freeze is even attempted. Nothing on the tile says any of that. <span class="obs-tag">Observed</span></p>
+        <div class="table-scroll">
+          <table class="wt">
+            <thead><tr><th>Tile</th><th>Buttons offered</th><th>Identity required</th><th>What it actually routes to</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>Women/Children Related Crime</strong></td>
+                <td>&ldquo;Report Anonymously&rdquo; <em>and</em> &ldquo;Register &amp; Track&rdquo;</td>
+                <td>None, on the anonymous path</td>
+                <td>The only genuinely anonymous filing route on the portal. FAQ scopes it narrowly: <q>You can report crimes related to online Rape or Gang Rape (RGR) content anonymously.</q> A complaint filed here <strong>can never be withdrawn</strong>.</td>
+              </tr>
+              <tr>
+                <td><strong>Financial Fraud</strong></td>
+                <td>&ldquo;Register a Complaint&rdquo;</td>
+                <td>Indian mobile + OTP</td>
+                <td><code>Crime_AuthoLogin.aspx?rnt=5</code>. This is the CFCFRMS fast-track where a bank lien is possible &mdash; the only path where speed changes the outcome, and the one that demands the most before it lets you in.</td>
+              </tr>
+              <tr>
+                <td><strong>Other Cyber Crime</strong></td>
+                <td>&ldquo;Register a Complaint&rdquo;</td>
+                <td>Indian mobile + OTP</td>
+                <td>Hacking, social media, ransomware, crypto, trafficking, gambling. Can be withdrawn, but only <q>before it is converted into FIR</q>.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="wt-block">
+        <p class="wt-label">The walked path &mdash; Financial Fraud, click by click</p>
+        <ol class="steps">
+          <li>
+            <div class="step-title">Homepage tile &rarr; &ldquo;Register a Complaint&rdquo; <span class="step-url">cybercrime.gov.in/Webform/Index.aspx</span></div>
+            <p class="step-body">Three image tiles, no explanatory text under any of them. Clicking the Financial Fraud button does not open a form. <span class="obs-tag">Observed</span></p>
+          </li>
+          <li>
+            <div class="step-title">Interstitial one: &ldquo;Filing a Complaint on National Cyber Crime Reporting Portal&rdquo; <span class="step-url">/Webform/Accept.aspx</span></div>
+            <p class="step-body">A blue panel of prose, then two buttons: &ldquo;Learn about cyber crime&rdquo; and &ldquo;File a complaint&rdquo;. It carries the three helpline numbers &mdash; 112 police, 181 women, <strong>1930 cyber</strong> &mdash; which is the first and only place on this path the citizen is told the 1930 route exists. <span class="obs-tag">Observed</span></p>
+          </li>
+          <li>
+            <div class="step-title">Interstitial two: terms and conditions, same URL <span class="step-url">/Webform/Accept.aspx</span></div>
+            <p class="step-body">The same page reloads with different copy and a single &ldquo;I Accept&rdquo; button. Two consent screens on the same URL before a single field is offered. The declaration includes the penal-liability warning for false information. <span class="obs-tag">Observed</span></p>
+          </li>
+          <li class="blocked">
+            <div class="step-title">Citizen Login &mdash; the wall <span class="step-url">/Webform/Crime_AuthoLogin.aspx?rnt=5</span></div>
+            <p class="step-body">Mobile number, &ldquo;Get OTP&rdquo;, OTP field, captcha. <strong>This is where the walkthrough stops</strong>; no OTP was requested. Existing users log in with mobile + OTP + captcha; new users additionally pick a <strong>State</strong> and set a <strong>Login ID (preferably your email)</strong>. Per the FAQ, the OTP is valid for <strong>30 minutes</strong>. <span class="obs-tag">Observed</span> <span class="obs-tag doc">Official doc</span></p>
+            <p class="step-body">Beside the login sits a &ldquo;<strong>Check list for complainant</strong>&rdquo; panel that is, in practice, the most useful thing on the portal &mdash; and it appears <em>after</em> two consent screens, at the exact moment the citizen can no longer proceed without it. Reproduced verbatim below.</p>
+          </li>
+        </ol>
+        <p class="quote">Mandatory: Incident Date and Time. Incident details (minimum 200 characters) without any special characters. Soft copy of any national Id in .jpeg, .jpg, .png (not more than 5 MB). In case of financial fraud: Name of the Bank/Wallet/Merchant, 12-digit Transaction id/UTR No., Date of transaction, Fraud amount. Soft copy of all the relevant evidences (not more than 10 MB each).<cite>Check list for complainant, cybercrime.gov.in login screen, observed 25 Aug 2026</cite></p>
+        <p class="wt-note">Note the internal contradiction the portal ships with: the checklist says evidence may be <strong>10 MB each</strong>, while the official citizen manual states <q>the maximum file size of 5 mb</q> for every category, and the ID upload on the same panel is capped at 5 MB. <span class="obs-tag gap">Gap</span></p>
+      </div>
+
+      <div class="wt-block">
+        <p class="wt-label">Inside the form &mdash; reached via the anonymous door, which needs no OTP</p>
+        <p class="wt-note">The Women/Child &ldquo;Report Anonymously&rdquo; path opens the real complaint wizard without any login, so the form structure could be observed directly. It is a <strong>three-step wizard</strong>: <em>Complaint &amp; Incident Details &rarr; Suspect Details &rarr; Preview &amp; Submit</em>. The other tracks add a fourth step, Complainant Details. <span class="obs-tag">Observed</span></p>
+        <ol class="steps">
+          <li>
+            <div class="step-title">Step 1 &middot; Complaint &amp; Incident Details</div>
+            <ul class="step-fields">
+              <li class="req"><strong>Category of complaint</strong><span class="req-tag">required</span> &mdash; on the anonymous path exactly four options: Rape/Gang Rape (RGR)-Sexually Abusive Content; Sexually Obscene material; Sexually Explicit Act; CSEAM.</li>
+              <li class="req"><strong>Approximate date &amp; time of incident</strong><span class="req-tag">required</span> &mdash; a date picker plus three separate dropdowns for HH, MM and AM/PM.</li>
+              <li><strong>Reason for delay in reporting</strong> &mdash; a free-text box, not marked required, with no guidance on what a good answer looks like or what happens if it is left blank.</li>
+              <li class="req"><strong>State / UT</strong><span class="req-tag">required</span>, then <strong>District</strong><span class="req-tag">required</span>, then <strong>Police Station</strong> (optional) &mdash; each dependent on the one above.</li>
+              <li class="req"><strong>Where did the incident occur?</strong><span class="req-tag">required</span> &mdash; Email, Facebook, Instagram, Snapchat, Twitter, WhatsApp, Website Url, Youtube, LinkedIn, Telegram, Other. There is no option for a phone call, an SMS, an in-person approach or a bank app; all of those collapse into &ldquo;Other&rdquo;.</li>
+              <li class="req"><strong>Additional information about the incident</strong><span class="req-tag">required</span> &mdash; <strong>minimum 200 characters, maximum 1500</strong>, and the helper text reads <q>Special Characters like ~!#^'`$|{}&lt;&gt;* are not allowed</q>.</li>
+            </ul>
+          </li>
+          <li>
+            <div class="step-title">Step 2 &middot; Suspect Details <span class="step-url">gated &mdash; step 1 must be completed first</span></div>
+            <p class="step-body">The tab is visible but inert until step 1 validates, so a citizen cannot see what will be asked of them next. Per the citizen manual it collects: suspect name (with &ldquo;Add More&rdquo;), an ID type from <em>Driving License, Email, Gov. Issued Card, Mobile Number, PAN Card, Voter Card, Other</em>, a photograph of the suspect, and an optional address block down to Country &rarr; State &rarr; District &rarr; Police Station. <span class="obs-tag">Observed</span> <span class="obs-tag doc">Official doc</span></p>
+          </li>
+          <li>
+            <div class="step-title">Step 3 &middot; Complainant Details <span class="step-url">identified tracks only</span></div>
+            <p class="step-body">Per the manual, this step makes <strong>Father/Mother/Spouse Name</strong> mandatory and requires an <strong>uploaded national ID</strong> (Voter ID, PAN, Driving Licence or any government-issued card), plus State and District. <span class="obs-tag doc">Official doc</span></p>
+          </li>
+          <li>
+            <div class="step-title">Step 4 &middot; Preview &amp; Submit</div>
+            <p class="step-body">Tick &ldquo;I Agree&rdquo;, click &ldquo;Confirm &amp; Submit&rdquo;. A Complaint ID appears on screen and is pushed by SMS and email; a PDF of the filed complaint can be downloaded. Uploaded evidence is given a <strong>hash value</strong> so the file's integrity can be proven later &mdash; a genuinely good feature that the portal never explains the point of. <span class="obs-tag doc">Official doc</span></p>
+          </li>
+        </ol>
+      </div>
+
+      <div class="wt-block">
+        <p class="wt-label">The category taxonomy the citizen has to self-diagnose into</p>
+        <p class="wt-note">Eight top-level categories under &ldquo;Other Cyber Crime&rdquo;, each with its own sub-list. The routing consequence is invisible: picking the wrong branch can cost the fund-freeze window entirely. <span class="obs-tag doc">Official doc</span></p>
+        <div class="table-scroll">
+          <table class="wt">
+            <thead><tr><th>Category</th><th>Sub-categories</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Online and Social Media Related Crime</strong></td><td>Cyber Bullying/Stalking/Sexting &middot; E-Mail Phishing &middot; E-mail Hacking &middot; Fake/Impersonating Profile &middot; Impersonating Email &middot; Online Job Fraud &middot; Online Matrimonial Fraud &middot; Profile Hacking &middot; Provocative Speech &middot; Intimidating Email</td></tr>
+              <tr><td><strong>Online Financial Fraud</strong></td><td>Business Frauds/Email Takeover &middot; Debit/Credit Card Fraud &amp; SIM Swap Fraud &middot; E-Wallet Related Fraud &middot; Fraud Call/Vishing &middot; Internet Banking Related Fraud</td></tr>
+              <tr><td><strong>Ransomware</strong></td><td>Ransomware</td></tr>
+              <tr><td><strong>Hacking</strong></td><td>Unauthorized Access/Data Breach &middot; Website Related/Defacement</td></tr>
+              <tr><td><strong>Cryptocurrency Related Crime</strong></td><td>Cryptocurrency Related Fraud</td></tr>
+              <tr><td><strong>Online Trafficking</strong></td><td>Online Trafficking</td></tr>
+              <tr><td><strong>Online Gambling</strong></td><td>Online Gambling</td></tr>
+              <tr><td><strong>Any Other Cyber Crime</strong></td><td>Free text</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="wt-block">
+        <p class="wt-label">Evidence rules, verbatim</p>
+        <p class="wt-note">From Annexure B of the citizen manual: accepted types are <code>.txt .png .jpeg .jiff .rtf .jpg .dib .gif .doc .ppt .docx .pptx .pdf .epub .bmp .avi .wmv .3gp .mp4 .mkv .mov .flv .mpg .webm</code> with <q>the maximum file size of 5 mb</q>, added one at a time through an &ldquo;Add&rdquo; button. <strong>There is no documented cap on the number of files.</strong> Audio evidence is referenced elsewhere in the portal's own material as <code>.amr .3gp .wav</code> &mdash; but <code>.wav</code> and <code>.amr</code> are not on the accepted list. A voice recording of a vishing call, the single most common evidence a fraud victim actually holds, has no documented way in. <span class="obs-tag doc">Official doc</span> <span class="obs-tag gap">Gap</span></p>
+      </div>
+
+      <div class="wt-block">
+        <p class="wt-label">Tracking, and why it fails the person who needs it most</p>
+        <ol class="steps">
+          <li class="blocked">
+            <div class="step-title">Track your Complaint <span class="step-url">/Webform/chkackstatus.aspx</span></div>
+            <p class="step-body">Three fields: <strong>Acknowledgement No.</strong>, an OTP sent to the registered mobile, and a captcha. The acknowledgement number alone is not enough &mdash; <strong>you must still hold the phone that filed the complaint</strong>. Reached and read; no OTP requested. <span class="obs-tag">Observed</span></p>
+          </li>
+          <li>
+            <div class="step-title">The logged-in view</div>
+            <p class="step-body">Per the manual, the in-portal route is different again: log in with <em>username</em> + mobile + OTP + security answer, then &ldquo;Check Status&rdquo; and <strong>select a date</strong> to search for the complaint. Tracking is a date-range search over your own filings, not a lookup by case ID. <span class="obs-tag doc">Official doc</span></p>
+          </li>
+          <li class="blocked">
+            <div class="step-title">What the statuses mean <span class="step-url">not published anywhere</span></div>
+            <p class="step-body"><strong>No official enumeration of NCRP status values exists.</strong> Not in the manual, not in the FAQ, not in any I4C document we could reach. Third-party guides variously report <em>Submitted / Assigned / Under Investigation / Under Process / Resolved / Closed / Disposed</em>, and none of them agrees with another. The single most consequential field in the citizen's experience is undocumented. <span class="obs-tag gap">Gap</span></p>
+          </li>
+        </ol>
+      </div>
+
+      <div class="wt-block">
+        <p class="wt-label">1930, CFCFRMS, and the 24-hour rule almost nobody knows</p>
+        <p class="wt-note">The portal's Learning Corner links three citizen manuals. One of them &mdash; still linked live in August 2026 &mdash; is titled <q>Citizen Financial Cyber Frauds Reporting and Management System <strong>(For Delhi Only)</strong></q> and carries the rule that governs every financial-fraud victim in the country: <span class="obs-tag doc">Official doc</span></p>
+        <p class="quote">After reporting of complaint/incident, the complainant will get a system generated Log-in Id/acknowledgement number through SMS/Mail. Using the above Log-in Id/acknowledgement number, the complainant must complete registration of complaint on National Cybercrime Reporting Portal within 24 hours. This is mandatory.<cite>instructions_citizenreportingcyberfrauds.pdf, hosted on cybercrime.gov.in</cite></p>
+        <p class="wt-note">So the real sequence is: call 1930 &rarr; give seven fields over the phone (mobile number; bank/wallet/merchant name; the account, wallet, merchant or UPI ID debited; transaction ID; transaction date; card number if card credentials were used; a screenshot if available) &rarr; receive an acknowledgement &rarr; <strong>and then re-enter the entire complaint on the portal within 24 hours or the ticket is not a complaint</strong>. A victim who calls the helpline, is told the money is being chased, and then waits, has done nothing the system recognises. This is the sharpest single procedural finding on this portal.</p>
+        <p class="wt-note">Downstream, the manual states the police officer examines the matter and reports to the bank <q>for blocking the money involved</q>. Nothing in the citizen-facing system reports back whether the block succeeded, at which bank, or against how much of the amount.</p>
+      </div>
+
+      <div class="wt-block">
+        <p class="wt-label">Escalation &mdash; where a citizen goes when nothing happens</p>
+        <p class="wt-note">&ldquo;Contact Us&rdquo; resolves to a State/UT table of Nodal Cyber Cell Officers and Grievance Officers, with the note: <q>Complainant who registered complaint using &ldquo;Report &amp; Track&rdquo; option ... may contact the respective State/UT Nodal Officer or Grievance Officer if the response has not been appropriate.</q> Three things about it: <span class="obs-tag">Observed</span></p>
+        <ul class="friction">
+          <li class="obs"><strong>Anonymous filers are excluded by design.</strong> The escalation note applies only to Report &amp; Track complaints. Choose the anonymous door and you have no escalation path at all.</li>
+          <li class="obs"><strong>Every email address is obfuscated.</strong> The page warns <q>In the Email Column, [at] indicates @, [dot] indicates ., [hyphen] indicates -</q>. A distressed citizen must manually reassemble an address like <code>sp[hyphen]cid[hyphen]cyber2[at]assampolice[dot]gov[dot]in</code> before they can write to anyone.</li>
+          <li class="hard"><strong>No SLA is stated anywhere.</strong> Not for the nodal officer, not for the grievance officer, not for the complaint itself. There is no published deadline the citizen can hold anyone to, and therefore no moment at which escalation is objectively due.</li>
+        </ul>
+      </div>
+
+      <div class="wt-block">
+        <p class="wt-label">Two side doors worth knowing about</p>
+        <ul class="friction">
+          <li class="obs"><strong>Report Suspect takes no login at all.</strong> <code>/Webform/cyber_suspect.aspx</code> accepts a state, a type (Website URL, WhatsApp/Telegram handle, phone number, email, SMS header, social media URL, <strong>Deepfake</strong>, <strong>Mobile App</strong>), one supporting file up to 5 MB and a 500-character description &mdash; with no OTP. The portal's easiest, fastest channel feeds an intelligence repository, not a case. <span class="obs-tag">Observed</span></li>
+          <li class="obs"><strong>The Suspect Repository is public and searchable</strong> by mobile, email, bank account number, UPI ID or social handle &mdash; and I4C disclaims it in the same breath: <q>I4C does not certify the authenticity of complaints ... This database is not complete ... there are chances of error.</q> The stated remedy if you are wrongly listed is an email to <code>cyberdost[at]mha[dot]gov[dot]in</code> <q>duly explaining and substantiating his claim</q>. No form, no ID, no SLA. That is the identical asymmetry the frozen-account research found: fast to be flagged, manual and adversarial to be cleared. <span class="obs-tag">Observed</span></li>
+        </ul>
+      </div>
+
+      <div class="wt-block">
+        <p class="wt-label">Systemic failure modes, from the record</p>
+        <ul class="friction">
+          <li><strong>Volume is compounding and the losses faster still.</strong> NCRP incidents: 4.52 lakh (2021) &rarr; 10.29 lakh (2022) &rarr; 15.96 lakh (2023) &rarr; 22.68 lakh (2024). Reported loss: &#8377;2,290 cr (2022) &rarr; &#8377;7,465 cr (2023) &rarr; &#8377;22,846 cr (2024). <span class="obs-tag sec">Secondary</span> <em>MHA figures via parliamentary answers</em></li>
+          <li><strong>&ldquo;Saved&rdquo; is not &ldquo;returned,&rdquo; and that gap only half-closed.</strong> CFCFRMS reports &#8377;11,158 crore saved across 32.80 lakh complaints as on 30 June 2026, against a confirmed 2.18% restoration rate overall (&#8377;167cr of &#8377;52,969cr reported stolen). MHA/I4C launched the Money Restoration Module around 20 Aug 2026, a tracked online refund path (request ID, then a Unique Request Number) for the original complainant. It requires the complainant's own NCRP acknowledgement number to log in &mdash; it has no path for someone who never filed a complaint. <span class="obs-tag sec">Secondary</span> <em>PIB / I4C, NIE, Aug 2026</em></li>
+          <li class="hard"><strong>There is no published FIR-conversion rate, and that is deliberate.</strong> MHA's standing parliamentary line is that conversion into FIRs <q>and subsequent action are handled by the State/UT Law Enforcement Agencies concerned</q>. Police is a State subject; the Union owns the intake and not the outcome. The absence of the number is the structural gap. <span class="obs-tag sec">Secondary</span></li>
+          <li><strong>e-Zero FIR started Delhi-only above &#8377;10 lakh, now expanding.</strong> Launched May 2025 as a Delhi pilot, it auto-generates a Zero FIR at the e-Crime Police Station for NCRP/1930 complaints over &#8377;10 lakh; by 2026 it has extended to multiple states with rollout planned across 19. Every smaller loss &mdash; which is almost all of them &mdash; still depends on a citizen persuading a police station to register. <span class="obs-tag sec">Secondary</span></li>
+          <li class="hard"><strong>Freeze and release are still asymmetric for the bystander.</strong> Money moves through five or six accounts before it lands, and the whole chain gets frozen. For the account holder who never filed a complaint, release is still manual: attend the cyber cell, prove you are a victim not an accused, obtain an NOC, take it to the bank. No SLA, no tracked status. This is the failing moment the team's rank-1 candidate targets &mdash; MHA's own Jan 2026 SOP names this exact failure mode (&ldquo;mistaken identity, disputed transactions, or insufficient verification&rdquo;) as grounds to freeze proportionately, which is as close to an official concession of this gap as exists. <span class="obs-tag sec">Secondary</span></li>
+        </ul>
+      </div>
+
+      <div class="callout bad">
+        <p class="callout-title">Needs Gaurav &mdash; Cyber Crime portal</p>
+        <ol>
+          <li><strong>Log in once with your own mobile and screenshot the logged-in complaint flow.</strong> Everything past the OTP wall is second-hand here, and the manual we relied on is dated <strong>30 August 2019</strong> while the live portal has since added the Financial Fraud tile and the Suspect Repository. Specifically capture: the Financial Fraud category screen, the transaction-detail fields, and the evidence uploader's actual behaviour.</li>
+          <li><strong>Capture the real status values on a live tracked complaint.</strong> This is the single most important unknown for the build &mdash; the product's whole premise is translating a status. There is no official list. If you know anyone with an open NCRP complaint, one screenshot of the status screen is worth more than any amount of further searching.</li>
+          <li><strong>Confirm whether the 24-hour rule is still enforced nationally.</strong> The only verbatim source is the Delhi-pilot PDF. Ask 1930 directly, or find the current NCRP-CFCFRMS SOP. If it holds, it is the sharpest thing in the pitch. If it has been quietly dropped, we must not claim it.</li>
+          <li><strong>Trace the parliamentary answers.</strong> mha.gov.in returns 403 to automated fetch. The numbers above came via secondary quotation of LS 22.07.2025 Q.344, LS 02.12.2025 Q.432 and Q.452, and RS 27.11.2024 Q.226. Open those PDFs by hand before any figure goes in a deck.</li>
+          <li><strong>Ask a bank, not the portal, about the unfreeze SLA.</strong> Whether banks work to any internal deadline once an NOC is produced is the load-bearing assumption behind the C1 build. Nothing public answers it.</li>
+        </ol>
+      </div>
+
+    </div>
+
+    <div class="panel standalone" id="wt-panel-cpgrams" role="tabpanel" aria-labelledby="wt-tab-cpgrams" hidden>
+
+      <!-- ============ PORTAL 2 : CPGRAMS ============ -->
+      <div class="portal-head">
+        <div class="panel-head-left">
+          <p class="kicker">Portal 2 &middot; walked live 2026&#8209;08&#8209;25</p>
+          <h2 class="portal-title">CPGRAMS</h2>
+          <p class="portal-meta">pgportal.gov.in &middot; DARPG, Ministry of Personnel &middot; version 7.0.01092019.0.0 &middot; last updated 21&#8209;08&#8209;2026</p>
+        </div>
+        <p class="portal-verdict">&ldquo;A complaint can be closed with no reply, and the closure switches off your right to object to it.&rdquo;</p>
+      </div>
+
+      <div class="wt-block">
+        <p class="wt-label">The official process flow, as the portal itself draws it</p>
+        <p class="wt-note">CPGRAMS publishes its own flow diagram at <code>/Home/ProcessFlow</code>. Read as a state machine it is: <strong>Citizen &rarr; One Time Registration &amp; Login &rarr; Registration with department details, Grievance Unique ID generated &rarr; Transmission to PGO/Field Office &rarr; Resolution &rarr; ATR to citizen by SMS/Email &rarr; Feedback &rarr; Satisfied?</strong> Yes closes the file; No routes to the <strong>Nodal Appellate Authority / Sub Appellate Authority</strong> and then to Final Resolution. A dotted box on the right states the resolution time: <strong>21 days</strong>. <span class="obs-tag">Observed</span></p>
+        <p class="wt-note">The critical structural fact is visible right there in the diagram: <strong>the only route to a second look runs through the Feedback node.</strong> A citizen who never returns to rate the closure never reaches the appeal branch at all. The appeal is not a right you exercise; it is a branch you unlock.</p>
+      </div>
+
+      <div class="wt-block">
+        <p class="wt-label">The walked path</p>
+        <ol class="steps">
+          <li class="blocked">
+            <div class="step-title">Lodge Public Grievance <span class="step-url">/Home/LodgeGrievance</span></div>
+            <p class="step-body">Returns a single red line and two links: <q>Grievance can now be lodged only by registered users..</q> There is <strong>no anonymous or guest filing path on CPGRAMS at all</strong> &mdash; a hard contrast with the cyber crime portal, which at least keeps one anonymous door open. The homepage adds two banners worth quoting: <q>Any Grievance sent by email will not be attended to / entertained</q> and <q>Government is not charging fee from the public for filing grievances.</q> <span class="obs-tag">Observed</span></p>
+          </li>
+          <li>
+            <div class="step-title">Registration / Sign up <span class="step-url">/Registration/Index</span></div>
+            <p class="step-body">Fully reachable and read; nothing was entered or submitted. The mandatory set is larger than most citizens expect: <span class="obs-tag">Observed</span></p>
+            <ul class="step-fields">
+              <li class="req"><strong>Name</strong><span class="req-tag">required</span></li>
+              <li class="req"><strong>Gender</strong><span class="req-tag">required</span> &mdash; Male / Female / Transgender</li>
+              <li class="req"><strong>Address: Premise Number or Name</strong><span class="req-tag">required</span>, plus Locality and Sub-locality</li>
+              <li class="req"><strong>Country</strong><span class="req-tag">required</span>, <strong>State</strong><span class="req-tag">required</span>, <strong>District</strong><span class="req-tag">required</span> (District is disabled until a State is picked)</li>
+              <li class="req"><strong>Mobile number</strong><span class="req-tag">required</span> and <strong>E-mail address</strong><span class="req-tag">required</span> &mdash; both, not either</li>
+              <li class="req"><strong>Security Code</strong><span class="req-tag">required</span> &mdash; a low-contrast captcha</li>
+              <li>Pincode and landline are optional</li>
+            </ul>
+            <p class="step-body">Registration is verified by <strong>mobile OTP and an email confirmation link</strong>. A postal address is mandatory to complain about a government service you may never have visited in person.</p>
+          </li>
+          <li class="blocked">
+            <div class="step-title">The grievance form itself <span class="step-url">behind login &mdash; not walked</span></div>
+            <p class="step-body">Targeting is a three-tier cascade: <strong>Ministry &rarr; Department &rarr; Subordinate Organisation</strong>. Critically, the grievance <strong>category list is not global</strong> &mdash; each organisation maintains its own, and it is not a mandatory field on the officer side. So the taxonomy a citizen sees depends entirely on which department they have already correctly guessed. <span class="obs-tag doc">Official doc</span></p>
+            <p class="step-body">Attachments are <strong>PDF only</strong> per NIC's own manual. A separate, largely unknown &ldquo;Attach Document&rdquo; path lets a PDF be added to an <em>already-registered</em> grievance by entering its registration number.</p>
+          </li>
+          <li>
+            <div class="step-title">View Status <span class="step-url">/Status</span></div>
+            <p class="step-body">Registration number + email or mobile + captcha. <strong>No OTP</strong> &mdash; materially easier than NCRP's tracking wall. There is a parallel <code>/Appeal/Status</code> that takes an <strong>Appeal Number</strong> instead, confirming appeals carry their own separate identifier. <span class="obs-tag">Observed</span></p>
+          </li>
+          <li>
+            <div class="step-title">Send Reminder <span class="step-url">/Reminder</span></div>
+            <p class="step-body">Registration number, then <em>either</em> a &ldquo;<strong>Grievance password</strong>&rdquo; or email/mobile, plus captcha. The per-grievance password is a concept the portal never introduces anywhere a citizen would meet it. This is also the only self-service nudge available before the appeal branch unlocks. <span class="obs-tag">Observed</span></p>
+          </li>
+        </ol>
+      </div>
+
+      <div class="wt-block">
+        <p class="wt-label">The rules that decide whether you are heard at all</p>
+        <p class="wt-note">DARPG Office Memorandum <strong>F.No. S-15/21/2021-(PG)-DARPG (e-7085), dated 23 August 2024</strong> is the governing document, and it is more revealing than the FAQ. Its list of references that are <q>not falling under the category of Grievance</q> is expressly <strong>illustrative, not exhaustive</strong>: <span class="obs-tag doc">Official doc</span></p>
+        <p class="quote">a. RTI Matters &nbsp;b. Court related / Sub-judice matters &nbsp;c. Religious Matters &nbsp;d. Grievances of Government employees concerning service matters &nbsp;e. Suggestions &nbsp;d. Anything that impacts upon territorial integrity of the country or friendly relations with other countries.<cite>DARPG OM 23.08.2024, Annexure &sect;2.1 &mdash; lettering error in the original</cite></p>
+        <p class="wt-note">What happens to a reference in that list is the finding. Per &sect;2.2 the officer <q>is not supposed to file ATR on those categories and complaints will not go into feedback loop.</q> The same treatment applies to AI-flagged spam (&sect;2.3), to suggestions (&sect;2.4), to scheme-benefit demands which may be <q>bulk closed</q> (&sect;2.5), and to anything a GRO judges frivolous, where <q>feedback will be disabled on such grievances</q> (&sect;7.3). Habitual complainants can be <q>flagged and blocked in CPGRAMS</q> (&sect;3.5.2).</p>
+        <p class="wt-note"><strong>Chain those two rules together and you get the real mechanism.</strong> Appeal requires a feedback rating. At least <strong>eight</strong> documented routes close a grievance with feedback switched off: &sect;2.2 (non-grievance categories), &sect;2.4 (suggestions), &sect;2.5 (scheme-benefit demands, bulk closed), &sect;7.3 (frivolous), &sect;3.1.5 (closed for insufficient information), &sect;3.1.7 (unresolvable), &sect;3.5 (corruption complaints), and &sect;3.5.2 (habitual-complainant blocking) &mdash; verified against the OM text 2026-08-26, three more than first counted. Those closures are therefore structurally unappealable &mdash; and nothing tells the citizen which route their case took.</p>
+      </div>
+
+      <div class="wt-block">
+        <p class="wt-label">Timelines and the appeal, with citations</p>
+        <div class="table-scroll">
+          <table class="wt">
+            <thead><tr><th>Rule</th><th>Value</th><th>Source</th></tr></thead>
+            <tbody>
+              <tr><td>Redressal target</td><td><strong>21 days</strong>, cut from 30. Delay requires <q>an Interim reply ... stating the reason</q></td><td class="mono">OM 23.08.2024 &sect;5.1; FAQ Q13</td></tr>
+              <tr><td>Priority cases</td><td><q>resolved maximum within 3 days</q></td><td class="mono">OM Annexure &sect;3.1.1</td></tr>
+              <tr><td>Per-category override</td><td>Ministries may set longer timelines; DARPG is building <q>an algorithm which will generate the optimal time for resolution</q>. The 21 days is advisory, not a hard SLA.</td><td class="mono">OM &sect;5.2</td></tr>
+              <tr><td>Appeal window</td><td><strong>30 days</strong> from disposal</td><td class="mono">DARPG FAQ Q15</td></tr>
+              <tr><td>Appeal precondition</td><td>A feedback rating on the disposal, and specifically a <strong>&ldquo;Poor&rdquo;</strong> rating &mdash; confirmed 2026-08-26 on CPGRAMS's own homepage: <q>If the rating is 'Poor' the option to file an appeal is enabled.</q> Both the rating requirement and the Poor threshold are now official.</td><td class="mono">CPGRAMS homepage, verified</td></tr>
+              <tr><td>Appeal channels</td><td>Portal, chatbot, WhatsApp, feedback call centre. <q>only a single appeal is filed for a grievance</q></td><td class="mono">OM &sect;4.1</td></tr>
+              <tr><td>Who hears it</td><td><strong>Nodal Appellate Authority</strong>, Additional/Joint Secretary rank, with optional <strong>Sub Appellate Authorities</strong> beneath. <q>next senior to the GRO in the hierarchy</q></td><td class="mono">OM &sect;6, &sect;4.2</td></tr>
+              <tr><td>Appeal SLA</td><td><q>disposed of in a maximum of 30 days</q></td><td class="mono">OM &sect;6</td></tr>
+              <tr><td>Second appeal</td><td><strong>None.</strong> <q>Appeals will not go into feedback process.</q> The appeal outcome cannot be rated and cannot be appealed.</td><td class="mono">OM &sect;4.2</td></tr>
+              <tr><td>Re-opening a closed case</td><td><strong>Not possible.</strong> <q>No. In such situations, the citizen will have to lodge a fresh grievance drawing reference to the closed grievance</q></td><td class="mono">FAQ Q7</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="wt-note" style="margin-top:16px;">That last row deserves its own line. The research file had &ldquo;disposed grievances are never reopened&rdquo; recorded as <em>EPFO practice</em>. It is not. <strong>It is the portal's own published policy, for every department.</strong> Every unresolved case becomes a brand-new grievance with a fresh 21-day clock and no linkage to its predecessor &mdash; which is precisely how a department's dashboard can report record disposal while the same citizen files the same complaint four times.</p>
+      </div>
+
+      <div class="wt-block">
+        <p class="wt-label">What DARPG has already fixed, and what it did not touch</p>
+        <ul class="friction">
+          <li class="obs"><strong>Closure-quality rules now exist on paper.</strong> The 2024 OM forbids closing with <q>Does not pertain to this Ministry/Department/Office</q>, forbids closing for missing documents (there is a mechanism to request them), requires the <strong>Relied Upon Document</strong> to be uploaded, and requires a <q>valid and speaking reason while closing</q>. Every one of these is an instruction to a human, enforced by nothing in the software. <span class="obs-tag doc">Official doc</span></li>
+          <li class="obs"><strong>Language is genuinely solved.</strong> The portal ships in 22+ Eighth Schedule languages, replies are meant to come back in the language the grievance was filed in, and <strong>Samadhan Didi</strong> &mdash; an AI voice chatbot built with Bhashini, launched 30 May 2026 &mdash; lets a citizen speak the grievance. Filing is not the bottleneck any more. <span class="obs-tag">Observed</span> <span class="obs-tag sec">Secondary</span></li>
+          <li class="obs"><strong>Speed is genuinely solved.</strong> Average central disposal time: 22 days (2022) &rarr; 15 (2025) &rarr; <strong>13 days</strong> (47th monthly report, March 2026, 1,81,279 grievances redressed). <span class="obs-tag sec">Secondary</span></li>
+          <li class="hard"><strong>Resolution quality was not touched.</strong> No system check tests whether an Action Taken Report addresses the complaint. Satisfaction on closed grievances has hovered around 50% while disposal hit records. The 119th Parliamentary Standing Committee (Dec 2021) found ministries disposing grievances without valid reasons and redirecting state-subject cases instead of forwarding them &mdash; and it remains the <strong>last dedicated external review</strong>. No CAG performance audit of CPGRAMS was found for 2023&ndash;2026. The only current scoring is GRAI, DARPG grading itself. <span class="obs-tag sec">Secondary</span></li>
+          <li class="hard"><strong>Pendency is not falling.</strong> 2,13,190 grievances pending across States/UTs as on 31 May 2026, with 22 States/UTs carrying over a thousand each. <span class="obs-tag sec">Secondary</span> <em>DARPG 46th monthly report</em></li>
+          <li><strong>The feedback signal is mostly telephonic.</strong> Every disposed grievance is dialled by a call-centre operator; in 2025 the call centre accounted for <strong>66%</strong> of all feedback. It is a measurement layer, not a gate &mdash; nothing it discovers blocks a closure. <span class="obs-tag doc">Official doc</span> <span class="obs-tag sec">Secondary</span></li>
+        </ul>
+      </div>
+
+      <div class="callout bad">
+        <p class="callout-title">Needs Gaurav &mdash; CPGRAMS</p>
+        <ol>
+          <li><strong>Register once and open the grievance form.</strong> Two numbers we need and could not get are behind the login, and the public sources contradict each other: the <strong>grievance text character limit</strong> (4,000 vs 1,000 with a 100-char subject) and the <strong>attachment size and count</strong> (1 MB PDF+JPG vs 4 MB &times; 5 files PDF-only). If the prototype's demo shows a citizen pasting their complaint, we need the real limit.</li>
+          <li><strong>Screenshot the Ministry &rarr; Department &rarr; Subordinate Organisation cascade and one department's category list.</strong> The claim that categories are per-organisation rather than global is from the officer-side manual. Seeing it is worth more than citing it.</li>
+          <li><strong>Resolved 2026-08-26, no action needed.</strong> The &ldquo;Poor&rdquo; rating threshold is confirmed on the CPGRAMS homepage itself; the &ldquo;you have to know to say Poor&rdquo; framing is load-bearing and safe to use as-is.</li>
+          <li><strong>Get one real disposed grievance and its ATR text.</strong> Yours, Kriti's, a family member's &mdash; any real (grievance, ATR) pair is the difference between a synthetic demo and a demo that lands. Redact freely; we only need the shape of the language.</li>
+          <li><strong>Pull the DARPG monthly report PDFs by hand.</strong> darpg.gov.in and pib.gov.in both 403 automated fetch. The <strong>appeals filed/disposed</strong> and <strong>satisfaction-rate</strong> tables for 2026 are in those PDFs and nowhere else we could reach. The most recent appeals numbers we hold are from 2025.</li>
+          <li><strong>Decide whether CPGRAMS-as-a-platform survives the overlap test.</strong> The impact scoring flagged CP1 as Harshit's exact idea. Nothing in this walkthrough changes that. It does, however, surface two framings that are <em>not</em> his: the <strong>feedback-disabled closure routes</strong>, and the <strong>no-reopen rule as official policy</strong>. Both are sharper than &ldquo;did they actually solve my complaint&rdquo;.</li>
+        </ol>
+      </div>
+
+    </div>
+
+    <div class="panel standalone" id="wt-panel-shared">
+
+      <!-- ============ COMPARISON ============ -->
+      <div class="wt-block">
+        <p class="wt-label">The two portals, side by side</p>
+        <div class="compare">
+          <div class="compare-card">
+            <h4>Getting in</h4>
+            <p><strong>NCRP:</strong> Indian mobile + OTP for anything that matters. One anonymous door, scoped to RGR content only, with no escalation path attached to it.</p>
+            <p><strong>CPGRAMS:</strong> registered users only, no exceptions. Mobile OTP <em>and</em> email confirmation <em>and</em> a postal address.</p>
+          </div>
+          <div class="compare-card">
+            <h4>Getting a status</h4>
+            <p><strong>NCRP:</strong> acknowledgement number <em>plus an OTP to the filing phone</em>. Lose the phone, lose the case. Status values are undocumented anywhere.</p>
+            <p><strong>CPGRAMS:</strong> registration number + email or mobile + captcha. No OTP. Materially better.</p>
+          </div>
+          <div class="compare-card">
+            <h4>The hidden deadline</h4>
+            <p><strong>NCRP:</strong> a 1930 call must be converted into a full portal complaint <strong>within 24 hours</strong> or it is not a complaint. Almost nobody knows this.</p>
+            <p><strong>CPGRAMS:</strong> the appeal window is <strong>30 days</strong> from disposal, and it only opens if you go back and rate the closure.</p>
+          </div>
+          <div class="compare-card">
+            <h4>When it goes wrong</h4>
+            <p><strong>NCRP:</strong> a State nodal officer with an obfuscated email and no SLA. Anonymous filers get nothing.</p>
+            <p><strong>CPGRAMS:</strong> a real appellate hierarchy with a real 30-day SLA &mdash; gated behind a rating, and switched off entirely for five documented classes of closure.</p>
+          </div>
+          <div class="compare-card">
+            <h4>Where the build sits</h4>
+            <p><strong>NCRP:</strong> the failing moment is <em>after</em> the freeze &mdash; an innocent account locked, or money somewhere in a pipeline nobody narrates. The product is a case-state machine, not a letter generator.</p>
+            <p><strong>CPGRAMS:</strong> the failing moment is <em>the closure itself</em> &mdash; and the sharpest wedge is not ATR quality but the routes that close a case with your objection rights already disabled.</p>
+          </div>
+          <div class="compare-card">
+            <h4>Mock-data safety</h4>
+            <p><strong>Both are clean.</strong> Everything either product needs to demo &mdash; complaint records, status timelines, fund hops, ATR text, appeal drafts &mdash; is synthesisable. Neither build requires a live call, a real OTP, or any government API. Both sit comfortably inside the brief's hard rules.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout accent">
+        <p class="callout-title">The honest state of this document</p>
+        <p><strong>Reachable without authentication and therefore verified first-hand:</strong> both homepages, NCRP's two consent interstitials, its login and new-user screens, the complete anonymous complaint form, Report Suspect, the Suspect Repository, the nodal officer directory, the tracking entry screen, the citizen-manual index; and on CPGRAMS the process-flow diagram, the registration form, View Status, Appeal Status, Send Reminder, the login wall and the full FAQ.</p>
+        <p><strong>Behind a wall we did not cross:</strong> everything after NCRP's OTP on the financial-fraud and other-cybercrime tracks, NCRP's logged-in status screen and its status values, and CPGRAMS' actual grievance form with its field limits and department category lists.</p>
+        <p><strong>Sourced from official documents rather than seen:</strong> NCRP's citizen manual (MHA/I4C, dated 30 August 2019 &mdash; older than several features now live), the CFCFRMS instruction sheet (titled &ldquo;For Delhi Only&rdquo;), DARPG's OM of 23 August 2024, and NIC's officer-side CPGRAMS manuals.</p>
+        <p><strong>Blocked to automation entirely:</strong> mha.gov.in, darpg.gov.in and pib.gov.in all return HTTP 403. Every parliamentary and monthly-report figure here reached us through secondary quotation and must be opened by hand before it appears in a submission.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+const DATA = [
+  {
+    code: "TOP5", name: "Compiled Problems",
+    synthesis: true,
+    domain: "Cross-platform synthesis · all 10 secondary + primary reports, ranked",
+    hook: "Same failure shape, ten disguises. The status changes. No one tells the citizen what happened next.",
+    problems: [
+      {
+        title: "National Cyber Crime Reporting Portal: an account frozen with no notice, no reason, no SLA",
+        strength: "strong",
+        findings: [
+          {t: "<strong>Problem.</strong> A bank account gets frozen as a link in someone else's fraud chain. The freeze is instant and automated. The moment after, there is no notice, no reason, and no clear way back."},
+          {t: "<strong>Why it ranks #1.</strong> Both research passes independently call this the best-evidenced problem across all 10 platforms. CBI flagged 8.5 lakh mule accounts in 2025. The primary complaint trail is the densest found anywhere, topped by a 2,434-upvote, 316-comment post where &#8377;18.6 lakh was locked over a &#8377;175 credit and released only after an RTI proved no case existed."},
+          {t: "<strong>Build it as.</strong> Not an explainer. A guided release path: which section applies, an auto-drafted RTI, a bank representation letter, and an NOC/SLA tracker, the exact assembly the 2,434-upvote poster had to do by hand."},
+          {t: "<strong>Demo data.</strong> A synthetic multi-hop fund chain, 5 to 6 accounts from fraud origin to one innocent recipient, each hop tagged with freeze status, authority, jurisdiction, NOC state, and an SLA clock."},
+          {t: "<strong>Sources.</strong> research/CyberCrime.md, research/primary/CyberCrime-primary.md"},
+          {t: "<strong>Watch this.</strong> Direct overlap with Harshit's \"why is my account frozen\" idea. If picked, coordinate with the other team first, or differentiate hard on the guided release build."}
+        ]
+      },
+      {
+        title: "GST Portal: an automated notice with no officer and no explanation",
+        strength: "strong",
+        findings: [
+          {t: "<strong>Problem.</strong> A rules engine issues a legally binding DRC-01B/01C notice with no officer in the loop. The trader cannot tell which transaction triggered it, whether the fault is theirs or a supplier's, or which reply form avoids a demand order, inside a 7-day clock."},
+          {t: "<strong>Why it ranks #2.</strong> Automated notice generation is documented policy from FY2024-25. Four dated CAclubindia threads (2019 to 2026) show traders outsourcing the decoding to strangers on a forum. In July 2025 (corrected 2026-08-26, was previously dated 2024), roughly 18,000 UPI-triggered notices went to informal traders in Karnataka they had no way to self-check; the commonly repeated "9,000 traders" figure is not independently confirmed."},
+          {t: "<strong>Build it as.</strong> A reasoning layer over a synthetic ledger: pinpoint the offending invoice, assign fault to buyer or supplier, and draft the right response form."},
+          {t: "<strong>Demo data.</strong> Synthetic GSTR-1/2A/2B/3B chains with planted mismatches (missing invoice, GSTIN typo, period mismatch, duplicate claim), each tagged with a ground-truth cause, paired with real-register DRC-01B/01C notice text."},
+          {t: "<strong>Sources.</strong> research/GST.md, research/primary/GST-primary.md"},
+          {t: "<strong>Watch this.</strong> No overlap with Harshit or Varun's lists. Also the least likely platform for other teams to pick."}
+        ]
+      },
+      {
+        title: "Parivahan Sewa: a status word hides who is still legally on the hook",
+        strength: "strong",
+        findings: [
+          {t: "<strong>Problem.</strong> An RC transfer stalls inside an invisible multi-stage pipeline. \"NOC issued\" or \"pending at RTO\" never says which stage is stuck, or that the seller remains legally liable until it clears."},
+          {t: "<strong>Why it ranks #3.</strong> CAG found 1.66 lakh challans worth &#8377;58 crore never forwarded, and only 3.8% of ANPR flags acted on. The loudest primary case: a seller's mother signed a bail bond four years after the sale, over a car that was never transferred, and an 800-plus-day case where both CPGRAMS and the National Consumer Helpline closed the file with no action."},
+          {t: "<strong>Build it as.</strong> A staged state machine, Form 35 to Form 28 NOC to destination RTO, with a liability flag showing what the seller is still exposed to at each stuck stage."},
+          {t: "<strong>Demo data.</strong> Synthetic RC-transfer records: seller/buyer state, hypothecation status, per-stage timestamps, pending-challan flags, and days-in-stage against a typical baseline."},
+          {t: "<strong>Sources.</strong> research/Parivahan.md, research/primary/Parivahan-primary.md"},
+          {t: "<strong>Watch this.</strong> No overlap with Harshit or Varun's lists. Maps onto Kriti's own Parivahan idea already in the pool."}
+        ]
+      },
+      {
+        title: "RTI Online: an appeal disappears into a commission with no case number",
+        strength: "strong",
+        findings: [
+          {t: "<strong>Problem.</strong> A first appeal gets rubber-stamped and a second appeal vanishes into an Information Commission queue, no acknowledgment, no case number, no way to learn the commission has a modeled multi-year backlog."},
+          {t: "<strong>Why it ranks #4.</strong> The SNS 2025 Report Card counts over 4 lakh pending appeals; Telangana's SIC is modeled at 29 years to clear a case filed mid-2025. Four dated first-person primary timelines corroborate this exactly, one filer spent 18 months and two RTIs, two appeals, and one CIC hearing just to get a recording."},
+          {t: "<strong>Build it as.</strong> A wrong-authority router, a defect-checker for vague rejections, and a realistic wait-time estimator paired with an appeal draft built to survive the CIC's own procedural-return filter."},
+          {t: "<strong>Demo data.</strong> A synthetic authority directory with deliberately confusing near-duplicate names, plus mock case timelines through file, silence, transfer, first appeal, and second appeal, each with an SLA clock."},
+          {t: "<strong>Sources.</strong> research/RTI.md, research/primary/RTI-primary.md"},
+          {t: "<strong>Watch this.</strong> No overlap with Harshit or Varun's lists. Ranked below Parivahan only because the fix demos as guidance, not a resolved moment; the backlog itself can't be prototyped away."}
+        ]
+      },
+      {
+        title: "IRCTC: money moves, the ticket doesn't, and the fix can lock the account",
+        strength: "strong",
+        findings: [
+          {t: "<strong>Problem.</strong> Money is debited with no PNR generated, an IRCTC-acknowledged failure. The refund/TDR process meant to fix it is itself a trap: one wrong dropdown reason code can auto-reject the claim or, in documented cases, deactivate the account entirely."},
+          {t: "<strong>Why it ranks #5.</strong> Evidence volume is the largest of the five (3.4 stars across 2.79 million Play Store ratings, IRCTC's own published debit-failure alert), and 2026-dated reviews show it still happening on the current app. The TDR-to-lockout trap is a fresh wedge the secondary research underweighted."},
+          {t: "<strong>Build it as.</strong> A payment-reconciliation state machine plus a TDR pre-flight checker that shows the accept/reject outcome before the citizen commits to a reason code."},
+          {t: "<strong>Demo data.</strong> A synthetic reconciliation ledger (debit timestamp, gateway response, refund-trigger state) and a TDR rules table (reason codes, filing deadline vs. scheduled departure, accept/reject outcome)."},
+          {t: "<strong>Sources.</strong> research/IRCTC.md, research/primary/IRCTC-primary.md"},
+          {t: "<strong>Watch this.</strong> No team-list overlap, but IRCTC is the most famous platform on the brief and the likely default pick for other teams. Ranked last purely on differentiation, not evidence."}
+        ]
+      }
+    ],
+    extra: [
+      {t:"<strong>CPGRAMS was deliberately left out of the top 5</strong>, despite strong secondary evidence, for two reasons: it is close to Harshit's own \"did they actually solve my complaint\" idea, and its primary-research footprint came back the thinnest of all 10 platforms. Citizens route through CPGRAMS but complain about the underlying scheme by name, not the portal."},
+      {t:"<strong>EPFO was also left out.</strong> It is Varun's own listed idea, he flagged the static-lookup risk himself, and the secondary research confirmed his doubt held up (see research/README.md, \"where evidence was thin\")."},
+      {t:"<strong>Framing correction on record.</strong> None of the five draws on Gaurav's RGHS/CGHS idea, but if a pitch references it, use the corrected framing from memory/decisions.md: documented fraud sits with empanelled providers and intermediaries, never with employees as a class."},
+      {t:"<strong>Ranking method.</strong> Fable 5 agent, synthesis-only pass (no new research), scored on four criteria: evidence strength, buildability under the hackathon's mock-data-only rule, sharpness of the after-the-status-changes failure moment, and differentiation from Harshit and Varun's likely picks."}
+    ]
+  },
+  {
+    code: "IRCTC", name: "IRCTC",
+    domain: "irctc.co.in · Indian Railway Catering &amp; Tourism Corporation",
+    hook: "Money leaves the account before the ticket ever exists.",
+    problems: [
+      {
+        title: "Payment deducted, no ticket issued",
+        strength: "strong",
+        findings: [
+          {t: "IRCTC's own published alert PDF acknowledges this exact failure mode: the payment gateway confirms the debit without a synchronous handshake back to the booking engine.", s: "sec"},
+          {t: "App-review analysis names “payments debited without tickets, pending refunds” a top complaint category; overall sentiment runs 83% unfavorable.", s: "sec"},
+          {t: "<strong>u/sudoDeploy</strong> (52 pts): “the transaction sat on 'processing', only to dump me back to the payment page with a 'not booked' status while my money is already gone.”", s: "pri"},
+          {t: "Play Store reviews dated as recently as Aug 2026 (Shreya Sinha, Baladittya Majhi) confirm this is still happening on the current app, not a legacy bug.", s: "pri"}
+        ]
+      },
+      {
+        title: "Tatkal server crashes the moment the window opens",
+        strength: "strong",
+        findings: [
+          {t: "Demand spikes to 186,000&ndash;223,000 ticket requests/hour against a stated ~32,000 tickets/min capacity; site crashed before Tatkal opened during the Oct 2025 Diwali rush and again in Apr 2026.", s: "sec"},
+          {t: "<strong>u/Jigar_bomb</strong> (60 pts): “Humans discovered Mars water before IRCTC discovered load balancing.”", s: "pri"},
+          {t: "<strong>u/scariah</strong> (225 pts): “It's either always loading or they log me out&hellip; it seems like a rigged system.”", s: "pri"}
+        ]
+      },
+      {
+        title: "One wrong TDR dropdown can permanently lock the account",
+        strength: "strong",
+        findings: [
+          {t: "Filing a TDR (refund claim) with the wrong reason code has led to full account deactivation — Aadhaar, wallet balance, and linked credit card all frozen with it.", s: "sec"},
+          {t: "<strong>u/WrongTrainToKyoto</strong>: support told him to click an “Override/Declaration checkbox” that “is gone” from the current UI.", s: "pri"},
+          {t: "<strong>u/thesagarbanik</strong>: a 10-year account with a linked SBI IRCTC credit card and reward points locked over a single reason-code mistake — “no option for appeals or correction, even for long-term, honest users.”", s: "pri"}
+        ]
+      },
+      {
+        title: "Refunds and TDR claims are slow, manual, and opaque",
+        strength: "moderate",
+        findings: [
+          {t: "Standard refund turnaround is cited at 5&ndash;7 days, but IRCTC does not auto-resolve stuck refunds; TDR claims can take up to 60 days and must be filed ≥ 30 minutes before the train's <em>scheduled</em>, not delayed, departure.", s: "sec"},
+          {t: "The documented escalation path for a genuinely stuck refund is an RTI application to IRCTC's own PIO.", s: "sec"},
+          {t: "<strong>u/RK03_IND</strong> (39 pts): a college student's ~₹18,000 refund stuck 2+ months, IRCTC and two banks “each blaming the other.”", s: "pri"}
+        ]
+      },
+      {
+        title: "Third-party “guaranteed refund” add-ons are a bait-and-switch",
+        strength: "strong",
+        findings: [
+          {t: "Booking apps sell a “3x refund” / “GoConfirm” add-on for waitlisted tickets that don't confirm; the payout turns out to be a restrictive coupon, not cash.", s: "pri"},
+          {t: "<strong>u/dad_op</strong> (236 pts, highest-engagement post found in this research): promised a 3x refund, received ₹1,300 back on a ₹2,100 ticket — the rest “is an Alternate Travel Plan coupon, not cash, and it has conditions attached.”", s: "pri"},
+          {t: "<strong>u/N0obFlick</strong> (88 pts): paid ₹319 for “GoConfirm,” received a voucher restricted to “within 60km of Pathankot or Bhopal,” 7-day window, one-time use.", s: "pri"}
+        ]
+      }
+    ],
+    extra: [
+      {t:"<strong>Bots and agents crowd out ordinary users</strong> — CBI prosecuted a technical staffer for “Neo,” captcha/OTP-bypassing booking software; up to 50% of login attempts in the first five Tatkal minutes are reported as bot traffic."},
+      {t:"<strong>Waitlist/RAC status is opaque</strong> — IRCTC's own confirmation-probability numbers are disclaimed as unreliable, and users report them diverging sharply from real outcomes."},
+      {t:"<strong>19 overlapping quotas confuse bookings</strong> — e.g. Tatkal and Premium Tatkal carry zero senior-citizen, ladies, or disability concessions, a rule buried in fine print."},
+      {t:"<strong>App-level bugs</strong> — RailOne blocks Android developer mode outright, false-positive root detection locks out unrooted phones, and wallet balances split confusingly between RWallet and EWallet."},
+      {t:"<strong>Customer support dead-ends</strong> — Rail Madad calls reported dropping the moment a citizen mentions an issue; one user's complaint sat “closed” with zero action after 12 days."}
+    ]
+  },
+  {
+    code: "ITAX", name: "Income Tax",
+    domain: "incometax.gov.in · e-Filing Portal",
+    hook: "The portal shows a number, never a reason.",
+    problems: [
+      {
+        title: "AIS mismatch notices land on citizens at massive scale",
+        strength: "strong",
+        findings: [
+          {t: "42 lakh taxpayers received AIS-ITR mismatch notices in AY 2025-26 alone, mostly triggered by unreported FD interest and small dividend income.", s: "sec"},
+          {t: "Root causes are structural, not user error: banks report on accrual basis while citizens think in receipt terms, and the same interest can be double-counted across a branch, its central unit, or a bank merger.", s: "sec"},
+          {t: "The only fix path leaves the portal entirely — the citizen must get the reporting bank or employer to file its own correction before AIS updates.", s: "sec"},
+          {t: "Quora question titles found this pass (“How do I know if I got a notice from the income tax department?”) show citizens don't even know where notices land, let alone what they mean.", s: "pri"}
+        ]
+      },
+      {
+        title: "The portal dies at every filing deadline, on schedule",
+        strength: "strong",
+        findings: [
+          {t: "2021 launch: the Finance Ministry itself summoned Infosys's CEO over unresolved glitches. 2024: a dedicated “war room.” 2025: the deadline was extended a day after “huge traffic disrupted the portal.”", s: "sec"},
+          {t: "<strong>CA Pratibha Goyal</strong> (@PratibhaGoyal): “Income Tax Portal is dead!” (11 Sep 2025) — and “Income Tax Portal Glitches!” a year earlier, same person, two separate filing seasons.", s: "pri"},
+          {t: "<strong>Gaurav Aggarwal</strong> (@fooobar): a week of painstaking form-filling “is not even showing up” — work silently lost, not just a login failure.", s: "pri"},
+          {t: "The department's own public reply (“clear your cache”) leaves citizens with no independent way to prove the portal is actually down.", s: "pri"}
+        ]
+      },
+      {
+        title: "Refunds sit stuck for months with no visible stage",
+        strength: "strong",
+        findings: [
+          {t: "24.64 lakh returns pending beyond 90 days as of Feb 2026 (AY 2025-26); a month later, over 27 lakh verified returns still unprocessed.", s: "sec"},
+          {t: "CPC legally has nine months after the financial year ends to process a return — a citizen can be told nothing more than “processing” for over a year.", s: "sec"},
+          {t: "The public tracker shows only four coarse stages, with no visibility into which real internal step (TDS reconciliation, bank validation, prior-year demand offset) is the actual blocker.", s: "sec"}
+        ]
+      },
+      {
+        title: "A rule-engine bug generated legally wrong demand notices",
+        strength: "moderate",
+        findings: [
+          {t: "In early 2025, taxpayers who revised returns to claim the Section 87A rebate — after a Bombay High Court order required it — received demand notices anyway, because the department's rule engine kept denying the rebate on capital gains.", s: "sec"},
+          {t: "Tax professionals had to formally petition authorities before the issue was acknowledged; the notice itself gave no hint the underlying rule might be wrong.", s: "sec"}
+        ]
+      },
+      {
+        title: "Citizens can't tell a routine notice from a scary one",
+        strength: "moderate",
+        findings: [
+          {t: "Section 143(1) intimations are automated processing outputs, but arrive in the same dense legal-format PDF as a genuine scrutiny notice.", s: "sec"},
+          {t: "A reported real case: an elderly UP daily-wage labourer received a notice to file returns on an alleged ₹4.88 crore income — “could not make sense of the notice or why they were being forced to file returns.”", s: "sec"},
+          {t: "Budget 2025 widened what CPC can flag during automated processing to include prior-year inconsistencies too — this volume is set to grow.", s: "sec"}
+        ]
+      }
+    ],
+    extra: [
+      {t:"<strong>Grievance redressal is a multi-hop maze</strong> — e-Nivaran targets 7-day acknowledgment, but complex cases needing inter-departmental coordination take 60&ndash;90 days across e-Nivaran, CPGRAMS, and an Ombudsman the citizen has to discover for themselves."},
+      {t:"<strong>AIS feedback just records a dispute, it doesn't resolve one</strong> — the six-category feedback form logs a complaint but resolution depends entirely on the reporting entity acting on its own schedule."},
+      {t:"<strong>No trustworthy real-time outage signal</strong> — when the portal goes down, the department's denial (“working fine”) is the only public word, so rumor and fake deadline-extension claims fill the vacuum."}
+    ]
+  },
+  {
+    code: "CPGRAMS", name: "CPGRAMS",
+    domain: "pgportal.gov.in · Centralised Public Grievance Redress &amp; Monitoring System",
+    hook: "Disposed doesn't mean done.",
+    problems: [
+      {
+        title: "“Disposed” closures routinely don't address the complaint",
+        strength: "moderate",
+        findings: [
+          {t: "Citizen satisfaction barely exceeds 50% even as the government reports record disposal (26.4 lakh grievances “resolved” in 2024) and shrinking closure times.", s: "sec"},
+          {t: "IMPRI names this a “disposal-at-all-costs” culture: departments are scored on closure speed, not resolution quality, with typical closing text like “matter forwarded” or “noted for future action.”", s: "sec"},
+          {t: "Two independent RTI/appeal-help sites converge, unprompted, on the same shape: “three weeks of silence, then an email &mdash; 'Your grievance has been disposed'” and an ATR that “restates your complaint, asserts everything is in order, and closes the file.”", s: "pri"}
+        ]
+      },
+      {
+        title: "Ministries dispose grievances without giving valid reasons",
+        strength: "strong",
+        findings: [
+          {t: "The 119th Parliamentary Standing Committee (Dec 2021) formally found ministries “disposing grievances without giving valid reasons for closure,” contrary to DARPG's own rules.", s: "sec"},
+          {t: "State-level issues are frequently disposed with “approach the state government” rather than being forwarded; other grievances are sent back to the very agency being complained against.", s: "sec"}
+        ]
+      },
+      {
+        title: "A closed loophole lets departments reclassify complaints to dodge review",
+        strength: "moderate",
+        findings: [
+          {t: "A documented case: RBI disposed four separate banking-practice grievances by relabeling each as a “suggestion/request/query,” a category exempt from substantive review — and repeated the identical dismissal even after PMO intervention.", s: "sec"},
+          {t: "Classification is self-assigned by the responding department with no independent audit of whether the relabel was legitimate.", s: "sec"}
+        ]
+      },
+      {
+        title: "Escalation requires the citizen to know to rate the closure “Poor”",
+        strength: "moderate",
+        findings: [
+          {t: "The Appeal option only unlocks after the complainant rates a closure “Poor” — a citizen who rates neutrally, or never returns after the disposal email, never sees the escalation path.", s: "sec"},
+          {t: "“Most citizens stop here, convinced the portal is decorative. Stopping here is the mistake.”", s: "pri"}
+        ]
+      },
+      {
+        title: "Real social-media complaint trail is almost nonexistent",
+        strength: "thin",
+        findings: [
+          {t: "Extensive Reddit and X querying returned zero actual citizen posts naming CPGRAMS — only government PR, Wikipedia, and news coverage.", s: "pri"},
+          {t: "Read as a finding in itself: citizens route <em>through</em> CPGRAMS but complain <em>about</em> the underlying scheme (EPFO, pension, PM-JAY) by name, fragmenting the conversation across dozens of other threads instead of concentrating it under one searchable term.", s: "pri"}
+        ]
+      }
+    ],
+    extra: [
+      {t:"<strong>No independent audit layer</strong> — monitoring officials are drawn from the same administrative cadre as the departments being complained against."},
+      {t:"<strong>Performance dashboard over-weights speed</strong> — feedback/satisfaction reportedly counts for only 30% of a ministry's score, the rest is disposal volume/speed."},
+      {t:"<strong>EPFO-style grievances are never reopened</strong> — a “disposed” ticket forces the citizen to file an entirely new grievance from zero, losing continuity."}
+    ]
+  },
+  {
+    code: "GST", name: "GST Portal",
+    domain: "gst.gov.in · Goods &amp; Services Tax Network",
+    hook: "A legal notice with no explanation attached.",
+    problems: [
+      {
+        title: "Automated DRC-01B/01C notices that nobody can self-diagnose",
+        strength: "strong",
+        findings: [
+          {t: "From FY 2024-25, GSTR-1 vs 3B and 3B vs 2B comparisons run automatically for every GSTIN with zero officer review before a notice fires.", s: "sec"},
+          {t: "Four dated, named CAclubindia threads (2019&ndash;2026) show taxpayers turning to public strangers to learn if they actually owe money — one facing a ₹3 lakh notice with no clue whether it closes automatically.", s: "pri"},
+          {t: "“If you ignore it, the officer can pass an ex parte order &mdash; a confirmed demand with no opportunity to explain your side.”", s: "pri"},
+          {t: "The Karnataka episode (July 2025, corrected from an earlier 2024 date): ~18,000 UPI-triggered notices, confirmed, lumped personal transfers and loan repayments in with genuine business income, some for exempt categories (milk, meat, flowers); the widely repeated ~9,000-trader figure is unconfirmed.", s: "pri"}
+        ]
+      },
+      {
+        title: "A buyer's tax credit depends on a supplier's filing they don't control",
+        strength: "moderate",
+        findings: [
+          {t: "ITC mismatch arises when a supplier delays filing or mis-keys an invoice — the compliant small buyer loses credit for someone else's error, discovered only via a downstream DRC-01C.", s: "sec"},
+          {t: "This is the exact mechanism feeding Cluster 1's notices: the fault sits entirely upstream, in a vendor the small trader has no leverage over.", s: "pri"}
+        ]
+      },
+      {
+        title: "The portal goes down right before every filing deadline",
+        strength: "strong",
+        findings: [
+          {t: "Jan 2025: portal inaccessible hours before the GSTR-1 deadline, GSTN filed an incident report with CBIC. Apr 2026: down again on GSTR-3B due date, late fees still applied.", s: "sec"},
+          {t: "<strong>CA Chirag Chauhan</strong> (@CAChirag, 2022): “GST SITE DOWN again today! Why is @FinMinIndia not increasing the capacity of the GST portal?” — the same structural complaint, publicly, four years apart.", s: "pri"}
+        ]
+      },
+      {
+        title: "Registration gets rejected over document technicalities",
+        strength: "moderate",
+        findings: [
+          {t: "The dominant 2025-26 rejection driver isn't fraud — it's an address-proof mismatch (electricity bill vs. registered office in REG-01) or a missing NOC for shared premises.", s: "sec"},
+          {t: "CBIC had to issue a corrective instruction (Apr 2025) telling officers to stop over-demanding paperwork, an implicit admission the verification pipeline was inconsistent; pre-fix waits ran 7&ndash;10+ days.", s: "sec"}
+        ]
+      },
+      {
+        title: "Suo moto cancellation removes the only tool to self-cure",
+        strength: "moderate",
+        findings: [
+          {t: "A GSTIN gets cancelled unilaterally after continuous non-filing (commonly 6 months), usually from lack of awareness or cash-flow strain, not fraud.", s: "sec"},
+          {t: "Once cancelled, the taxpayer “would not be allowed to file return or upload invoices” for that period — a catch-22 that removes the only mechanism that would let them fix it.", s: "sec"}
+        ]
+      }
+    ],
+    extra: [
+      {t:"<strong>Refunds tie up MSME working capital</strong> — government paid ₹16.6 crore in interest on delayed refunds across three fiscal years, evidence delay is routine, not exceptional."},
+      {t:"<strong>E-way bills fail at the exact moment of dispatch</strong> — a 180-day invoice-age rule and a filing-status gate can block legal movement of already-paid-for goods with no advance warning."},
+      {t:"<strong>The GSP/CA/software ecosystem doesn't reach the smallest traders</strong> — every existing reconciliation tool assumes a subscription or a CA retainer the least tax-literate sole proprietor can't afford."}
+    ]
+  },
+  {
+    code: "EPFO", name: "EPFO",
+    domain: "unifiedportal-mem.epfindia.gov.in · Employees' Provident Fund Organisation",
+    hook: "The claim looked complete. It wasn't.",
+    problems: [
+      {
+        title: "Claims rejected over mismatches the member never saw coming",
+        strength: "strong",
+        findings: [
+          {t: "26% of all claims were rejected in 2023-24, up from an average of 17% pre-2019 — a worsening trend, not a one-off.", s: "sec"},
+          {t: "A March 2026 Lok Sabha reply lists the real causes: DOB, exit-date, Aadhaar, and bank-account mismatches, plus missing legal-heir certificates.", s: "sec"},
+          {t: "<strong>Manjeet Singh</strong>, quoted in Tribune India (2022): stuck three weeks on a portal glitch for “technical reasons best known to the authorities concerned.”", s: "pri"},
+          {t: "A Teamblind post documents an entire class of job-switchers repeatedly rejected over a single day's service-date overlap — common enough that EPFO had to issue a fixing circular.", s: "pri"}
+        ]
+      },
+      {
+        title: "The grievance system closes tickets without fixing anything",
+        strength: "strong",
+        findings: [
+          {t: "EPFiGMS grievances rose sixfold in a decade (2.48 lakh in 2012-13 to 16.1 lakh in 2023-24); nearly half cluster in four categories — transfer, withdrawal, KYC, and advance claims — the core pipeline itself.", s: "sec"},
+          {t: "EPFO's own support account has publicly redirected unanswered complaints to a second escalation portal, an admission the first channel wasn't responding.", s: "pri"},
+          {t: "17.5 lakh EPFiGMS complaints logged in 2025 alone, 98% “disposed within SLA” by EPFO's own count — a metric that measures speed, not whether the problem was fixed.", s: "pri"}
+        ]
+      },
+      {
+        title: "Employer sign-off stalls claims with no escalation for the employee",
+        strength: "moderate",
+        findings: [
+          {t: "Several claim types required employer digital attestation with no SLA or bypass — EPFO's April 2025 reform removing this for a subset of claims immediately unblocked 14.95 lakh pending cases, itself proof of how large the bottleneck was.", s: "sec"}
+        ]
+      },
+      {
+        title: "EPFO's own backend is under-resourced, by its own staff's account",
+        strength: "moderate",
+        findings: [
+          {t: "EPFO field officers wrote to the Labour Minister (Aug 2026) warning claims routinely miss the 20-day SLA because of an under-resourced IT system.", s: "sec"},
+          {t: "No direct hiring into the technical division since 2004, no full-time CTO for three years, and the last workload assessment was done in 2016-17.", s: "sec"}
+        ]
+      },
+      {
+        title: "Pension eligibility gaps surface only after it's too late to fix",
+        strength: "moderate",
+        findings: [
+          {t: "EPS (pension) claims fail on service-year or contribution-record gaps that only become visible at retirement, when the member has already exited and correction is no longer possible — the most irreversible failure mode on the platform.", s: "sec"}
+        ]
+      }
+    ],
+    extra: [
+      {t:"<strong>PF transfer between jobs fails on ID/establishment-code mismatches</strong> — “non-transfer of PF accumulations” is EPFO's single largest grievance category."},
+      {t:"<strong>KYC has a hidden “linked vs. verified” gap</strong> — a state the member can't see is checked only after a claim is filed and rejected."},
+      {t:"<strong>Auto-settlement reforms haven't added an explanation layer</strong> — faster processing (2.34 crore auto-settlements in FY2024-25) doesn't tell a rejected member which of six known reasons applies to them."}
+    ]
+  },
+  {
+    code: "MCA", name: "MCA21",
+    domain: "mca.gov.in · Ministry of Corporate Affairs",
+    hook: "Filed, accepted, and still not real.",
+    problems: [
+      {
+        title: "The V3 portal itself fails basic filing and incorporation flows",
+        strength: "strong",
+        findings: [
+          {t: "ICSI's President wrote to the ministry (29 Sep 2025): the V2→V3 migration “has inadvertently left professionals unable to file numerous e-forms.”", s: "sec"},
+          {t: "Approved filings (PAS-3, CRF) don't reflect in MCA's own master data; DSC verification fails on certificates that are valid and correctly linked.", s: "pri"},
+          {t: "<strong>Jitender Ahlawat</strong>, CA firm founder: “Incorporation form (INC-7)&hellip; is not available in the V3 version” — a core incorporation form simply missing during the transition.", s: "pri"},
+          {t: "<strong>Nakul Grover</strong>, law firm partner: “Even after the issuance of the circular [waiving penalties], the MCA21 portal is not waiving off penalties” — the government announced relief the portal didn't implement.", s: "pri"}
+        ]
+      },
+      {
+        title: "Directorship can vanish over a company you forgot you're listed on",
+        strength: "strong",
+        findings: [
+          {t: "Over 14,000 directors were disqualified in 2025 alone for three consecutive years of non-filing, each barred from any Indian directorship for five years.", s: "sec"},
+          {t: "Section 164(2) combined with Section 167 vacates the director's seat on <em>every</em> company they hold a directorship in — including fully compliant ones — if just one company defaults.", s: "pri"}
+        ]
+      },
+      {
+        title: "Late fees accrue uncapped, with no proactive warning",
+        strength: "moderate",
+        findings: [
+          {t: "₹100/day per form, no ceiling, since 2018 — 200 days late on two annual forms alone costs ₹40,000, discoverable only after the fact.", s: "sec"},
+          {t: "Multiple independent, unrelated compliance-tech vendors have each separately built a “ROC late fee calculator” — a lead-gen product category that only exists because founders keep getting blindsided.", s: "pri"}
+        ]
+      },
+      {
+        title: "Name rejections give no explanation of which name clashed or why",
+        strength: "moderate",
+        findings: [
+          {t: "The dominant rejection driver is phonetic or visual similarity, not exact duplication, and MCA's own name-check doesn't cross-reference the trademark registry — applicants must search two databases blind.", s: "sec"},
+          {t: "A rejection costs an estimated 3&ndash;5 days per resubmission cycle, on top of a fresh filing fee.", s: "sec"}
+        ]
+      },
+      {
+        title: "“DSC not registered with DIN” hides six different real problems",
+        strength: "moderate",
+        findings: [
+          {t: "MCA issued a special advisory for this one generic error during mandatory annual DIR-3 KYC, because it can mean any of six distinct underlying causes; the fallback when self-service fails is to “raise a service-related complaint.”", s: "sec"},
+          {t: "<strong>Priyanka</strong> (reader comment, Jul 2023): unable to download her own LLP's Certificate of Incorporation for a full month, same repeating “technical error.”", s: "pri"},
+          {t: "<strong>Meenu Gupta</strong> and <strong>SANYA</strong>, a month apart: both independently hit the identical “Personal details mismatch” error trying to log in against their own DIN.", s: "pri"}
+        ]
+      }
+    ],
+    extra: [
+      {t:"<strong>SPICe+ Part B rejection auto-kills the bundled DIN application too</strong> — a single clerical mismatch costs both the name reservation and the director ID, forcing a full refiling with fresh fees."},
+      {t:"<strong>Strike-off restoration is a legal ordeal for an honest mistake</strong> — reversing an ROC-initiated strike-off needs an NCLT Section 252 petition costing ₹25,000&ndash;₹1,00,000+ over months."},
+      {t:"<strong>STK-2 (voluntary closure) forms get rejected with no chance to resubmit</strong> — documented in ICSI's own 2023 issue list."}
+    ]
+  },
+  {
+    code: "CYBER", name: "Cyber Crime",
+    domain: "cybercrime.gov.in · National Cyber Crime Reporting Portal, 1930",
+    hook: "Freezing an account is instant. Getting it back isn't.",
+    problems: [
+      {
+        title: "Innocent accounts get frozen with zero explanation",
+        strength: "strong",
+        findings: [
+          {t: "CBI identified nearly 8.5 lakh mule accounts across 700 branches in 2025; I4C shared 2.73 million suspected accounts with banks between Sep 2024 and Jan 2026, blocking over ₹9,518 crore.", s: "sec"},
+          {t: "Dozens of near-identical Reddit threads (r/IndianCyberHub, r/LegalAdviceIndia) span SBI, ICICI, HDFC, Axis, IndusInd, IDFC — a small, explainable credit (salary, a friend's repayment) triggers a full account freeze with no notice.", s: "pri"},
+          {t: "<strong>u/HauntedAlgorithm</strong> (2,434 pts, 316 comments — highest-engagement thread found in this entire research): ICICI locked ₹18.6 lakh over a ₹175 credit, twice. Recovery required an RTI proving no case existed against him, and a threatened High Court writ.", s: "pri"},
+          {t: "<strong>u/404BrainNotFound12</strong>: “I don't know why exactly it got frozen&hellip; I don't know if I need a lawyer or what the first step even is&hellip; Very scared.”", s: "pri"}
+        ]
+      },
+      {
+        title: "“Disposed” status explains nothing about what actually happened",
+        strength: "moderate",
+        findings: [
+          {t: "“Closed” can mean transferred, insufficient grounds, or converted to a formal FIR elsewhere — the portal gives no plain-language indication of which.", s: "sec"},
+          {t: "Multiple 2025-26-dated explainer articles exist purely to decode this one status field — real victims are googling “what does disposed mean” instead of getting an answer from the system.", s: "sec"}
+        ]
+      },
+      {
+        title: "Money recovery lags far behind money frozen, let alone reported",
+        strength: "moderate",
+        findings: [
+          {t: "Even the best-performing jurisdictions freeze roughly 21&ndash;26% of reported amounts; “saved”/“frozen” is not “returned” — a separate, often slow court/bank process sits between the two with no visible end-to-end status.", s: "sec"},
+          {t: "<strong>u/Independent_Exam7093</strong>: filed with 1930, state cybercrime, the portal, and the bank — with a full call recording proving the fraud — and got back only a form “we'll respond in 3 working days.”", s: "pri"}
+        ]
+      },
+      {
+        title: "No unified status across the agencies a case actually touches",
+        strength: "moderate",
+        findings: [
+          {t: "A single case touches the portal/I4C intake, the local police station, banks across 5–6 hops, NPCI/UPI rails, and sometimes another state's cyber cell — none of it synthesized into one citizen-facing timeline.", s: "sec"},
+          {t: "<strong>u/sandeep075aa</strong>: police unfroze an account, then the bank's own EDD team froze it again independently, restarting the whole cycle from a different internal team.", s: "pri"}
+        ]
+      },
+      {
+        title: "1930 helpline is inconsistent and often contradicts the bank",
+        strength: "moderate",
+        findings: [
+          {t: "<strong>u/Background-Guest6518</strong>: called 1930, was told “there is no complaint registered against my number/account” — directly contradicting what the bank had told him, leaving a he-said/she-said with no resolution.", s: "pri"},
+          {t: "<strong>u/ScooterNinja</strong>: calls to 1930 were “cutting the call after I mention the amount” for a small ₹1,900 loss, suggesting small-ticket fraud gets triaged away.", s: "pri"}
+        ]
+      }
+    ],
+    extra: [
+      {t:"<strong>The whole freeze mechanism depends on a ~60-minute “golden hour”</strong> that most victims don't know exists, with no system-side trigger if they miss it."},
+      {t:"<strong>Confusing complaint categorization at filing</strong> — multiple independent guide sites exist purely to help victims pick the right category before they submit."},
+      {t:"<strong>The portal itself crashes mid-complaint</strong> — one user described losing an hour of typing to a final-submit error and a login lockout loop."},
+      {t:"<strong>Jurisdiction ping-pong forces long-distance travel</strong> — freezes issued by a cyber cell hundreds of kilometres from the account holder, who is told to appear in person."}
+    ]
+  },
+  {
+    code: "UMANG", name: "UMANG",
+    domain: "umang.gov.in · Unified Mobile Application for New-age Governance",
+    hook: "The service exists. Finding it, and finishing it, is the problem.",
+    problems: [
+      {
+        title: "“Unexpected error occurred” strands users right after OTP",
+        strength: "strong",
+        findings: [
+          {t: "Six dated, named 1-star App Store reviews (Apr 2024&ndash;Oct 2025) describe the identical dead end on EPFO actions, immediately after entering the OTP.", s: "pri"},
+          {t: "<strong>AryanNan</strong> (19 Aug 2025): “Duplicate or no transaction history found for OTP verification” — described losing a job opportunity because UAN allotment kept failing.", s: "pri"},
+          {t: "A third-party review aggregator shows the recent review stream cratered to 73% one-star (1.10/5 average) against a 4.15/5 all-time average.", s: "pri"},
+          {t: "A TeamBlind thread confirms UMANG is not even a reliable fallback: when the EPFO web portal itself failed, the app blocked the identical password reset.", s: "pri"}
+        ]
+      },
+      {
+        title: "2,446 services across 240 departments, organized by department not by need",
+        strength: "moderate",
+        findings: [
+          {t: "The catalogue has grown from 162 services/33 departments at 2017 launch to 2,446 services/240 departments by early 2026 — faster than its navigation model.", s: "sec"},
+          {t: "A citizen who wants to “check why my PF is stuck” must already know that lives under EPFO, itself filed under Employment & Skills, not Finance.", s: "sec"}
+        ]
+      },
+      {
+        title: "No working support channel when a flow fails",
+        strength: "moderate",
+        findings: [
+          {t: "<strong>The.BigBull</strong>: “It is giving me a feeling that I am begging for my own money&hellip; worst government and worst service” — phone, email, and chat support all reported non-functional at the point of failure.", s: "pri"},
+          {t: "<strong>Affan121</strong>: the same login failure recurred across multiple days with no help resolving it — “should not feel like a rocket science mission.”", s: "pri"}
+        ]
+      },
+      {
+        title: "Each service has its own hidden ID requirement, revealed only mid-flow",
+        strength: "moderate",
+        findings: [
+          {t: "UMANG login only gets a user into the app; each integrated service (EPFO UAN/Member ID, Aadhaar-linked-mobile Face Authentication, state scheme numbers) has its own separate identity requirement never previewed before the flow starts.", s: "sec"},
+          {t: "One named root cause: OTP goes to the mobile number linked to Aadhaar, not necessarily the number the user is currently using — a mismatch the app never surfaces before “Get OTP.”", s: "sec"}
+        ]
+      },
+      {
+        title: "The government's own fixes sit on top of the same broken index",
+        strength: "moderate",
+        findings: [
+          {t: "In-app keyword search, a Bhashini-powered multilingual chatbot, and a Senseforth.ai voice assistant were all added since 2022 — each a retrieval layer bolted onto the same department-first taxonomy, none restructuring it.", s: "sec"}
+        ]
+      }
+    ],
+    extra: [
+      {t:"<strong>“No permission to access this service”</strong> errors resolve themselves “after a few days” with zero explanation — consistent with a backend entitlement sync bug."},
+      {t:"<strong>Server buckles in sync with EPFO's own portal</strong> under load, especially around mandate-driven traffic spikes."},
+      {t:"<strong>UMANG and DigiLocker get confused</strong> by users, since both are NeGD products touching Aadhaar identity."},
+      {t:"<strong>Some state services silently redirect out of the app</strong> to an external portal, breaking the “one app for everything” promise without warning."}
+    ]
+  },
+  {
+    code: "PARIVAHAN", name: "Parivahan",
+    domain: "parivahan.gov.in · Vahan / Sarathi / e-Challan",
+    hook: "You sold the car. The government still thinks it's yours.",
+    problems: [
+      {
+        title: "RC transfer delays turn into real legal jeopardy for the seller",
+        strength: "strong",
+        findings: [
+          {t: "A documented case timeline: hypothecation clearance took 5 days, but the RTO's own NOC took until day 39, and the new RC wasn't issued until day 54.", s: "sec"},
+          {t: "<strong>u/Horror-Finance-6381</strong> (374 pts, r/CarsIndia): sold a car to Cars24 in 2021; four years later, police arrived with an arrest warrant in his name. “My mother had to sign a bail bond so that I wouldn't be taken into custody&hellip; for a car I sold legitimately years ago.”", s: "pri"},
+          {t: "<strong>u/Sunrise_468</strong>: RC still untransferred 800+ days after sale; both a CPGRAMS grievance and a National Consumer Helpline complaint closed without action.", s: "pri"}
+        ]
+      },
+      {
+        title: "DL/LL test slots are scarce, and rejections come with no explanation",
+        strength: "strong",
+        findings: [
+          {t: "<strong>u/No-Tap112</strong> (242 pts): booked officer never showed — “Kal to server hi down tha, kisi ka test nahi hua” (yesterday the server itself was down, nobody's test happened) — while agents openly worked the queue for ₹7,000+ with no actual test.", s: "pri"},
+          {t: "<strong>u/Present_Desk_6679</strong>: passed the AI-proctored contactless LL test twice, in a locked silent room, rejected both times for “LL Test Violations found” with no detail and no refund.", s: "pri"}
+        ]
+      },
+      {
+        title: "Payment succeeds, the portal still says pending",
+        strength: "moderate",
+        findings: [
+          {t: "Multiple independent guide sites converge on the same pattern: payment completes on the payer's side, but the status page shows “pending” for 24&ndash;72 hours with no automated reconciliation.", s: "sec"},
+          {t: "<strong>u/ajeyvm</strong>: paid ₹450 for a hypothecation termination, hit a raw HTTP 404 error on the final step — “they happily took my money, and now the system won't let me finish the actual application.”", s: "pri"}
+        ]
+      },
+      {
+        title: "e-Challans get misissued, and the fix path is a black hole",
+        strength: "strong",
+        findings: [
+          {t: "CAG's 2025 audit found only 3.8% of ANPR-flagged violations were ever forwarded to an enforcement officer, and 1.66 lakh challans worth ₹58 crore never reached court.", s: "sec"},
+          {t: "Near-identical single-digit plate-misread complaints surfaced independently in Hyderabad, Raipur, Chennai, Goa, and UP — each hitting the same wall: the grievance ticket goes into a black hole, and the real fix (when it happens) comes from an informal or state-specific channel, not the stated process.", s: "pri"},
+          {t: "<strong>u/No-Initiative3561</strong> (82 pts): a ₹10,000 challan for a scooter in Goa while both vehicle and owner were in different states; resolved only by cold-calling a traffic officer's personal number.", s: "pri"}
+        ]
+      },
+      {
+        title: "The same status word means different things in different states",
+        strength: "moderate",
+        findings: [
+          {t: "Each state RTO runs its own Vahan/Sarathi instance with its own backlog and manual verification layered on the shared central database.", s: "sec"},
+          {t: "An earlier CAG IT audit found 95% of legacy vehicle/licence records never migrated into Vahan 4.0 — the “single national database” framing is aspirational.", s: "sec"}
+        ]
+      }
+    ],
+    extra: [
+      {t:"<strong>Duplicate DL fee overcharging</strong> — CAG found 79,762 duplicate licences charged the old ₹200 fee instead of the revised ₹400, a ₹1.6 crore short-levy from inconsistent state-level rule enforcement."},
+      {t:"<strong>Agent/middleman capture</strong> — multiple posters describe direct applicants being pushed to the back of the queue while agent-routed applications move faster."},
+      {t:"<strong>Fake mParivahan apps are now a banking-trojan vector</strong> — scammers exploit the same “is this legit or not” confusion documented above."}
+    ]
+  },
+  {
+    code: "RTI", name: "RTI Online",
+    domain: "rtionline.gov.in · Right to Information",
+    hook: "You filed it correctly. The queue is 29 years long.",
+    problems: [
+      {
+        title: "Filing against the wrong authority loses the fee, no recovery",
+        strength: "moderate",
+        findings: [
+          {t: "The portal's own FAQ states applications meant for a state authority — including Delhi's own NCT government — are simply returned if filed centrally, with no refund.", s: "sec"},
+          {t: "The RTI Act's own guidance says “applicants are not expected to know the internal structure of departments,” yet the portal requires exactly that at the point of submission.", s: "sec"}
+        ]
+      },
+      {
+        title: "Payment gets stuck or falsely reports failure, even when debited",
+        strength: "strong",
+        findings: [
+          {t: "Documented as far back as 2013: a successful SBI debit SMS, immediately followed by “Sorry due to transaction cancellation/failure your RTI request could not be filed.”", s: "pri"},
+          {t: "<strong>u/im_rk_</strong> (r/CharteredAccountants): stuck on “Please Wait&hellip;” for three straight days across every browser and off-peak hour tried — “considering sending a physical postal RTI if this doesn't resolve soon.”", s: "pri"},
+          {t: "A meme post, “After 20+ attempts, finally filed RTI” (67 pts), draws enough shared recognition to show repeated failed attempts are a rite of passage, not an edge case.", s: "pri"}
+        ]
+      },
+      {
+        title: "First and second appeals go silent for months to years",
+        strength: "strong",
+        findings: [
+          {t: "More than 4 lakh appeals/complaints were pending across 29 Information Commissions as of June 2025; disposal (~1.8 lakh) runs behind new filings (~2.4 lakh) in the same period.", s: "sec"},
+          {t: "At current rates, Telangana's SIC would take an estimated 29 years to clear a case filed 1 July 2025; the CIC itself returns 38% of what it receives on procedural grounds.", s: "sec"},
+          {t: "<strong>u/Organic-Waltz433</strong>: RTI filed Feb 2026, ignored; First Appeal filed Mar 2026, ignored; Second Appeal delivered by post to the state commission in May — two months later, still no acknowledgment or case number.", s: "pri"},
+          {t: "<strong>u/Beneficial-Key-1494</strong>: a full appeal chain to force an Insurance Ombudsman hearing recording took 18 months, two RTIs, two appeals, and one CIC hearing — “Budget a year+ for the second-appeal stage.”", s: "pri"}
+        ]
+      },
+      {
+        title: "Section 6(3) “transfer” is used to pass the buck, not route the query",
+        strength: "moderate",
+        findings: [
+          {t: "The PIO must forward a misdirected application within 5 days, but in practice this “loophole&hellip; is being increasingly used&hellip; to deny information&hellip; by passing the buck,” bouncing requests to offices that don't hold the record.", s: "sec"},
+          {t: "A primary example: ISRO re-transferred a question it had already fully answered in a prior RTI, rather than answering directly a second time.", s: "pri"}
+        ]
+      },
+      {
+        title: "Retaliation risk is real, documented, and discourages first-time filers",
+        strength: "strong",
+        findings: [
+          {t: "95 RTI activists killed since 2005, 175 assaulted, 186 harassed, per the CHRI Hall of Shame tracker; named 2025 deaths include Sunil Kapoor (Haryana) and a Gujarat activist abducted and found dead within two days.", s: "sec"},
+          {t: "<strong>u/Flat-Article1311</strong> (r/LegalAdviceIndia): filed anonymously via a burner number for a village budget RTI; local officials traced it through police contacts to his family and began indirect threats — “Top se lekr bottom tk hamari government hai.”", s: "pri"},
+          {t: "<strong>u/Narwhal-Plane</strong> (766 pts): after a four-month appeal chain, began receiving pressure calls from a government official to withdraw everything.", s: "pri"}
+        ]
+      }
+    ],
+    extra: [
+      {t:"<strong>Vague Section 8 exemption citations go unchallenged</strong> — the three most-invoked exemption clauses account for nearly three-quarters of all rejections, many “too broad, poorly reasoned, or applied to the wrong type of information.”"},
+      {t:"<strong>First-timers get rejected on drafting technicalities</strong> — “why/how/where” phrasing is treated as seeking opinion, not a record, and is liable to rejection under the Act's own case law."},
+      {t:"<strong>Undocumented format traps</strong> — no commas or special characters, filename length limits, attachment size caps — shared as memed “tricks” rather than surfaced by the portal itself."},
+      {t:"<strong>Several state RTI portals are worse, or simply don't exist</strong> — Andhra Pradesh reportedly still has no functional online portal, post Supreme Court judgment."}
+    ]
+  }
+];
+
+function chipLabel(s){
+  return s === "strong" ? "Strong" : s === "moderate" ? "Moderate" : "Thin";
+}
+
+const tabsEl = document.getElementById("tabs");
+const panelsEl = document.getElementById("panels");
+const compiledEl = document.getElementById("compiled-panel");
+const PLATFORMS = DATA.filter(p => !p.synthesis);
+
+let platformCounter = 0;
+DATA.forEach((platform) => {
+  let problemsHtml = "";
+  platform.problems.forEach((p, idx) => {
+    let findingsHtml = "";
+    p.findings.forEach(f => {
+      const srcTag = f.s === "pri"
+        ? '<span class="src primary">Primary</span>'
+        : f.s === "sec"
+        ? '<span class="src">Secondary</span>'
+        : '';
+      findingsHtml += '<li>' + f.t + srcTag + '</li>';
+    });
+    problemsHtml += `
+      <div class="problem">
+        <div class="problem-num">${String(idx + 1).padStart(2, "0")}</div>
+        <div class="problem-head">
+          <h3 class="problem-title">${p.title}</h3>
+          <span class="chip ${p.strength}">${chipLabel(p.strength)}</span>
+        </div>
+        <ul class="findings">${findingsHtml}</ul>
+      </div>`;
+  });
+
+  let extraHtml = "";
+  if (platform.extra && platform.extra.length) {
+    let items = "";
+    platform.extra.forEach(e => { items += "<li>" + e.t + "</li>"; });
+    const extraLabel = platform.synthesis
+      ? "Notes on this ranking"
+      : "Also on record &mdash; " + platform.extra.length + " more issue" + (platform.extra.length > 1 ? "s" : "");
+    extraHtml = `
+      <div class="extra">
+        <p class="extra-label">${extraLabel}</p>
+        <ul class="extra-list">${items}</ul>
+      </div>`;
+  }
+
+  const kicker = platform.synthesis
+    ? "Compiled &middot; ranked across all 10"
+    : "Platform " + String(++platformCounter).padStart(2, "0") + " / 10";
+
+  const panel = document.createElement("section");
+  panel.className = "panel" + (platform.synthesis ? " standalone" : "");
+  panel.id = "panel-" + platform.code;
+  panel.innerHTML = `
+    <div class="panel-head">
+      <div class="panel-head-left">
+        <p class="kicker">${kicker}</p>
+        <h2 class="panel-title">${platform.name}</h2>
+        <p class="panel-domain">${platform.domain}</p>
+      </div>
+      <p class="panel-hook">&ldquo;${platform.hook}&rdquo;</p>
+    </div>
+    ${problemsHtml}
+    ${extraHtml}
+  `;
+
+  if (platform.synthesis) {
+    compiledEl.appendChild(panel);
+    return;
+  }
+
+  const i = PLATFORMS.indexOf(platform);
+  const tabBtn = document.createElement("button");
+  tabBtn.className = "tab";
+  tabBtn.id = "tab-" + platform.code;
+  tabBtn.setAttribute("role", "tab");
+  tabBtn.setAttribute("aria-selected", i === 0 ? "true" : "false");
+  tabBtn.setAttribute("aria-controls", "panel-" + platform.code);
+  tabBtn.innerHTML = '<span class="tab-code">' + platform.code + '</span><span class="tab-name">' + platform.name + '</span>';
+  tabBtn.addEventListener("click", () => selectTab(platform.code));
+  tabsEl.appendChild(tabBtn);
+
+  panel.setAttribute("role", "tabpanel");
+  panel.setAttribute("aria-labelledby", "tab-" + platform.code);
+  if (i !== 0) panel.hidden = true;
+  panelsEl.appendChild(panel);
+});
+
+function selectTab(code){
+  PLATFORMS.forEach(p => {
+    document.getElementById("tab-" + p.code).setAttribute("aria-selected", p.code === code ? "true" : "false");
+    document.getElementById("panel-" + p.code).hidden = p.code !== code;
+  });
+  document.getElementById("tab-" + code).scrollIntoView({block: "nearest", inline: "center", behavior: "smooth"});
+}
+
+// keyboard arrow nav across platform sub-tabs
+tabsEl.addEventListener("keydown", (e) => {
+  const tabs = Array.from(tabsEl.querySelectorAll(".tab"));
+  const currentIndex = tabs.findIndex(t => t.getAttribute("aria-selected") === "true");
+  if (e.key === "ArrowRight") { e.preventDefault(); const n = (currentIndex + 1) % tabs.length; tabs[n].focus(); selectTab(PLATFORMS[n].code); }
+  if (e.key === "ArrowLeft") { e.preventDefault(); const n = (currentIndex - 1 + tabs.length) % tabs.length; tabs[n].focus(); selectTab(PLATFORMS[n].code); }
+});
+
+// top-level stage tabs
+const VIEWS = ["research", "compiled", "decide"];
+function selectView(v){
+  VIEWS.forEach(x => {
+    document.getElementById("toptab-" + x).setAttribute("aria-selected", x === v ? "true" : "false");
+    document.getElementById("view-" + x).hidden = x !== v;
+  });
+}
+VIEWS.forEach(v => document.getElementById("toptab-" + v).addEventListener("click", () => selectView(v)));
+selectView("decide");
+
+// outermost meta tabs: Problem Identification / Platform Walkthrough
+const METAS = ["identify", "walkthrough"];
+function selectMeta(m){
+  METAS.forEach(x => {
+    document.getElementById("metatab-" + x).setAttribute("aria-selected", x === m ? "true" : "false");
+    document.getElementById("meta-" + x).hidden = x !== m;
+  });
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+METAS.forEach(m => document.getElementById("metatab-" + m).addEventListener("click", () => selectMeta(m)));
+const metaBar = document.querySelector(".metatabs");
+metaBar.addEventListener("keydown", (e) => {
+  if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+  e.preventDefault();
+  const btns = METAS.map(m => document.getElementById("metatab-" + m));
+  const cur = btns.findIndex(b => b.getAttribute("aria-selected") === "true");
+  const n = e.key === "ArrowRight" ? (cur + 1) % btns.length : (cur - 1 + btns.length) % btns.length;
+  btns[n].focus();
+  selectMeta(METAS[n]);
+});
+selectMeta("identify");
+
+// walkthrough portal sub-tabs: Cyber Crime / CPGRAMS
+const WT_TABS = ["cyber", "cpgrams"];
+function selectWtTab(t){
+  WT_TABS.forEach(x => {
+    document.getElementById("wt-tab-" + x).setAttribute("aria-selected", x === t ? "true" : "false");
+    document.getElementById("wt-panel-" + x).hidden = x !== t;
+  });
+}
+WT_TABS.forEach(t => document.getElementById("wt-tab-" + t).addEventListener("click", () => selectWtTab(t)));
+document.getElementById("wt-tabs").addEventListener("keydown", (e) => {
+  if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+  e.preventDefault();
+  const cur = WT_TABS.findIndex(t => document.getElementById("wt-tab-" + t).getAttribute("aria-selected") === "true");
+  const n = e.key === "ArrowRight" ? (cur + 1) % WT_TABS.length : (cur - 1 + WT_TABS.length) % WT_TABS.length;
+  document.getElementById("wt-tab-" + WT_TABS[n]).focus();
+  selectWtTab(WT_TABS[n]);
+});
+</script>
+
+</body></html>

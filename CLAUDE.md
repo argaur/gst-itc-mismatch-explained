@@ -1,18 +1,26 @@
 # Build What Moves India
 
 ## What This Is
-Team hackathon submission (4 people: Gaurav, Harshit, Varun, Kriti) for **"Build What Moves India"**, a hackathon by Varun Mayya backed by OpenAI. Site: https://buildwhatmovesindia.com/
+Hackathon submission for **"Build What Moves India"**, a hackathon by Varun Mayya backed by OpenAI. Site: https://buildwhatmovesindia.com/
 
-The brief: pick one real problem on an Indian public-service website or digital service and build a simpler, clearer, more useful way to solve it. Prototype must be built with Codex or an OpenAI model, and must address the backend/process, not just redesign the screen. IRCTC, EPFO, and the Income Tax portal are given as examples only, not a fixed list.
+The brief: pick one real problem on an Indian public-service website or digital service and build a simpler, clearer, more useful way to solve it. Prototype must be built with Codex or an OpenAI model, and must address the backend/process, not just redesign the screen.
 
-**Submission deadline: August 27, 2026.** Finale window: Sep 5-6, 2026 (10 finalists selected; filmed shoot planned Sep 6).
+**As of 2026-08-24: team rules changed to 2-person teams.** The original 4-person group (Gaurav, Harshit, Varun Malani, Kriti) split into two independent teams submitting separately. Note: **Varun Malani** (Harshit's teammate, from Gaurav's Rethink Cohort 7 group) is a different person from **Varun Mayya** (the hackathon's organizer/host, referenced throughout this doc as the source of the brief and rules) — do not conflate the two.
+- **Harshit + Varun Malani**
+- **Kriti + Gaurav** — this repo tracks this team's work.
+
+**As of 2026-08-24: the brief also narrowed to 10 named official platforms** (no longer an open "any public-service site" choice; IRCTC/EPFO/Income Tax are no longer just examples). Pick one platform from this list:
+IRCTC, Income Tax e-Filing Portal, CPGRAMS, GST Portal, EPFO, MCA (Ministry of Corporate Affairs) Portal, National Cyber Crime Reporting Portal, UMANG, Parivahan Sewa, RTI Online.
+Secondary research on all 10 lives in `research/` (one file per platform) — read before narrowing Kriti+Gaurav's idea pool below to what's actually buildable against this list.
+
+**Submission deadline: August 28, 2026, 8:00 PM IST. No grace period.** Verified 2026-08-24 against both `buildwhatmovesindia.com/brief` and `buildwhatmovesindia.com/faq`, and cross-checked against Varun Mayya's own explainer video ("Build What Moves India: Rules & How to Participate," YouTube, posted 2026-08-21). Selection runs in two stages: shortlist of 250 announced Sep 1, one week of mentorship, round-two resubmission by **Sep 7, 2026**, top 10 finalists announced Sep 8-12. **Finale: Sep 12, 2026, in Bengaluru** (filmed, not livestreamed; winners announced same day). The video also confirms "pick one of the 10 public service platforms" shown on an on-screen graphic, matching this repo's 10-platform list below, though off-list submissions are allowed at lower odds and the live brief/FAQ pages themselves list no fixed platform names (they call IRCTC/EPFO/Income Tax "examples, not a fixed list"). Team size is capped at 2, confirmed in the video's pinned comment.
 
 Hard rules from the brief: no touching live government systems, no undocumented private APIs, no real Aadhaar/PAN/OTP/payment data — use mock/synthetic data throughout.
 
 ## Framework state
-**Framework: none, workspace.** No rubric yet — the team has not locked which idea to build; this is pending a combined decision. 2026-08-18.
+**Framework: active GST product build.** Gaurav approved GST DRC-01C as the problem and mechanism on 2026-08-27. Root `PRD.md` is sealed; `IMPLEMENTATION_PLAN.md` is reconciled; the prior Cyber Crime PRD is archived at `Documentation/archive/PRD-cybercrime.md`.
 
-Once the team picks one idea: run `/prd-create` on the chosen idea, then `/rubric` to lock framework depth, then bootstrap with the Blueprint `new-project.sh` script from the Claude Optimisation framework repo. Do not scaffold Blueprint's Documentation/ tree before that — it expects a filled PRD.md, not a blank one.
+Block 1 is complete in `prototype/` and deployed at https://prototype-blue-three.vercel.app. It is a flow-review skeleton, not a submission candidate: deterministic fixtures and `reconcile()` are real and tested, while the OpenAI call, generated response text, print styles, and final visual design are not built. The exact citizen-flow sequence remains provisional pending confirmation from the 2026-08-27 team call. Do not run discovery or `/prd-create` again, and do not proceed to the full build or Stage 4 until Gaurav reports that flow decision.
 
 ## Candidate ideas (from team's shared doc)
 Source: [team ideas sheet](https://docs.google.com/spreadsheets/d/1bO0N33XyMnJFJNtw5x8oNMZ3nrR_xtoeikeczHe_Wn4/edit?gid=0#gid=0) — pulled 2026-08-18, re-check the sheet for updates before treating this list as current.
@@ -29,7 +37,7 @@ Shared pattern across nearly all ideas: don't rebuild the government portal, fix
 - "Did they actually solve my complaint?" — checks whether a "disposed" grievance response actually addressed the issue, drafts the escalation if not
 - "Where did my government payment actually go?" — diagnoses the gap between a "paid" status and no money received
 
-**Varun:**
+**Varun Malani:**
 - SIR / voter roll gaps — address-to-ward/constituency/BLO resolver + Form 6 vs Form 8 wizard (voters.eci.gov.in requires the user to already know their ward)
 - Aadhaar creation — online pre-enrollment form generating a QR/reference code so the centre operator does verify-and-confirm instead of full re-entry
 - EPFO stuck claims — claim diagnosis tool mapping status to the ~6 known failure modes (UAN-Aadhaar link, name/DOB mismatch, employer attestation, stale IFSC, service overlap). Varun's own note: SIR and Aadhaar creation are the stronger builds since they're fully mockable; EPFO risks feeling like a static rules-lookup rather than something functional.
@@ -54,4 +62,4 @@ Shared pattern across nearly all ideas: don't rebuild the government portal, fix
 - **"Who built this, and who else did they fail?"** A citizen sees a foot overbridge or a station platform redone badly six months ago and has no way to learn which vendor did it, what the contract promised, or whether the same vendor is currently working on three more sites nearby. Tender award data exists in scattered portals, but performance after award is effectively invisible, and blacklisting decisions are not published anywhere a citizen would look. The retaliation concern is real and documented at the general level: over 300 recorded instances of attack or harassment and at least 51 murders linked to information sought under the RTI Act, which is exactly why people who see bad work say nothing. We are not building a procurement watchdog, we are fixing the moment a citizen notices bad work and hits a dead end: point a photo and a location at it, get back who the vendor was and what else they hold, and file into an aggregated site-level record rather than a named individual complaint. Medium buildathon fit: fully mockable with a synthetic tender and works dataset, strong as a story, but it needs care to stay a record of work quality and not a public accusation board.
 
 ## Out of Scope
-Nothing built yet. Do not start implementation until the team locks one idea and a PRD exists.
+Until the flow is confirmed, do not build beyond the existing Block 1 skeleton. OpenAI integration, generated Part B text, print styles, and final visual design remain deferred to Stage 4. The permanent Round-1 cuts in `IMPLEMENTATION_PLAN.md` section 3 remain out of scope: timelines or mocked status changes, multiple notices/causes/personas/languages, uploads/CSV/OCR/accounts/login/persistence, custom PDF generation, charts, animations, dark mode, analytics, a component library, and broad test coverage beyond the focused P0 checks.

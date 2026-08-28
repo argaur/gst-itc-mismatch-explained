@@ -1,13 +1,23 @@
-**Status:** active
-**Last session:** 2026-08-18 — Scaffolded the project folder, pulled the team's shared idea sheet (Harshit, Varun, Kriti's ideas), and researched + structured Gaurav's own 5 ideas into verified problem statements.
-**Next up:** Team of 4 picks one idea to build. Then run `/prd-create` on the chosen idea, then `/rubric` to lock framework depth, then bootstrap with the Blueprint `new-project.sh` script.
-**Blockers:** None. Waiting on a combined team decision, not a technical blocker.
+**Status:** active, paused at the end of Block 1 pending the confirmed flow decision
+**Last session:** 2026-08-27 (9th session, Claude + Codex in parallel) — Gaurav approved the GST DRC-01C problem, mechanism, and deterministic/OpenAI responsibility boundary; Kriti's exact-flow confirmation remains pending. Claude drafted a 4-stage `CODEX_PROMPTS.md` with reusable rules split into `Documentation/process/PRD_QUALITY_BAR.md` instead of naming Claude-only skills. Gaurav then ran Codex through Stages 1–3: `PRD.md` is sealed for GST with its citizen-flow section explicitly provisional, `IMPLEMENTATION_PLAN.md` is reconciled, the Cyber Crime PRD is archived at `Documentation/archive/PRD-cybercrime.md`, and the flow-review skeleton in `prototype/` is deployed at https://prototype-blue-three.vercel.app. Six domain tests and the production build pass; the public shell was verified at 375px and contains no OpenAI call, print styles, or final visual treatment.
+**Next up:** Kriti + Gaurav use the deployed skeleton to confirm or adjust the citizen journey from the 2026-08-27 call. Once Gaurav reports the confirmed decision: update `PRD.md` Part B and `IMPLEMENTATION_PLAN.md` section 6 in place if needed, get one qualified GST practitioner to sanity-check the synthetic case and Part B wording, then run Stage 4 of `CODEX_PROMPTS.md` (full views, OpenAI integration, print styles, QA, demo prep).
+**Blockers:** Explicit flow confirmation from the 2026-08-27 call. Do not proceed to the full build or Stage 4 before it. After that: the GST-practitioner review. The direct DRC-01C interview gap remains noted but is not a Round-1 build blocker.
 
 ## Team
-Gaurav, Harshit, Varun, Kriti.
+Split as of 2026-08-24 (2-person team cap): **Harshit + Varun Malani** on one submission, **Kriti + Gaurav** on the other. This repo tracks Kriti+Gaurav's work; the candidate idea pool below still holds all 4 original members' ideas as shared research. Note: Varun Malani (Harshit's teammate) is a different person from Varun Mayya, the hackathon's organizer.
 
 ## Deadline
-Submission: 2026-08-27. Finale window: 2026-09-05 to 2026-09-06.
+**Verified 2026-08-24** against the live brief, FAQ, and Varun Mayya's own explainer video: submission deadline is **Aug 28, 2026, 8:00 PM IST, no grace period**. Selection: top 250 shortlisted by Sep 1, one week mentorship, resubmission by Sep 7, top 10 announced Sep 8-12. Finale: **Sep 12, 2026, Bengaluru**, filmed not livestreamed. (Earlier repo values of Aug 27 / Sep 5-6 were wrong — see `past-mistakes.md`.)
 
 ## Idea pool
 Full structured list (team's + Gaurav's) lives in `CLAUDE.md` at the project root, under "Candidate ideas". Gaurav's 5 ideas are verified against real sources (see `decisions.md` for the one framing correction that came out of that research).
+
+## Platform research (10 official platforms)
+`research/README.md` indexes 10 secondary-research reports (news, CAG, parliamentary sources), one per named platform, each with root-cause analysis, buildathon-fit assessment, and 3 to 5 candidate problem statements.
+
+`research/primary/README.md` indexes 10 primary-research reports (real Reddit, X, app store, and forum complaints) for the same platforms. Read both before narrowing Kriti+Gaurav's pick. Three platforms got a sharper lead from primary research than secondary alone: UMANG (an EPFO-action OTP dead-end inside the app beats the discovery problem), MCA (the MCA21 V3 portal itself failing, backed by named professionals, beats the disqualification-dashboard framing), and National Cyber Crime (came back as the single strongest-evidenced problem statement across all 10 platforms: innocent account freezes with no explanation).
+
+## Comparison artifact
+Published 2026-08-24 as a Claude artifact ("Ten Portals, Ten Failures") — 10 tabs, one per platform, each with its top 5 sourced problems (evidence-strength chip + Secondary/Primary source tags per finding) and an "also on record" list of every additional issue found. Source file: `research/` + `research/primary/` (synthesized, not a new research pass). Gaurav decided to share it with Kriti as a downloaded file rather than an "anyone with the link" share, given Anthropic's July 2026 share-link indexing incident (patched, but the safer call for a first share).
+
+As of 2026-08-25 the artifact has 2 top-level tabs: **Problem Identification** (the original 3-tab research view above, unchanged) and **Platform Walkthrough**, itself split into **Cyber Crime** / **CPGRAMS** sub-tabs — a live, screen-by-screen walkthrough of both chosen portals with "Needs Gaurav" callouts marking what Chrome automation couldn't verify. Live at https://claude.ai/code/artifact/f3d9d505-91e7-490d-aff9-deafdfca7fec — local source mirrored at `artifact/ten-portals-ten-failures.html`. Publishing this artifact hit a recurring gate bug requiring `force:true` twice; see `past-mistakes.md`.

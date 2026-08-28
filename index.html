@@ -1,0 +1,579 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Decision brief and working PRD for the Build What Moves India hackathon prototype."
+    />
+    <title>Notice, Explained — Decision Brief &amp; Working PRD</title>
+    <style>
+      :root {
+        --ink: #162235;
+        --muted: #59677a;
+        --paper: #f6f4ef;
+        --card: #ffffff;
+        --line: #dce1e7;
+        --navy: #183c66;
+        --blue: #2469b1;
+        --sky: #e9f3ff;
+        --mint: #e7f7ef;
+        --mint-ink: #12603f;
+        --amber: #fff4dc;
+        --amber-ink: #795000;
+        --rose: #fdf0f0;
+        --rose-ink: #8f3034;
+        --shadow: 0 14px 36px rgba(20, 42, 68, 0.08);
+        --radius: 18px;
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        color: var(--ink);
+        background: var(--paper);
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        line-height: 1.55;
+      }
+
+      a { color: var(--blue); }
+      a:focus-visible, button:focus-visible, summary:focus-visible {
+        outline: 3px solid #9cc8ff;
+        outline-offset: 3px;
+      }
+
+      .wrap { width: min(1120px, calc(100% - 32px)); margin: 0 auto; }
+      .eyebrow {
+        margin: 0 0 10px;
+        color: #b9dcff;
+        font-size: 0.78rem;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      header {
+        color: white;
+        background:
+          radial-gradient(circle at 82% 15%, rgba(97, 185, 255, 0.28), transparent 28%),
+          linear-gradient(125deg, #102b4b 0%, #183c66 55%, #1a5387 100%);
+        padding: 58px 0 36px;
+      }
+      header h1 { max-width: 770px; margin: 0; font-size: clamp(2rem, 5vw, 4.2rem); line-height: 1.04; letter-spacing: -0.05em; }
+      header .lede { max-width: 700px; margin: 20px 0 0; color: #e0edfb; font-size: clamp(1rem, 2vw, 1.18rem); }
+      .meta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+      .chip { display: inline-flex; align-items: center; min-height: 30px; border-radius: 999px; padding: 5px 11px; background: rgba(255,255,255,.13); color: #f4f9ff; font-size: .83rem; font-weight: 700; }
+
+      .notice {
+        margin: 24px auto 0;
+        border: 1px solid #f0d28d;
+        border-radius: 14px;
+        padding: 15px 17px;
+        background: var(--amber);
+        color: #543b0e;
+        font-size: .94rem;
+      }
+      .notice strong { color: var(--amber-ink); }
+
+      .tabs-shell { position: sticky; top: 0; z-index: 10; border-bottom: 1px solid var(--line); background: rgba(246,244,239,.94); backdrop-filter: blur(14px); }
+      .tabs { display: flex; gap: 8px; padding: 12px 0; }
+      [role="tab"] {
+        min-height: 46px;
+        border: 1px solid transparent;
+        border-radius: 10px;
+        padding: 10px 14px;
+        color: var(--muted);
+        background: transparent;
+        cursor: pointer;
+        font: inherit;
+        font-weight: 800;
+      }
+      [role="tab"][aria-selected="true"] { border-color: #b8d5f2; color: #0e477c; background: var(--sky); }
+      main { padding: 34px 0 72px; }
+      [role="tabpanel"][hidden] { display: none; }
+
+      .section-head { margin: 34px 0 16px; }
+      .section-head:first-child { margin-top: 0; }
+      h2 { margin: 0; font-size: clamp(1.45rem, 3vw, 2rem); letter-spacing: -0.035em; line-height: 1.15; }
+      h3 { margin: 0 0 8px; font-size: 1.05rem; line-height: 1.25; }
+      p { margin: 0 0 12px; }
+      .sub { max-width: 800px; margin-top: 9px; color: var(--muted); }
+
+      .grid { display: grid; gap: 16px; }
+      .grid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .card { border: 1px solid var(--line); border-radius: var(--radius); padding: 21px; background: var(--card); box-shadow: var(--shadow); }
+      .card p:last-child { margin-bottom: 0; }
+      .recommendation { border: 2px solid #87bee9; background: linear-gradient(135deg, #f6fbff, #fff); }
+      .kicker { margin: 0 0 7px; color: var(--blue); font-size: .74rem; font-weight: 850; letter-spacing: .1em; text-transform: uppercase; }
+      .score { display: inline-block; margin: 4px 0 10px; padding: 2px 8px; border-radius: 6px; color: #0d4a7c; background: #dceeff; font-size: .82rem; font-weight: 800; }
+      .callout { border-left: 4px solid var(--blue); padding: 4px 0 4px 16px; color: #26435f; font-size: 1.05rem; }
+      .good { border-left-color: #28a56a; background: #f1fbf5; }
+      .warn { border-left-color: #db9d27; background: #fff9eb; }
+      .danger { border-left-color: #d76368; background: #fff7f7; }
+
+      .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius); background: var(--card); box-shadow: var(--shadow); }
+      table { width: 100%; border-collapse: collapse; min-width: 800px; }
+      th, td { padding: 14px 15px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); }
+      th { color: #395168; background: #f8fafc; font-size: .78rem; letter-spacing: .05em; text-transform: uppercase; }
+      tr:last-child td { border-bottom: 0; }
+      .yes { color: var(--mint-ink); font-weight: 800; }
+      .mixed { color: var(--amber-ink); font-weight: 800; }
+      .no { color: var(--rose-ink); font-weight: 800; }
+
+      ul, ol { margin: 10px 0 0; padding-left: 21px; }
+      li + li { margin-top: 7px; }
+      details { border-top: 1px solid var(--line); padding: 14px 0; }
+      details:last-child { border-bottom: 1px solid var(--line); }
+      summary { cursor: pointer; color: #183c66; font-weight: 800; }
+      summary + div { padding-top: 12px; color: var(--muted); }
+
+      .journey { display: grid; gap: 0; overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; box-shadow: var(--shadow); }
+      .step { position: relative; display: grid; grid-template-columns: 44px 1fr; gap: 14px; padding: 18px 20px; border-bottom: 1px solid var(--line); }
+      .step:last-child { border-bottom: 0; }
+      .number { display: grid; width: 32px; height: 32px; place-items: center; border-radius: 50%; color: white; background: var(--navy); font-size: .85rem; font-weight: 800; }
+      .step p { color: var(--muted); }
+      .step h3 { margin-top: 4px; }
+
+      .flow { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-top: 14px; }
+      .flow-item { position: relative; min-height: 105px; border: 1px solid #cbddeb; border-radius: 14px; padding: 14px; background: #f8fbfe; }
+      .flow-item:not(:last-child)::after { position: absolute; top: 50%; right: -17px; z-index: 1; color: #5a82a7; content: "→"; font-weight: 800; }
+      .flow-item strong { display: block; color: var(--navy); font-size: .92rem; }
+      .flow-item span { display: block; margin-top: 5px; color: var(--muted); font-size: .8rem; line-height: 1.35; }
+
+      .label { display: inline-block; margin-bottom: 8px; border-radius: 5px; padding: 3px 7px; background: #ebf4ff; color: #225a91; font-size: .72rem; font-weight: 850; letter-spacing: .05em; text-transform: uppercase; }
+      .label.mock { color: #785400; background: #fff3d8; }
+      .label.real { color: #12603f; background: #e6f6ee; }
+      .label.open { color: #963b42; background: #fdecef; }
+      .footer { margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--line); color: var(--muted); font-size: .85rem; }
+
+      @media (max-width: 760px) {
+        header { padding-top: 42px; }
+        .grid.two, .grid.three { grid-template-columns: 1fr; }
+        .flow { grid-template-columns: 1fr; }
+        .flow-item:not(:last-child)::after { top: auto; right: auto; bottom: -19px; left: 50%; content: "↓"; }
+        .tabs { gap: 5px; overflow-x: auto; scrollbar-width: thin; }
+        [role="tab"] { flex: 0 0 auto; padding: 9px 11px; font-size: .88rem; }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="wrap">
+        <p class="eyebrow">Build What Moves India · Kriti + Gaurav</p>
+        <h1>Show a small business what caused its GST mismatch.</h1>
+        <p class="lede">A decision brief and working PRD for one proposed citizen journey: explain a synthetic DRC-01C ITC mismatch using traceable records, then prepare a review-ready response brief.</p>
+        <div class="meta">
+          <span class="chip">Round 1 deadline: Aug 28, 2026 · 8:00 PM IST</span>
+          <span class="chip">Mobile-first · Synthetic data only</span>
+          <span class="chip">Not an official government product</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="wrap notice">
+      <strong>Conditional recommendation:</strong> GST DRC-01C is the safest build for the time available, but it is not approved. Before prototype work begins, Kriti + Gaurav should accept the thinner user-pain evidence, keep the scope to one notice type, and get the response wording checked by a qualified GST practitioner.
+    </div>
+
+    <div class="tabs-shell">
+      <div class="wrap tabs" role="tablist" aria-label="Project views">
+        <button id="analysis-tab" role="tab" aria-selected="true" aria-controls="analysis-panel" tabindex="0">1. Decision analysis</button>
+        <button id="research-tab" role="tab" aria-selected="false" aria-controls="research-panel" tabindex="-1">2. Research for GST Problem</button>
+        <button id="prd-tab" role="tab" aria-selected="false" aria-controls="prd-panel" tabindex="-1">3. Working PRD</button>
+        <button id="plan-tab" role="tab" aria-selected="false" aria-controls="plan-panel" tabindex="-1">4. Implementation plan</button>
+      </div>
+    </div>
+
+    <main class="wrap">
+      <section id="analysis-panel" role="tabpanel" aria-labelledby="analysis-tab">
+        <div class="section-head">
+          <h2>The recommendation: one DRC-01C reconciliation journey</h2>
+          <p class="sub">Choose one narrow problem: a small-business owner receives an automated ITC-mismatch intimation and cannot connect the aggregate difference to the purchase records that created it.</p>
+        </div>
+
+        <div class="grid two">
+          <article class="card recommendation">
+            <p class="kicker">Recommended problem</p>
+            <h3>“Which records created this difference, and what should I take to my reviewer?”</h3>
+            <p class="score">Best delivery-risk trade-off, subject to approval</p>
+            <p>A trader receives a DRC-01C intimation. It shows an aggregate difference between ITC claimed in GSTR-3B and ITC available in GSTR-2B; resolving the cause still requires reconciliation against the trader’s purchase register.</p>
+            <p class="callout good"><strong>Product thesis:</strong> do not simulate GSTN or decide tax liability. Build a transparent bridge from the aggregate flag to source records, a plain-language explanation, and a professional-review handoff.</p>
+          </article>
+          <article class="card">
+            <p class="kicker">Why now</p>
+            <ul>
+              <li><strong>Real, specific mechanism:</strong> DRC-01C compares ITC claimed in GSTR-3B with ITC available in GSTR-2B and requires a Part B response when triggered.</li>
+              <li><strong>Correct division of work:</strong> deterministic code performs every match and calculation; the model turns validated findings into plain language and constrained draft text.</li>
+              <li><strong>Buildable safely:</strong> structured synthetic ledgers and notices create a complete demo without GSTN access or real tax data.</li>
+              <li><strong>Bounded enough to ship:</strong> one notice, one composite persona, two seeded causes, one review-ready output.</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="section-head">
+          <h2>What the research says</h2>
+          <p class="sub">The project compared 29 candidate problems across 10 public-service platforms, then tested the strongest candidates against the hackathon rubric and delivery risk.</p>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Rank</th><th>Candidate</th><th>Evidence</th><th>AI / process fit</th><th>Round 1 delivery read</th><th>Decision</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td><strong>GST · DRC-01C reconciler</strong></td><td>Official mechanism is strong; direct DRC-01C pain evidence exists but is thinner than Cyber Crime</td><td class="yes">Excellent</td><td>One narrow data flow can run end to end</td><td class="mixed">Conditional pick</td></tr>
+              <tr><td>2</td><td><strong>Cyber Crime · wrongful freeze release</strong></td><td>Strongest victim evidence and highest emotional stakes</td><td class="yes">Strong</td><td>Legal, jurisdictional, and multi-agency branching is high risk now</td><td class="mixed">Round 2 candidate</td></tr>
+              <tr><td>3</td><td><strong>Parivahan · RC transfer liability shield</strong></td><td>Very strong individual stories and CAG-backed process gap</td><td class="mixed">Good process, weaker natural AI</td><td>Credible but less compelling model role</td><td class="mixed">Runner-up</td></tr>
+              <tr><td>4</td><td><strong>Parivahan · e-challan dispute triage</strong></td><td>Focused evidence of ANPR errors and dispute failures</td><td class="yes">Strong vision use</td><td>Tightest consumer demo; depends on robust synthetic visual evidence</td><td class="mixed">Alternative if GST feels too technical</td></tr>
+              <tr><td>5</td><td><strong>RTI · file it right first time</strong></td><td>Strong legal/process research and primary user stories</td><td class="yes">Strong</td><td>Existing free AI drafting makes differentiation harder</td><td class="no">Do not lead with it</td></tr>
+              <tr><td>—</td><td><strong>CPGRAMS / UMANG / IRCTC</strong></td><td>Respectively thin primary evidence, “better search” risk, or heavy crowding</td><td class="mixed">Mixed</td><td>Each has an avoidable judge attack</td><td class="no">Do not pick for Round 1</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="section-head">
+          <h2>Why GST wins the tie</h2>
+        </div>
+        <div class="grid three">
+          <article class="card"><p class="kicker">1 · Working build</p><h3>The input and output are concrete</h3><p>A notice, GSTR-2B extract, GSTR-3B summary, and purchase register go in. The exact difference, source rows, explanation, and review brief come out.</p></article>
+          <article class="card"><p class="kicker">2 · Meaningful AI</p><h3>The model handles language, not tax math</h3><p>Deterministic reconciliation identifies causes and amounts. The model explains only those validated findings and drafts a short Part B explanation for human review.</p></article>
+          <article class="card"><p class="kicker">3 · Honest scope</p><h3>No fake integration or outcome is required</h3><p>The prototype ends with a review-ready artifact. It does not invent a submission, payment, portal status, or successful tax outcome.</p></article>
+        </div>
+
+        <div class="section-head"><h2>Why not lead with Cyber Crime right now?</h2></div>
+        <div class="card">
+          <p>The account-freeze concept remains the best-researched problem in the repository. It has recurring first-person accounts, exceptional emotional stakes, and a genuine release-side process gap. It should not be discarded.</p>
+          <div class="callout warn"><strong>But it is the wrong Round 1 starting point from zero code.</strong> Its proposed solution must be accurate across banks, cyber cells, RTI exceptions, NOCs, courts, jurisdiction, and a new Money Restoration Module that serves a different user. A rushed build could look like a legal-document generator acting out a fictional backend.</div>
+          <p>GST has a cleaner contract with the reviewer: “Here is the automated notice, here are the records that caused it, here is a transparent explanation, and here is a human-reviewable response draft.”</p>
+        </div>
+
+        <div class="section-head"><h2>Decision gate for Kriti + Gaurav</h2></div>
+        <div class="grid three">
+          <article class="card"><span class="label open">Approve before build</span><h3>Lock one wedge</h3><p>Approve DRC-01C reconciliation only—not DRC-01B, all GST notices, a filing product, or an open-ended tax assistant.</p></article>
+          <article class="card"><span class="label open">Accept or close</span><h3>Own the evidence gap</h3><p>The general GST-notice pain trail is credible, but direct first-person DRC-01C evidence is still thinner than the Cyber Crime corpus. Do not describe it as equally proven.</p></article>
+          <article class="card"><span class="label open">Validate before pitch</span><h3>Check the response shape</h3><p>Have one qualified GST practitioner confirm the synthetic reconciliation, plain-language wording, and proposed Part B explanation before recording the demo.</p></article>
+        </div>
+
+        <div class="section-head"><h2>Evidence and source boundary</h2></div>
+        <div class="card">
+          <p><span class="label real">Verified mechanism</span> Government GST guidance says DRC-01C compares ITC claimed in GSTR-3B with ITC available in GSTR-2B; Part B can contain a DRC-03 payment ARN, a reason for the difference, or both. A missing Part B response blocks a subsequent GSTR-1/IFF filing. <a href="https://comtax.wb.gov.in/GST/Functionality_Taxpayer/functionality_FO_Return_20231123_2.pdf" target="_blank" rel="noreferrer">Read the government functionality note</a>.</p>
+          <p><span class="label real">Direct pain signal</span> A dated CAclubindia thread records filers unable to proceed while the portal checked DRC-01C compliance and asking other users how to resolve it. This supports confusion and workflow blockage, but it is not yet a dense small-trader evidence base. <a href="https://www.caclubindia.com/forum/getting-drc01c-error-while-trying-to-file-gstr1-603354.asp?offset=2" target="_blank" rel="noreferrer">Read the DRC-01C thread</a>.</p>
+          <p><span class="label open">Evidence gap</span> The repository has strong official mechanics and several practitioner/forum signals, but no structured interview with a DRC-01C recipient. The recommendation is driven partly by buildability, not evidence superiority.</p>
+          <p><span class="label mock">Prototype boundary</span> This project will never access GSTN, submit a filing, use a real GSTIN, or advise a person to pay or not pay tax. It produces synthetic educational support and draft text for qualified review.</p>
+        </div>
+      </section>
+
+      <section id="research-panel" role="tabpanel" aria-labelledby="research-tab" hidden>
+        <div class="section-head">
+          <h2>Research for GST Problem</h2>
+          <p class="sub">The evidence behind the proposed DRC-01C problem, separated into direct user and practitioner signals, secondary research, confirmed facts, interpretations, and open gaps. Research collected August 24–26, 2026.</p>
+        </div>
+
+        <div class="grid two">
+          <article class="card recommendation">
+            <p class="kicker">Research question</p>
+            <h3>Can a small GST-registered business understand and safely act on an automated ITC-mismatch intimation?</h3>
+            <p>The research tested whether the portal explains the aggregate mismatch well enough for a non-specialist to trace it to source records, understand the consequence of not responding, and prepare a safe response for professional review.</p>
+          </article>
+          <article class="card">
+            <p class="kicker">Evidence standard</p>
+            <ul>
+              <li><strong>Confirmed:</strong> supported by government guidance or a directly accessible dated user thread.</li>
+              <li><strong>Corroborated:</strong> repeated across independent practitioner or industry sources.</li>
+              <li><strong>Inferred:</strong> a product conclusion drawn from the evidence, not a fact stated by a source.</li>
+              <li><strong>Open:</strong> still requires an interview, practitioner validation, or stronger source.</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="section-head">
+          <h2>Primary research — direct voices and observed behaviour</h2>
+          <p class="sub">Here “primary” means first-person taxpayer or practitioner material found in public forums and posts. The team has not yet conducted a structured interview with a DRC-01C recipient; this is online observational research, not interview evidence.</p>
+        </div>
+
+        <div class="grid two">
+          <article class="card">
+            <span class="label real">Strongest direct signal</span>
+            <h3>People are blocked by automated compliance checks without a usable diagnosis</h3>
+            <p>A CAclubindia filer reported being unable to file GSTR-1 while the system checked DRC-01C compliance and asked the forum how to resolve it. A closely related DRC-01B thread records a filer seeing a compliance error despite believing there was no prior mismatch; the practical advice offered was to refresh and retry.</p>
+            <p><strong>What this supports:</strong> the system state and next action are unclear even to active filers, and users seek diagnosis outside the portal.</p>
+            <p><a href="https://www.caclubindia.com/forum/getting-drc01c-error-while-trying-to-file-gstr1-603354.asp?offset=2" target="_blank" rel="noreferrer">DRC-01C filing-block thread</a> · <a href="https://www.caclubindia.com/forum/drc01b-compliance-error-605055.asp" target="_blank" rel="noreferrer">DRC-01B compliance-error thread</a></p>
+          </article>
+          <article class="card">
+            <span class="label real">Repeated notice confusion</span>
+            <h3>Recipients ask strangers whether they owe money, must reply, or need formal closure</h3>
+            <p>Across dated CAclubindia threads from 2019–2026, filers ask whether a mismatch case closes automatically, whether penalty is mandatory, and whether a reply is required after payment. One reported a roughly ₹3 lakh DRC-01B allegation despite seeing no difference in the filed returns.</p>
+            <p><strong>What this supports:</strong> the recurring unmet need is interpretation of the notice, evidence, consequence, and next step—not merely discovery of the form.</p>
+            <p><a href="https://www.caclubindia.com/forum/gst-notice-under-drc01b-602197.asp" target="_blank" rel="noreferrer">₹3 lakh mismatch thread</a> · <a href="https://www.caclubindia.com/forum/drc-01-issued-613943.asp" target="_blank" rel="noreferrer">Penalty and reply thread</a> · <a href="https://www.caclubindia.com/forum/reply-to-drc-01-502854.asp" target="_blank" rel="noreferrer">How-to-reply thread</a></p>
+          </article>
+          <article class="card">
+            <span class="label open">Mechanism strong, direct voices thin</span>
+            <h3>ITC mismatch is often caused by records outside the buyer’s control</h3>
+            <p>The research consistently identifies late supplier filing, incorrect GSTIN or invoice data, period differences, and duplicate claims as mismatch causes. However, the accessible primary-research pass did not find a dense set of first-person DRC-01C recipient accounts describing invoice-level reconciliation.</p>
+            <p><strong>What this supports:</strong> these are credible causes for a synthetic scenario. It does not prove how frequently each cause occurs for the intended user segment.</p>
+          </article>
+          <article class="card">
+            <span class="label open">Access limitation</span>
+            <h3>The online sample is practitioner-heavy</h3>
+            <p>Reddit search and direct retrieval were blocked in the research environment, while full X threads were often inaccessible. The reachable evidence therefore leans on CAclubindia and practitioner reporting and may underrepresent small traders who do not post on tax forums.</p>
+            <p><strong>Required follow-up:</strong> interview one DRC-01C recipient or qualified GST practitioner and manually review logged-in Reddit/X results before claiming the user need is fully validated.</p>
+          </article>
+        </div>
+
+        <div class="section-head">
+          <h2>Secondary research — process, causes, and consequences</h2>
+          <p class="sub">Official material establishes how DRC-01C works. Independent practitioner and industry sources help explain why mismatches arise and why small businesses struggle with reconciliation.</p>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Finding</th><th>Evidence</th><th>Confidence</th><th>Product implication</th></tr></thead>
+            <tbody>
+              <tr><td><strong>DRC-01C compares two aggregate figures</strong></td><td>Government functionality guidance describes the difference between ITC claimed in GSTR-3B and ITC available in GSTR-2B.</td><td class="yes">Confirmed</td><td>Begin with the plain-language amount, then trace it to the trader’s own purchase/claim records.</td></tr>
+              <tr><td><strong>A response is made through Part B</strong></td><td>Part B may include a DRC-03 payment ARN, a reason for the difference, or both.</td><td class="yes">Confirmed</td><td>The prototype may draft a neutral explanation for review, but must not decide whether to pay, reverse, or contest.</td></tr>
+              <tr><td><strong>Non-response has a workflow consequence</strong></td><td>Government guidance says a subsequent GSTR-1/IFF filing can be blocked when the required Part B response is missing.</td><td class="yes">Confirmed</td><td>Explain the consequence and review deadline clearly; do not invent a case outcome.</td></tr>
+              <tr><td><strong>The likely cause is not visible in the aggregate comparison</strong></td><td>Practitioner sources repeatedly identify late supplier filing, invoice/GSTIN errors, period differences, and duplicate entries.</td><td class="mixed">Corroborated</td><td>Reconciliation must use GSTR-2B plus the taxpayer’s purchase/claim workpaper; GSTR-3B itself is only a summary.</td></tr>
+              <tr><td><strong>The buyer depends on supplier behaviour</strong></td><td>GSTR-2B is populated from supplier-reported data, so a late or incorrect supplier filing can make otherwise expected credit absent for that period.</td><td class="mixed">Corroborated</td><td>Separate “your record may need correction” from “supplier filing timing may explain this”; preserve uncertainty for human review.</td></tr>
+              <tr><td><strong>Existing help assumes expertise or paid tooling</strong></td><td>GST Suvidha Providers, accounting products, and CA-assisted workflows already offer reconciliation, but generally assume data access and compliance literacy.</td><td class="mixed">Corroborated</td><td>The differentiation must be a narrow notice-to-evidence explanation for a small operator, not another broad GST filing suite.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="section-head"><h2>Root-cause map</h2></div>
+        <div class="grid three">
+          <article class="card"><p class="kicker">Data dependency</p><h3>The buyer’s claim depends on supplier-reported records</h3><p>A timing or data-quality failure upstream can surface as a mismatch for the buyer. This is a cross-party data-pipeline problem, not a cosmetic portal issue.</p></article>
+          <article class="card"><p class="kicker">Explanation gap</p><h3>The system flags a total, not the evidence chain</h3><p>The comparison detects a difference but does not reconcile the trader’s purchase/claim workpaper to show which records explain it. Users must create that bridge themselves or pay someone to do it.</p></article>
+          <article class="card"><p class="kicker">Workflow pressure</p><h3>Unresolved compliance can block the next filing</h3><p>The hard consequence increases urgency while the meaning of the mismatch and safe response still require judgment. That combination pushes users toward informal advice.</p></article>
+        </div>
+
+        <div class="section-head"><h2>Synthesis: what the evidence does and does not justify</h2></div>
+        <div class="grid two">
+          <article class="card">
+            <span class="label real">Supported</span>
+            <ul>
+              <li>DRC-01C is a real automated mismatch-and-response workflow with a filing consequence.</li>
+              <li>Users and practitioners report confusion and blockage around DRC compliance and notice responses.</li>
+              <li>Invoice-level causes require records beyond the aggregate GSTR-3B figure.</li>
+              <li>A transparent synthetic reconciliation can demonstrate meaningful backend/process thinking without touching GSTN.</li>
+              <li>Calculations should be deterministic; an OpenAI model is best limited to grounded explanation and draft language.</li>
+            </ul>
+          </article>
+          <article class="card">
+            <span class="label open">Not yet supported</span>
+            <ul>
+              <li>That DRC-01C is the most painful GST problem by prevalence or financial impact.</li>
+              <li>That the team has interviewed a small-business DRC-01C recipient.</li>
+              <li>That the synthetic causes or Part B wording are safe for real use before practitioner review.</li>
+              <li>That every mismatch can be classified automatically or resolved without professional judgment.</li>
+              <li>That the prototype connects to GSTN, files a response, determines liability, or produces an official result.</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="section-head"><h2>Research gaps and validation plan</h2></div>
+        <div class="journey">
+          <article class="step"><div class="number">1</div><div><h3>Practitioner review — build gate</h3><p>Ask one qualified GST practitioner to verify the DRC-01C explanation, synthetic ₹21,600 reconciliation, evidence chain, and neutral Part B draft wording.</p></div></article>
+          <article class="step"><div class="number">2</div><div><h3>Recipient interview — evidence gate</h3><p>Ask a real recipient what they first understood, which records they had, where they got help, what they feared would happen, and what artifact would have shortened the work. Record no GSTIN, invoice, or sensitive tax data.</p></div></article>
+          <article class="step"><div class="number">3</div><div><h3>Five-minute comprehension test</h3><p>Show the notice amount, two synthetic findings, and proposed review brief to a non-tax specialist. Test whether they can explain the mismatch and the prototype’s limits without prompting.</p></div></article>
+        </div>
+
+        <div class="section-head"><h2>Source register</h2></div>
+        <div class="card">
+          <details open><summary>Official process source</summary><div><a href="https://comtax.wb.gov.in/GST/Functionality_Taxpayer/functionality_FO_Return_20231123_2.pdf" target="_blank" rel="noreferrer">Government functionality note: difference in ITC available in GSTR-2B and claimed in GSTR-3B</a>. Used for the comparison, Part B response options, and filing-block consequence.</div></details>
+          <details><summary>Direct user and practitioner sources</summary><div><a href="https://www.caclubindia.com/forum/getting-drc01c-error-while-trying-to-file-gstr1-603354.asp?offset=2" target="_blank" rel="noreferrer">DRC-01C filing-block thread</a>; <a href="https://www.caclubindia.com/forum/drc01b-compliance-error-605055.asp" target="_blank" rel="noreferrer">DRC-01B compliance-error thread</a>; <a href="https://www.caclubindia.com/forum/gst-notice-under-drc01b-602197.asp" target="_blank" rel="noreferrer">DRC-01B mismatch and closure thread</a>; <a href="https://www.caclubindia.com/forum/drc-01-issued-613943.asp" target="_blank" rel="noreferrer">DRC-01 penalty/reply thread</a>; <a href="https://www.caclubindia.com/forum/reply-to-drc-01-502854.asp" target="_blank" rel="noreferrer">DRC-01 reply thread</a>.</div></details>
+          <details><summary>Independent explanatory sources</summary><div><a href="https://irismsme.com/blog/gst-reconciliation-msmes-claim-missing-itc/" target="_blank" rel="noreferrer">IRIS MSME on missing ITC and reconciliation</a>; <a href="https://authbridge.com/knowledge-centre/insights/correct-itc-mismatch-gst" target="_blank" rel="noreferrer">AuthBridge on ITC mismatch causes</a>; <a href="https://www.cygnet.one/blog/drc-01b-and-drc-01c-gst-notices/" target="_blank" rel="noreferrer">Cygnet on DRC-01B/01C automation</a>; <a href="https://blog.saginfotech.com/gst-software-resolves-gstr-3b-2a-2b-itc-mismatches" target="_blank" rel="noreferrer">SAG Infotech on existing reconciliation tools</a>. These explain the ecosystem and likely causes; they do not replace official guidance or direct interviews.</div></details>
+          <details><summary>Repository research trail</summary><div>The working notes are in <code>research/GST.md</code> and <code>research/primary/GST-primary.md</code>. They include broader GST findings—portal downtime, registration, refunds, cancellation, and e-way bills—that were reviewed but excluded here unless they directly affect the chosen DRC-01C problem.</div></details>
+        </div>
+
+        <div class="footer">
+          <p><strong>Research conclusion:</strong> the DRC-01C mechanism and the need for clearer notice interpretation are credible. The precise small-business segment and proposed response artifact remain hypotheses until practitioner review and at least one structured recipient interview.</p>
+        </div>
+      </section>
+
+      <section id="prd-panel" role="tabpanel" aria-labelledby="prd-tab" hidden>
+        <div class="section-head">
+          <h2>Working PRD — Notice, Explained</h2>
+          <p class="sub">Draft for team approval. It is deliberately narrow enough for a credible Round 1 prototype and will need an explicit decision update before implementation starts.</p>
+        </div>
+
+        <div class="grid two">
+          <article class="card recommendation"><p class="kicker">One-line product</p><h3>Trace a synthetic DRC-01C mismatch from the aggregate intimation to the purchase records behind it, then prepare a plain-language brief for professional review.</h3><p class="callout good">A citizen-facing, synthetic-data prototype for <strong>DRC-01C only</strong>.</p></article>
+          <article class="card"><p class="kicker">Product principles</p><ul><li>Plain language before tax jargon.</li><li>Show evidence before recommendation.</li><li>Never imply a real GSTN connection.</li><li>Human review is required before any real filing or payment.</li><li>Mobile-first, with 44px minimum touch targets.</li></ul></article>
+        </div>
+
+        <div class="section-head"><h2>1. Problem</h2></div>
+        <div class="card">
+          <p><strong>Who faces it:</strong> small business owners and sole proprietors who are registered for GST but do not have a dedicated compliance team.</p>
+          <p><strong>Failing moment:</strong> they receive a DRC-01C intimation saying ITC claimed in GSTR-3B exceeds ITC available in GSTR-2B. The intimation identifies an aggregate difference; it does not perform the trader’s invoice-level reconciliation against their purchase register.</p>
+          <p><strong>What is hard today:</strong> the trader must connect a return summary, an auto-generated statement, and their own purchase records; distinguish timing differences from their own bookkeeping error; and prepare a reason for review before responding.</p>
+          <p><strong>Evidence confidence:</strong> the DRC-01C mechanism and filing consequence are confirmed in government guidance. Practitioner/forum evidence shows confusion and blockage, but direct small-trader interviews are still missing.</p>
+          <p class="callout"><strong>Problem statement:</strong> A small-business owner who receives an automated DRC-01C intimation can see the total mismatch but not the source records that explain it, turning a valid automated check into an opaque reconciliation task they cannot safely complete alone.</p>
+        </div>
+
+        <div class="section-head"><h2>2. Target user and demo scenario</h2></div>
+        <div class="grid two">
+          <article class="card"><p class="kicker">Synthetic composite persona</p><h3>Meera, independent wholesaler</h3><p>Meera represents a small GST-registered business with occasional professional filing help but no in-house compliance team. She is a demo persona, not a researched individual; the team must present her that way.</p></article>
+          <article class="card"><p class="kicker">Synthetic scenario</p><h3>₹21,600 aggregate difference</h3><p>A mock DRC-01C follows a GSTR-3B claim that exceeds the synthetic GSTR-2B. Reconciliation against a synthetic purchase register finds a later-period supplier filing (₹18,400) and a probable duplicate entry in the claim workpaper (₹3,200).</p></article>
+        </div>
+
+        <div class="section-head"><h2>3. Main citizen journey</h2></div>
+        <div class="journey">
+          <article class="step"><div class="number">1</div><div><h3>Open a notice</h3><p>Meera selects a sample DRC-01C notice from her synthetic case. The first screen says, in plain language, “Your claimed credit is ₹21,600 higher than the portal record.”</p></div></article>
+          <article class="step"><div class="number">2</div><div><h3>See where the ₹21,600 comes from</h3><p>She sees the GSTR-3B claim total, GSTR-2B available total, and only the purchase-register rows that explain the difference. The app never invents invoice-level GSTR-3B data.</p></div></article>
+          <article class="step"><div class="number">3</div><div><h3>Understand the validated findings</h3><p>Deterministic rules identify the later-period supplier filing and probable duplicate. The OpenAI model explains those findings in plain language and cites the supplied demo invoice IDs.</p></div></article>
+          <article class="step"><div class="number">4</div><div><h3>Review what still needs judgment</h3><p>Meera sees a neutral checklist: verify the duplicate in her books, collect supplier evidence, and ask a qualified professional to decide the real response. The tool does not tell her to pay, reverse, or contest.</p></div></article>
+          <article class="step"><div class="number">5</div><div><h3>Print a review brief</h3><p>The prototype produces a clearly labeled mock Part B explanation draft plus the supporting rows and limitations. It is a handoff for review, not a filing, case-status update, or claimed resolution.</p></div></article>
+        </div>
+
+        <div class="section-head"><h2>4. Product scope</h2></div>
+        <div class="grid two">
+          <article class="card"><span class="label real">Round 1: build</span><ul><li>One synthetic DRC-01C intimation flow.</li><li>Exactly two seeded mismatch causes.</li><li>Purchase-register-to-GSTR-2B reconciliation, tied back to the GSTR-3B total.</li><li>OpenAI-powered explanation and short Part B draft grounded in validated findings.</li><li>Print-friendly professional-review brief.</li><li>Persistent real-versus-mock disclosure.</li></ul></article>
+          <article class="card"><span class="label open">Not in Round 1</span><ul><li>Live GSTN integration, login, GSTIN validation, or filing.</li><li>Real tax advice, liability determination, or payment recommendation.</li><li>All GST notices, registration, refunds, e-way bills, or returns.</li><li>An admin, officer, CA, or compliance dashboard.</li><li>A fabricated submission, outcome, or case-status timeline.</li><li>Any real personal, financial, or tax data.</li></ul></article>
+        </div>
+
+        <div class="section-head"><h2>5. How the build works</h2></div>
+        <div class="card">
+          <div class="flow" aria-label="System flow">
+            <div class="flow-item"><strong>Synthetic notice</strong><span>DRC-01C text, amount, response date</span></div>
+            <div class="flow-item"><strong>Synthetic records</strong><span>GSTR-3B summary + GSTR-2B + purchase register</span></div>
+            <div class="flow-item"><strong>Rules engine</strong><span>Exact mismatch math and evidence linking</span></div>
+            <div class="flow-item"><strong>OpenAI model</strong><span>Grounded explanation + short draft; no calculations</span></div>
+            <div class="flow-item"><strong>Citizen output</strong><span>Evidence, review checklist, printable brief</span></div>
+          </div>
+          <p style="margin-top:18px"><strong>Why this is end-to-end:</strong> the prototype takes a citizen from an aggregate system flag to traceable evidence and a review-ready artifact. Process depth comes from the reconciliation and guarded handoff—not from pretending the prototype filed or tracked a real response.</p>
+        </div>
+
+        <div class="section-head"><h2>6. What is real vs. mocked</h2></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Element</th><th>State</th><th>Disclosure in product</th></tr></thead>
+            <tbody>
+              <tr><td>GST notice categories and response mechanics</td><td><span class="yes">Real, public process reference</span></td><td>Link to official GST Portal FAQs; do not claim legal completeness.</td></tr>
+              <tr><td>Notice, trader identity, GSTIN, invoices, amounts, suppliers</td><td><span class="mixed">Synthetic</span></td><td>Persistent “Demo data” label on every case screen.</td></tr>
+              <tr><td>Purchase-register reconciliation and mismatch calculation</td><td><span class="mixed">Prototype rules engine</span></td><td>Show source rows and arithmetic; never call it a GSTN result.</td></tr>
+              <tr><td>Explanation and response draft</td><td><span class="mixed">OpenAI-assisted prototype output</span></td><td>“Review with a qualified tax professional before using.”</td></tr>
+              <tr><td>Submission, payment, portal status, outcome</td><td><span class="no">Not implemented</span></td><td>State plainly: “Nothing has been submitted to GSTN.” Do not display a fake outcome.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="section-head"><h2>7. Requirements and acceptance criteria</h2></div>
+        <div class="grid two">
+          <article class="card"><p class="kicker">Functional</p><ul><li>A reviewer completes the notice-to-review-brief journey in under 60 seconds.</li><li>The rules engine proves ₹18,400 + ₹3,200 = ₹21,600 and links both findings to synthetic source rows.</li><li>The model output is separated from calculations and names only supplied demo invoice IDs.</li><li>The print view includes evidence, draft text, and the mock/review disclaimer.</li><li>If the model call fails, the deterministic evidence remains visible with an honest retry state.</li></ul></article>
+          <article class="card"><p class="kicker">Trust, accessibility, performance</p><ul><li>The first screen and evidence load without waiting for the model.</li><li>Plain English appears before every tax abbreviation.</li><li>Touch targets are at least 44px and the journey works by keyboard.</li><li>No dark mode for Round 1.</li><li>Every mock, limitation, and safety boundary is visible inside the journey.</li></ul></article>
+        </div>
+
+        <div class="section-head"><h2>8. Delivery plan</h2></div>
+        <div class="grid three">
+          <article class="card"><p class="kicker">P0 · prove the core</p><h3>Data before interface</h3><p>Create the synthetic purchase register, GSTR-2B extract, GSTR-3B summary, and tests proving the two causes and ₹21,600 total.</p></article>
+          <article class="card"><p class="kicker">P0 · complete the journey</p><h3>Evidence before ornament</h3><p>Build the five-step mobile route, then connect one structured OpenAI response and a print stylesheet. Cut anything that does not improve the one-minute demo.</p></article>
+          <article class="card"><p class="kicker">P0 · submit safely</p><h3>Deploy and rehearse early</h3><p>Deploy to Vercel while there is still time to fix the API path, run focused mobile/keyboard/failure checks, then record and prepare the summary.</p></article>
+        </div>
+
+        <div class="section-head"><h2>9. Risks and mitigations</h2></div>
+        <div class="card">
+          <details open><summary>Risk: the evidence is stronger for the mechanism than for this exact user segment.</summary><div>Describe the recommendation as conditional, cite the direct DRC-01C signals that exist, and obtain one rapid practitioner review. Do not invent interviews or claim evidence parity with Cyber Crime.</div></details>
+          <details><summary>Risk: it sounds like tax advice.</summary><div>Use educational wording, show evidence and uncertainty, include “review before use,” and never tell the citizen to pay, reverse, contest, or not pay.</div></details>
+          <details><summary>Risk: tax jargon overwhelms the demo.</summary><div>Start with Meera and the amount at stake. Explain “credit you claimed is not yet visible in the system record” before showing GSTR-3B or GSTR-2B labels.</div></details>
+          <details><summary>Risk: the model invents an explanation.</summary><div>Keep matching, amounts, and cause categories deterministic. Send only validated findings, require structured output and supplied invoice IDs, and reject invalid responses visibly.</div></details>
+          <details><summary>Risk: the prototype feels like a static lookup.</summary><div>Make evidence groups expandable, let the citizen confirm what they want reviewed, and generate a tailored brief. Do not add a fictional timeline merely to create activity.</div></details>
+        </div>
+
+        <div class="footer">
+          <p><strong>Project note:</strong> This is an independent hackathon prototype by Kriti + Gaurav. It is not affiliated with, approved by, or connected to the Government of India, GSTN, CBIC, or any tax authority.</p>
+          <p>Research basis: project research corpus as of Aug 26, 2026; official GST Portal references linked above. Last updated for team review.</p>
+        </div>
+      </section>
+
+      <section id="plan-panel" role="tabpanel" aria-labelledby="plan-tab" hidden>
+        <div class="section-head">
+          <h2>Implementation plan — high-level view</h2>
+          <p class="sub">A deadline-focused summary of how the proposed DRC-01C prototype would be built. The detailed technical contracts, fixtures, checks, and deployment steps remain in <code>IMPLEMENTATION_PLAN.md</code> in the project repository.</p>
+        </div>
+
+        <div class="grid two">
+          <article class="card recommendation">
+            <p class="kicker">Round 1 outcome</p>
+            <h3>One notice to one review-ready brief</h3>
+            <p>In under 60 seconds, a reviewer opens Meera’s synthetic DRC-01C intimation, sees why ₹21,600 differs, reviews two source-backed findings, receives a grounded OpenAI explanation, and prints a brief for professional review.</p>
+          </article>
+          <article class="card">
+            <p class="kicker">Build status</p>
+            <span class="label open">Approval required</span>
+            <p>Implementation does not begin until Kriti + Gaurav approve the GST direction, accept the evidence trade-off, and a qualified GST practitioner checks the synthetic scenario and response wording.</p>
+          </article>
+        </div>
+
+        <div class="section-head"><h2>What gets built</h2></div>
+        <div class="grid three">
+          <article class="card"><p class="kicker">1 · Deterministic core</p><h3>Prove every rupee</h3><p>Typed synthetic fixtures reconcile a GSTR-3B summary, purchase/claim workpaper, and GSTR-2B extracts. Code—not the model—identifies ₹18,400 and ₹3,200 findings.</p></article>
+          <article class="card"><p class="kicker">2 · Citizen journey</p><h3>Evidence before advice</h3><p>Four mobile-first views cover notice, evidence, explanation, and review brief. Disclosures remain visible throughout; no screen imitates filing or a successful outcome.</p></article>
+          <article class="card"><p class="kicker">3 · OpenAI layer</p><h3>Translate validated findings</h3><p>A server-side Responses API call explains only the supplied findings and drafts short review text. Structured output and application validation reject unsupported references.</p></article>
+        </div>
+
+        <div class="section-head"><h2>Delivery sequence</h2></div>
+        <div class="journey">
+          <article class="step"><div class="number">0</div><div><h3>Approve and validate</h3><p>Lock the direction, verify the government-process wording, confirm API and Vercel access, and freeze the practitioner-reviewed synthetic scenario.</p></div></article>
+          <article class="step"><div class="number">1</div><div><h3>Prove the domain core</h3><p>Create fixtures and reconciliation tests first, then deploy a static first view early so hosting risk is visible immediately.</p></div></article>
+          <article class="step"><div class="number">2</div><div><h3>Complete the no-AI route</h3><p>Build the full notice-to-review-brief experience with evidence, disclosures, keyboard support, and print styles before adding the model call.</p></div></article>
+          <article class="step"><div class="number">3</div><div><h3>Add and constrain OpenAI</h3><p>Connect one allow-listed synthetic case, validate structured output, and keep deterministic evidence usable during loading, timeout, or failure.</p></div></article>
+          <article class="step"><div class="number">4</div><div><h3>Deploy, rehearse, submit</h3><p>Run focused mobile, keyboard, model-failure, and secret checks; rehearse the 60-second journey; then prepare the public link, video, and summary.</p></div></article>
+        </div>
+
+        <div class="section-head"><h2>Scope control</h2></div>
+        <div class="grid two">
+          <article class="card"><span class="label real">P0 · must ship</span><ul><li>One synthetic case and one DRC-01C intimation.</li><li>Exactly two deterministic findings totaling ₹21,600.</li><li>Transparent evidence and one real structured OpenAI response.</li><li>Print-friendly professional-review brief.</li><li>Public Vercel link and rehearsed one-minute journey.</li></ul></article>
+          <article class="card"><span class="label open">Cut before deadline</span><ul><li>Case timeline or mocked status changes.</li><li>Uploads, login, persistence, OCR, or live integration.</li><li>Multiple notices, causes, personas, or languages.</li><li>Custom PDF generation, animations, dark mode, or analytics.</li><li>Broad test coverage beyond the focused P0 checks.</li></ul></article>
+        </div>
+
+        <div class="section-head"><h2>Round 1 is done when</h2></div>
+        <div class="card">
+          <ul>
+            <li>The visible source rows and deterministic code prove the ₹21,600 result.</li>
+            <li>A real deployed OpenAI call returns schema-valid text grounded only in supplied demo IDs.</li>
+            <li>The journey works in under 60 seconds on mobile and remains usable if the model call fails.</li>
+            <li>Every identifier is synthetic and no screen implies GSTN connection, submission, payment, or outcome.</li>
+            <li>The public link, two-minute video, and under-250-word summary are ready before the deadline.</li>
+          </ul>
+        </div>
+
+        <div class="footer">
+          <p><strong>Detailed build document:</strong> <code>IMPLEMENTATION_PLAN.md</code> remains in the project repository with the data model, API contract, file layout, QA matrix, deployment steps, and definition of done.</p>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const tabs = [...document.querySelectorAll('[role="tab"]')];
+      const panels = [...document.querySelectorAll('[role="tabpanel"]')];
+
+      function activateTab(tab) {
+        tabs.forEach((item) => {
+          const selected = item === tab;
+          item.setAttribute('aria-selected', String(selected));
+          item.tabIndex = selected ? 0 : -1;
+        });
+        panels.forEach((panel) => {
+          panel.hidden = panel.getAttribute('aria-labelledby') !== tab.id;
+        });
+      }
+
+      tabs.forEach((tab, index) => {
+        tab.addEventListener('click', () => activateTab(tab));
+        tab.addEventListener('keydown', (event) => {
+          if (!['ArrowRight', 'ArrowLeft', 'Home', 'End'].includes(event.key)) return;
+          event.preventDefault();
+          let next = index;
+          if (event.key === 'ArrowRight') next = (index + 1) % tabs.length;
+          if (event.key === 'ArrowLeft') next = (index - 1 + tabs.length) % tabs.length;
+          if (event.key === 'Home') next = 0;
+          if (event.key === 'End') next = tabs.length - 1;
+          tabs[next].focus();
+          activateTab(tabs[next]);
+        });
+      });
+    </script>
+  </body>
+</html>
