@@ -2,7 +2,8 @@
 
 - [project.md](project.md) — status, last session, next up, blockers
 - [decisions.md](decisions.md) — workspace scoping; research/problem-direction decisions; team split and Harshit-overlap resolution; Netlify decision-brief / Vercel prototype hosting split; GST DRC-01C locked as platform
-- [past-mistakes.md](past-mistakes.md) — parallel WebSearch-heavy agent fan-outs exhaust quota; artifact publish gate refused a valid republish in a loop; a Codex prompt named a Claude-only skill
+- [past-mistakes.md](past-mistakes.md) — parallel WebSearch-heavy agent fan-outs exhaust quota; artifact publish gate refused a valid republish in a loop; a Codex prompt named a Claude-only skill; wrote memory to the wrong (non-canonical) location
+- [gopass-path-fix.md](gopass-path-fix.md) — gopass wasn't on Windows PATH, fixed permanently 2026-08-28 (machine-wide, not project-specific)
 - [Session: 2026-08-18](session-2026-08-18.md) — project scaffolded, team ideas pulled, Gaurav's 5 ideas researched and structured
 - [Session: 2026-08-24](session-2026-08-24.md) — team split, 10-platform secondary + primary research, published comparison artifact
 - [Session: 2026-08-24 (2)](session-2026-08-24-2.md) — Fable 5 ranked top-5 problem shortlist, added "Compiled Problems" tab to the artifact
@@ -19,3 +20,5 @@
 - [Session: 2026-08-26 (7)](session-2026-08-26-7.md) — Codex created a clickable existing-vs-proposed GST DRC-01C comparison wireframe, documented the six-stage current portal flow and four-stage proposed journey, froze the shared synthetic case, and preserved the non-approval boundary
 - [Session: 2026-08-26 (8)](session-2026-08-26-8.md) — Codex added a fully sourced GST research tab to `index.html`, separated direct voices from official/secondary evidence and inference, documented validation gaps, kept Implementation Plan last, and verified desktop/mobile/keyboard behavior
 - [Session: 2026-08-27](session-2026-08-27.md) — Gaurav approved GST DRC-01C while the exact flow remained pending; Codex sealed the PRD, reconciled the plan, built and tested the deterministic Block 1 core, deployed the flow-review skeleton, and stopped before Stage 4 awaiting the call decision
+- [Session: 2026-08-28](session-2026-08-28.md) — fixed gopass PATH permanently, corrected a truncated key paste, wired OpenAI key into Vercel prod, verified live API; public GitHub repo now exists, Kriti's contributor add still pending
+- [Session: 2026-08-28 final release](session-2026-08-28-final.md) — completed Stages 0–3, fixed two Vercel runtime defects, deployed and live-verified the grounded OpenAI path, created the public GitHub repo, invited Kriti, and recorded the remaining QA/submission work
