@@ -28,6 +28,7 @@ Stages 0–3 are complete: the ₹30 lakh fixture, exhaustive reconciliation, sh
 - The former Cyber Crime PRD has been preserved at `Documentation/archive/PRD-cybercrime.md` as unsealed discovery; it is no longer the active root PRD.
 - The prototype app lives in `prototype/` so the existing root `index.html` decision brief remains intact. The app follows the planned `src/data`, `src/domain`, `src/components`, `src/views`, and `tests` layout and deploys that directory as the Vercel project root.
 - The public URL https://prototype-blue-three.vercel.app now serves the Stage 0–3 build. The page returns HTTP 200 and `/api/explain` safely returns `service_not_configured` until `OPENAI_API_KEY` is configured. The deterministic evidence path remains usable.
+- Public repository: https://github.com/argaur/gst-itc-mismatch-explained
 - `prototype/src/contracts/**` is frozen for the next agents. The current UI remains buildable through deprecated `Finding.type` and `matchedPurchaseRowIds` bridges; the UI agent must migrate to `category` and format `2026-04` as `April 2026`.
 - Stage 0/1 verification: `npm test -- --run` passes 20/20 tests; `npm run build` passes; no dependency or package-manifest change was needed.
 - The deployed four-view shell intentionally contains no OpenAI integration, print styles, final visual design, or cut-list features. The explanation and draft-response stages are visibly marked as deferred rather than simulated.
