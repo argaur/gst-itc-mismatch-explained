@@ -38,11 +38,14 @@ interface RiskRule {
 const RISK_RULES: Record<RiskCategory, RiskRule> = {
   credit_note_reducing_itc: {
     severity: "act_now",
+    // Deliberately does not say the credit is simply "gone". Since the October
+    // 2025 IMS changes the reversal can be full, partial or nil depending on
+    // how much ITC was actually availed. We show the exposure, not a verdict.
     whyItMatters:
-      "Your supplier has sent a note that reduces your credit. Nobody has responded to it. If you do nothing, it is treated as accepted and this credit is gone.",
+      "Your supplier has sent a note that reduces your credit. Nobody has responded to it. If you do nothing, it is treated as accepted. How much you actually have to give back depends on how much of this credit you already claimed.",
     whoCausedIt: "supplier",
     whatToDo:
-      "Open the invoice screen and accept or reject this note before the date shown.",
+      "Open the invoice screen and decide on this note before the date shown. Notes like this one have a shorter deadline than ordinary bills.",
     atRisk: true,
   },
   supplier_not_filed: {
@@ -55,8 +58,10 @@ const RISK_RULES: Record<RiskCategory, RiskRule> = {
   },
   wrongly_rejected: {
     severity: "act_now",
+    // "Until corrected", not "lost". An erroneous rejection can be reversed
+    // before filing, or fixed by the supplier re-reporting the document.
     whyItMatters:
-      "This bill was rejected on the portal, but your own books say you bought it. A rejection you did not intend costs you the credit.",
+      "This bill was rejected on the portal, but your own records say you bought it. Until that is corrected, this bill cannot support your credit.",
     whoCausedIt: "you",
     whatToDo:
       "Check whether this rejection was a mistake, and correct it before the date shown.",
@@ -64,8 +69,10 @@ const RISK_RULES: Record<RiskCategory, RiskRule> = {
   },
   itc_not_available: {
     severity: "check",
+    // The portal's own reason, shown as the portal's reason. GSTR-2B does not
+    // catch every ground of ineligibility, so this must not read as a verdict.
     whyItMatters:
-      "The government has marked this credit as not available, and given a reason.",
+      "The credit statement itself marks this credit as not available, and gives a reason. That is the system's reason, not a full check of everything the law allows you to claim.",
     whoCausedIt: "rules",
     whatToDo:
       "Read the reason and confirm with a professional whether it can be corrected.",
