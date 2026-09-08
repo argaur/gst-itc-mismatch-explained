@@ -22,6 +22,10 @@ Hard rules from the brief: no touching live government systems, no undocumented 
 
 Block 1 is complete in `prototype/` and deployed at https://prototype-blue-three.vercel.app. It is a flow-review skeleton, not a submission candidate: deterministic fixtures and `reconcile()` are real and tested, while the OpenAI call, generated response text, print styles, and final visual design are not built. The exact citizen-flow sequence remains provisional pending confirmation from the 2026-08-27 team call. Do not run discovery or `/prd-create` again, and do not proceed to the full build or Stage 4 until Gaurav reports that flow decision.
 
+**Deploy target:** Vercel account `argaurs-projects` (team `team_3VVVuqz6VHXjBQCANdWIY7OF`), project `prototype` (`prj_uzHjQ7EbSI5OJUob091cvbSvxHZ3`), runtime Node.js serverless (`api/explain.ts`, no edge runtime declared). Production URL https://prototype-blue-three.vercel.app. Confirmed 2026-08-28.
+
+**Model lock, 2026-09-08 (Round 2 handoff):** Gaurav had an operation and is on heavy meds, taking a backseat this round. Kriti wrote and tested all Round 2 domain logic herself; Codex Sol (high effort) is the only model for this project until Gaurav lifts this. Claude runs as orchestrator only — relay Kriti's material and instructions to Codex verbatim, prepare/manage the worktree, and pass through Codex's diffs and questions rather than deciding architecture or scope itself. This overrides the per-turn model-routing hook for this repo. **Note (2026-09-08, later same day):** Codex's `--permission edit` path is confirmed broken on this machine (see `memory/past-mistakes.md`). Gaurav granted a one-off exception letting Claude apply a small, pre-verified content fix directly when this happens again — the lock itself still stands for anything requiring judgment.
+
 ## Candidate ideas (from team's shared doc)
 Source: [team ideas sheet](https://docs.google.com/spreadsheets/d/1bO0N33XyMnJFJNtw5x8oNMZ3nrR_xtoeikeczHe_Wn4/edit?gid=0#gid=0) — pulled 2026-08-18, re-check the sheet for updates before treating this list as current.
 
