@@ -1,8 +1,8 @@
 # Memory Index — Build What Moves India
 
 - [project.md](project.md) — status, last session, next up, blockers
-- [decisions.md](decisions.md) — workspace scoping; research/problem-direction decisions; team split and Harshit-overlap resolution; Netlify decision-brief / Vercel prototype hosting split; GST DRC-01C locked as platform
-- [past-mistakes.md](past-mistakes.md) — parallel WebSearch-heavy agent fan-outs exhaust quota; artifact publish gate refused a valid republish in a loop; a Codex prompt named a Claude-only skill; wrote memory to the wrong (non-canonical) location
+- [decisions.md](decisions.md) — workspace scoping; research/problem-direction decisions; team split and Harshit-overlap resolution; Netlify decision-brief / Vercel prototype hosting split; GST DRC-01C locked as platform; Top 250 SCOPE HOLD + open "functioning product" scope question (2026-09-02); Round 2 feature scope verdict + frontend-first build order (2026-09-07); Codex Sol locked as sole model + Claude orchestrator-only pattern (2026-09-08)
+- [past-mistakes.md](past-mistakes.md) — parallel WebSearch-heavy agent fan-outs exhaust quota; artifact publish gate refused a valid republish in a loop; a Codex prompt named a Claude-only skill; wrote memory to the wrong (non-canonical) location; Codex --permission edit broken at a Windows sandbox layer deeper than config.toml (2026-09-08)
 - [gopass-path-fix.md](gopass-path-fix.md) — gopass wasn't on Windows PATH, fixed permanently 2026-08-28 (machine-wide, not project-specific)
 - [Session: 2026-08-18](session-2026-08-18.md) — project scaffolded, team ideas pulled, Gaurav's 5 ideas researched and structured
 - [Session: 2026-08-24](session-2026-08-24.md) — team split, 10-platform secondary + primary research, published comparison artifact
@@ -22,3 +22,8 @@
 - [Session: 2026-08-27](session-2026-08-27.md) — Gaurav approved GST DRC-01C while the exact flow remained pending; Codex sealed the PRD, reconciled the plan, built and tested the deterministic Block 1 core, deployed the flow-review skeleton, and stopped before Stage 4 awaiting the call decision
 - [Session: 2026-08-28](session-2026-08-28.md) — fixed gopass PATH permanently, corrected a truncated key paste, wired OpenAI key into Vercel prod, verified live API; public GitHub repo now exists, Kriti's contributor add still pending
 - [Session: 2026-08-28 final release](session-2026-08-28-final.md) — completed Stages 0–3, fixed two Vercel runtime defects, deployed and live-verified the grounded OpenAI path, created the public GitHub repo, invited Kriti, and recorded the remaining QA/submission work
+- [Session: 2026-08-28 (2)](session-2026-08-28-2.md) — wrote SUBMISSION.html (225-word summary, honest checklist) and DEMO_VIDEO_SCRIPT.md (full two-minute script) from both approved PRDs
+- [Session: 2026-09-02](session-2026-09-02.md) — confirmed Top 250; 4-round Fable+Codex brainstorm produced a SCOPE HOLD next-stage plan; Gaurav flagged an open "functioning product" scope question
+- [Session: 2026-09-07](session-2026-09-07.md) — verified the live build against stale CLAUDE.md claims, two Codex passes scoped Round 2's 3 approved features + video plan, locked frontend-first build order for tomorrow
+- [Session: 2026-09-08](session-2026-09-08.md) — Gaurav took a backseat post-operation, locked Codex Sol as sole model with Claude as orchestrator, worked around a broken Windows Codex edit-sandbox via read-only-design + mechanical placement, shipped all 6 Round 2 build steps, merged and live-verified in Vercel production
+- [Session: 2026-09-08 (2)](session-2026-09-08-2.md) — pushed 2 stranded Round 2 commits, fixed Vercel's broken Root Directory setting and the dead `vitest/globals` tsconfig entry breaking push-triggered deploys, added the repo's first README
