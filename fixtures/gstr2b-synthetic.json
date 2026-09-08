@@ -1,0 +1,250 @@
+{
+  "chksum": "SYNTHETIC-FIXTURE-NOT-A-REAL-CHECKSUM",
+  "data": {
+    "gstin": "88DEMOA1000A1Z0",
+    "rtnprd": "082026",
+    "version": "1.0",
+    "gendt": "14-09-2026",
+    "itcsumm": {
+      "itcavl": {
+        "nonrevsup": {
+          "igst": 0,
+          "cgst": 133750,
+          "sgst": 133750,
+          "cess": 0
+        }
+      },
+      "itcunavl": {
+        "nonrevsup": {
+          "igst": 0,
+          "cgst": 11000,
+          "sgst": 11000,
+          "cess": 0
+        }
+      },
+      "itcrev": {
+        "nonrevsup": {
+          "igst": 0,
+          "cgst": 43200,
+          "sgst": 43200,
+          "cess": 0
+        }
+      },
+      "itcRejected": {
+        "nonrevsup": {
+          "igst": 0,
+          "cgst": 0,
+          "sgst": 0,
+          "cess": 0
+        }
+      }
+    },
+    "cpsumm": {
+      "b2b": [
+        {
+          "ctin": "88DEMOB1001B1Z1",
+          "trdnm": "Verma Packaging (synthetic)",
+          "supfildt": "09-09-2026",
+          "supprd": "082026",
+          "ttldocs": 1,
+          "igst": 0,
+          "cgst": 22500,
+          "sgst": 22500,
+          "cess": 0
+        },
+        {
+          "ctin": "88DEMOC1002C1Z2",
+          "trdnm": "Nadkarni Steel (synthetic)",
+          "supfildt": "10-09-2026",
+          "supprd": "082026",
+          "ttldocs": 2,
+          "igst": 0,
+          "cgst": 92000,
+          "sgst": 92000,
+          "cess": 0
+        },
+        {
+          "ctin": "88DEMOE1004E1Z4",
+          "trdnm": "Rao Electricals (synthetic)",
+          "supfildt": "12-09-2026",
+          "supprd": "082026",
+          "ttldocs": 1,
+          "igst": 0,
+          "cgst": 19250,
+          "sgst": 19250,
+          "cess": 0
+        },
+        {
+          "ctin": "88DEMOF1005F1Z5",
+          "trdnm": "Sethi Motors (synthetic)",
+          "supfildt": "10-09-2026",
+          "supprd": "082026",
+          "ttldocs": 1,
+          "igst": 0,
+          "cgst": 11000,
+          "sgst": 11000,
+          "cess": 0
+        }
+      ]
+    },
+    "docdata": {
+      "b2b": [
+        {
+          "ctin": "88DEMOB1001B1Z1",
+          "trdnm": "Verma Packaging (synthetic)",
+          "supfildt": "09-09-2026",
+          "supprd": "082026",
+          "inv": [
+            {
+              "inum": "DEMO-INV-4101",
+              "typ": "R",
+              "dt": "04-08-2026",
+              "val": 270000,
+              "pos": "88",
+              "rev": "N",
+              "itcavl": "Y",
+              "rsn": "",
+              "diffprcnt": 1,
+              "txval": 225000,
+              "igst": 0,
+              "cgst": 22500,
+              "sgst": 22500,
+              "cess": 0,
+              "imsStatus": "A",
+              "srctyp": "e-Invoice"
+            }
+          ]
+        },
+        {
+          "ctin": "88DEMOC1002C1Z2",
+          "trdnm": "Nadkarni Steel (synthetic)",
+          "supfildt": "10-09-2026",
+          "supprd": "082026",
+          "inv": [
+            {
+              "inum": "DEMO-INV-4102",
+              "typ": "R",
+              "dt": "07-08-2026",
+              "val": 720000,
+              "pos": "88",
+              "rev": "N",
+              "itcavl": "Y",
+              "rsn": "",
+              "diffprcnt": 1,
+              "txval": 600000,
+              "igst": 0,
+              "cgst": 60000,
+              "sgst": 60000,
+              "cess": 0,
+              "imsStatus": "A",
+              "srctyp": "e-Invoice"
+            },
+            {
+              "inum": "DEMO-INV-4131",
+              "typ": "R",
+              "dt": "28-08-2026",
+              "val": 384000,
+              "pos": "88",
+              "rev": "N",
+              "itcavl": "Y",
+              "rsn": "",
+              "diffprcnt": 1,
+              "txval": 320000,
+              "igst": 0,
+              "cgst": 32000,
+              "sgst": 32000,
+              "cess": 0,
+              "imsStatus": "R",
+              "srctyp": "e-Invoice"
+            }
+          ]
+        },
+        {
+          "ctin": "88DEMOE1004E1Z4",
+          "trdnm": "Rao Electricals (synthetic)",
+          "supfildt": "12-09-2026",
+          "supprd": "082026",
+          "inv": [
+            {
+              "inum": "DEMO-INV-4121",
+              "typ": "R",
+              "dt": "22-08-2026",
+              "val": 231000,
+              "pos": "88",
+              "rev": "N",
+              "itcavl": "Y",
+              "rsn": "",
+              "diffprcnt": 1,
+              "txval": 192500,
+              "igst": 0,
+              "cgst": 19250,
+              "sgst": 19250,
+              "cess": 0,
+              "imsStatus": "N",
+              "srctyp": "e-Invoice"
+            }
+          ]
+        },
+        {
+          "ctin": "88DEMOF1005F1Z5",
+          "trdnm": "Sethi Motors (synthetic)",
+          "supfildt": "10-09-2026",
+          "supprd": "082026",
+          "inv": [
+            {
+              "inum": "DEMO-INV-4126",
+              "typ": "R",
+              "dt": "25-08-2026",
+              "val": 132000,
+              "pos": "88",
+              "rev": "N",
+              "itcavl": "N",
+              "rsn": "POS and supplier state are the same; recipient state differs",
+              "diffprcnt": 1,
+              "txval": 110000,
+              "igst": 0,
+              "cgst": 11000,
+              "sgst": 11000,
+              "cess": 0,
+              "imsStatus": "A",
+              "srctyp": "e-Invoice"
+            }
+          ]
+        }
+      ],
+      "cdnr": [
+        {
+          "ctin": "88DEMOB1001B1Z1",
+          "trdnm": "Verma Packaging (synthetic)",
+          "supfildt": "11-09-2026",
+          "supprd": "082026",
+          "nt": [
+            {
+              "inum": "DEMO-CN-4108",
+              "typ": "R",
+              "dt": "19-08-2026",
+              "val": 518400,
+              "pos": "88",
+              "rev": "N",
+              "itcavl": "Y",
+              "rsn": "",
+              "diffprcnt": 1,
+              "txval": 432000,
+              "igst": 0,
+              "cgst": 43200,
+              "sgst": 43200,
+              "cess": 0,
+              "imsStatus": "N",
+              "srctyp": "e-Invoice",
+              "ntnum": "DEMO-CN-4108",
+              "ntty": "C"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "_synthetic": {
+    "warning": "SYNTHETIC FIXTURE. Not government data, and not issued or checked by any tax authority. All values are invented. The field structure follows public developer documentation published by a licensed commercial provider, not a schema published by GSTN. GSTIN state code 88 is not in the published list of Indian state codes, so these identifiers should not match any real taxpayer."
+  }
+}

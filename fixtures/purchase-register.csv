@@ -1,0 +1,7 @@
+our_ref,supplier_name,supplier_gstin,invoice_no,invoice_date,document_type,tax_amount_rupees
+DEMO-PR-0001,"Verma Packaging (synthetic)",88DEMOB1001B1Z1,DEMO-INV-4101,2026-08-04,invoice,45000
+DEMO-PR-0002,"Nadkarni Steel (synthetic)",88DEMOC1002C1Z2,DEMO-INV-4102,2026-08-07,invoice,120000
+DEMO-PR-0003,"Iqbal Traders (synthetic)",88DEMOD1003D1Z3,DEMO-INV-4114,2026-08-11,invoice,152000
+DEMO-PR-0004,"Rao Electricals (synthetic)",88DEMOE1004E1Z4,DEMO-INV-4121,2026-08-22,invoice,38500
+DEMO-PR-0005,"Sethi Motors (synthetic)",88DEMOF1005F1Z5,DEMO-INV-4126,2026-08-25,invoice,22000
+DEMO-PR-0006,"Nadkarni Steel (synthetic)",88DEMOC1002C1Z2,DEMO-INV-4131,2026-08-28,invoice,64000

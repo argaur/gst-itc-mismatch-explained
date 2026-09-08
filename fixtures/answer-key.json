@@ -1,0 +1,51 @@
+{
+  "caseId": "DEMO-RISK-CASE-01",
+  "totalAmountAtRisk": 324400,
+  "amountLostIfNothingDone": 86400,
+  "deadline": "2026-10-20",
+  "expectations": [
+    {
+      "rowId": "DEMO-ROW-0001",
+      "ref": "OK-01",
+      "expectedCategory": "no_action_needed",
+      "expectedAmountAtRisk": 0
+    },
+    {
+      "rowId": "DEMO-ROW-0002",
+      "ref": "OK-02",
+      "expectedCategory": "no_action_needed",
+      "expectedAmountAtRisk": 0
+    },
+    {
+      "rowId": "DEMO-ROW-0003",
+      "ref": "RISK-CN",
+      "expectedCategory": "credit_note_reducing_itc",
+      "expectedAmountAtRisk": 86400
+    },
+    {
+      "rowId": "DEMO-ROW-0004",
+      "ref": "RISK-NOFILE",
+      "expectedCategory": "supplier_not_filed",
+      "expectedAmountAtRisk": 152000
+    },
+    {
+      "rowId": "DEMO-ROW-0005",
+      "ref": "INFO-DEEMED",
+      "expectedCategory": "deemed_accept_harmless",
+      "expectedAmountAtRisk": 0
+    },
+    {
+      "rowId": "DEMO-ROW-0006",
+      "ref": "RISK-BLOCKED",
+      "expectedCategory": "itc_not_available",
+      "expectedAmountAtRisk": 22000
+    },
+    {
+      "rowId": "DEMO-ROW-0007",
+      "ref": "RISK-WRONGREJECT",
+      "expectedCategory": "wrongly_rejected",
+      "expectedAmountAtRisk": 64000
+    }
+  ],
+  "note": "The engine must reproduce every expectedCategory and the totalAmountAtRisk exactly. Two rows are deliberately NOT at risk so a naive engine that flags everything fails this key."
+}

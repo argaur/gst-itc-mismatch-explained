@@ -5,6 +5,12 @@
   "functions": {
     "api/explain.ts": {
       "maxDuration": 15
+    },
+    "api/ask.ts": {
+      "maxDuration": 15
+    },
+    "api/explain-risk.ts": {
+      "maxDuration": 15
     }
   }
 }

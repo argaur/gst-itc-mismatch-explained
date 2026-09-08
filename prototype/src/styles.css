@@ -315,3 +315,60 @@ dd { margin: 5px 0 0; font-size: .82rem; font-weight: 700; line-height: 1.4; }
   .draft-text { min-height: auto; overflow: visible; border-color: #555; }
   .portal-footer { color: #000; background: #fff; border-top: 1px solid #555; }
 }
+
+@media (min-width: 761px) {
+  .stepper {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+.language-control {
+  display: flex;
+  margin: 20px 24px;
+  padding: 14px 16px;
+  align-items: center;
+  gap: 14px;
+  border: 1px solid #c7cfd5;
+  background: #f8fafb;
+  flex-wrap: wrap;
+}
+
+.language-control > strong {
+  color: #263f52;
+  font-size: .82rem;
+}
+
+.language-control .inline-actions {
+  margin: 0;
+}
+
+.language-control small {
+  flex-basis: 100%;
+  color: var(--muted);
+  font-size: .72rem;
+  line-height: 1.45;
+}
+
+.risk-question {
+  min-height: 96px;
+}
+
+.finding-body .ai-disclosure {
+  margin: 16px 18px 0;
+}
+
+@media (max-width: 760px) {
+  .step-button:nth-child(4) {
+    border-right: 0;
+  }
+
+  .step-button:nth-child(3),
+  .step-button:nth-child(4) {
+    border-bottom: 1px solid #cbd2d8;
+  }
+
+  .language-control {
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+}

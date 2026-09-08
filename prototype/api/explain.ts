@@ -19,7 +19,7 @@ const MAX_REQUEST_BYTES = 256;
 const MAX_UPSTREAM_RESPONSE_BYTES = 64_000;
 const DEFAULT_TIMEOUT_MS = 12_000;
 const DEFAULT_MODEL = "gpt-5.6-terra";
-const MAX_OUTPUT_TOKENS = 1_800;
+const MAX_OUTPUT_TOKENS = 500;
 
 type SafeLogEvent = {
   event: "explanation_succeeded" | "explanation_failed";
@@ -228,7 +228,7 @@ function createOpenAiRequestBody(): Record<string, unknown> {
   return {
     model: DEFAULT_MODEL,
     store: false,
-    reasoning: { effort: "medium" },
+    reasoning: { effort: "low" },
     max_output_tokens: MAX_OUTPUT_TOKENS,
     tools: [],
     instructions: [

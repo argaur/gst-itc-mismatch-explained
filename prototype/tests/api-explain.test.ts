@@ -189,8 +189,8 @@ describe("POST /api/explain", () => {
     >;
     expect(upstreamBody.store).toBe(false);
     expect(upstreamBody.model).toBe("gpt-5.6-terra");
-    expect(upstreamBody.reasoning).toEqual({ effort: "medium" });
-    expect(upstreamBody.max_output_tokens).toBeLessThanOrEqual(1_800);
+    expect(upstreamBody.reasoning).toEqual({ effort: "low" });
+    expect(upstreamBody.max_output_tokens).toBeLessThanOrEqual(500);
     expect(upstreamBody.tools).toEqual([]);
     expect(upstreamBody.text).toMatchObject({
       format: { type: "json_schema", strict: true },
