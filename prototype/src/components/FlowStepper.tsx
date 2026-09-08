@@ -8,6 +8,7 @@ const steps = [
   { short: "Evidence", label: "Source reconciliation", context: "New" },
   { short: "Explanation", label: "Plain-language explanation", context: "New" },
   { short: "Part B", label: "Part B review", context: "Existing" },
+  { short: "Risk", label: "Silent-loss check", context: "Round 2" },
 ];
 
 export function FlowStepper({ currentView, onSelect }: FlowStepperProps) {
@@ -21,7 +22,9 @@ export function FlowStepper({ currentView, onSelect }: FlowStepperProps) {
           onClick={() => onSelect(index)}
           type="button"
         >
-          <span className="step-number" aria-hidden="true">{index + 1}</span>
+          <span className="step-number" aria-hidden="true">
+            {index + 1}
+          </span>
           <span className="step-copy">
             <strong>{step.label}</strong>
             <small>{step.context}</small>

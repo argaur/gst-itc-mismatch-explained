@@ -12,7 +12,7 @@ Stages 0–3 are complete: the ₹30 lakh fixture, exhaustive reconciliation, sh
 
 - Team: Kriti + Gaurav, 2-person team, submitting separately from Harshit + Varun Malani.
 - Harshit's team is building on EPFO. No overlap risk with this team's direction.
-- Deadline: Aug 28, 2026, 8:00 PM IST, no grace period. Round 2 resubmission Sep 7, 2026.
+- Deadline: Aug 28, 2026, 8:00 PM IST, no grace period. Round 2 resubmission Sep 8, 2026, 10:00 PM IST.
 - Hard rules and judging criteria: locked, see `AGENTS.md` and `PROJECT_CONTEXT.md`. These came from a live re-fetch of the brief on 2026-08-26 and are not expected to change.
 - Codex plan: Gaurav is upgrading from ChatGPT Go to Plus for this build, to get full model access and a workable usage floor during the sprint. Watch the 5-hour rolling usage limit reintroduced on Plus starting Aug 26, 2026, and pace sessions accordingly.
 - From 2026-08-26 on: Codex builds, Claude plans. This 3-file structure (`AGENTS.md`, `PROJECT_CONTEXT.md`, `STATUS.md`) is the handoff mechanism.

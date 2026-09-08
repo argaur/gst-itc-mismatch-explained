@@ -2,11 +2,14 @@ import { useMemo, useState } from "react";
 import { FlowStepper } from "./components/FlowStepper";
 import type { ExplainCaseResponse } from "./contracts/explanation";
 import { demoCase } from "./data/demoCase";
+import { riskCase } from "./data/riskCase";
+import { assessRisk } from "./domain/assessRisk";
 import { reconcile } from "./domain/reconcile";
 import { EvidenceView } from "./views/EvidenceView";
 import { ExplanationView } from "./views/ExplanationView";
 import { NoticeView } from "./views/NoticeView";
 import { ReviewView } from "./views/ReviewView";
+import { RiskView } from "./views/RiskView";
 import type { ExplanationState } from "./views/ViewProps";
 
 const viewLabels = [
@@ -14,12 +17,18 @@ const viewLabels = [
   "Source reconciliation",
   "Plain-language explanation",
   "Part B review",
+  "Silent-loss check",
 ];
 
 function isExplainCaseResponse(value: unknown): value is ExplainCaseResponse {
   if (!value || typeof value !== "object" || !("ok" in value)) return false;
   if (value.ok === true) return "data" in value && Boolean(value.data);
-  if (value.ok !== false || !("error" in value) || !value.error || typeof value.error !== "object") {
+  if (
+    value.ok !== false ||
+    !("error" in value) ||
+    !value.error ||
+    typeof value.error !== "object"
+  ) {
     return false;
   }
   return (
@@ -38,6 +47,7 @@ export default function App() {
     status: "idle",
   });
   const result = useMemo(() => reconcile(demoCase), []);
+  const riskResult = useMemo(() => assessRisk(riskCase), []);
 
   const commonProps = {
     caseData: demoCase,
@@ -96,7 +106,9 @@ export default function App() {
 
   return (
     <div className="site-shell">
-      <a className="skip-link" href="#main-content">Skip to main content</a>
+      <a className="skip-link" href="#main-content">
+        Skip to main content
+      </a>
       <div className="prototype-strip" role="note">
         INDEPENDENT SYNTHETIC PROTOTYPE · NOT GSTN · NOT TAX ADVICE
       </div>
@@ -106,14 +118,18 @@ export default function App() {
           <span>English</span>
         </div>
         <div className="brand-row">
-          <div className="brand-mark" aria-hidden="true">NE</div>
+          <div className="brand-mark" aria-hidden="true">
+            NE
+          </div>
           <div>
             <p className="product-name">Notice, Explained</p>
             <p className="product-subtitle">GST ITC difference review</p>
           </div>
           <div className="case-reference">
             <span>DEMO REFERENCE</span>
-            <strong>{demoCase.id}</strong>
+            <strong>
+              {currentView === 4 ? riskCase.id : demoCase.id}
+            </strong>
           </div>
         </div>
         <nav className="primary-nav" aria-label="Prototype navigation">
@@ -126,8 +142,10 @@ export default function App() {
 
       <div className="page-frame">
         <nav className="breadcrumb" aria-label="Breadcrumb">
-          <span>Home</span><span aria-hidden="true">›</span>
-          <span>Returns</span><span aria-hidden="true">›</span>
+          <span>Home</span>
+          <span aria-hidden="true">›</span>
+          <span>Returns</span>
+          <span aria-hidden="true">›</span>
           <strong>{viewLabels[currentView]}</strong>
         </nav>
 
@@ -163,6 +181,12 @@ export default function App() {
               }
               onBack={() => setCurrentView(2)}
               onRestart={restart}
+            />
+          )}
+          {currentView === 4 && (
+            <RiskView
+              result={riskResult}
+              onBack={() => setCurrentView(3)}
             />
           )}
         </main>
