@@ -86,15 +86,15 @@ function readApiError(value: unknown): ApiError | undefined {
   };
 }
 
-function readRiskProse(value: unknown): RiskProse[] | undefined {
+export function readRiskProse(value: unknown): RiskProse[] | undefined {
   if (!isRecord(value) || value.ok !== true || !isRecord(value.data)) {
     return undefined;
   }
-  if (!Array.isArray(value.data.explanations)) return undefined;
+  if (!Array.isArray(value.data.sentences)) return undefined;
 
   const explanations: RiskProse[] = [];
   const seen = new Set<string>();
-  for (const item of value.data.explanations) {
+  for (const item of value.data.sentences) {
     if (
       !isRecord(item) ||
       typeof item.rowId !== "string" ||

@@ -438,7 +438,7 @@ function validateModelSentences(
 
   const result = assessRisk(riskCase);
   const items = result.items.filter((item) => item.amountAtRisk > 0);
-  const itemById = new Map(items.map((item) => [item.rowId, item]));
+  const itemById = new Map<string, RiskItem>(items.map((item) => [item.rowId, item]));
   const seen = new Set<string>();
   const validated: ModelSentence[] = [];
 
